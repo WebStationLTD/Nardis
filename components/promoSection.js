@@ -19,16 +19,16 @@ export default function Example() {
             </p>
           </div>
           <div>
-            <div className="mt-10 relative z-50">
+            <div className="mt-10 relative z-2">
               {/* Decorative image grid */}
               <div
                 aria-hidden="true"
                 className="lg:absolute lg:inset-y-0 lg:mx-auto lg:w-full lg:max-w-7xl"
               >
-                <div className="absolute transform sm:top-0 sm:left-1/2 sm:translate-x-8 lg:top-1/2 lg:left-1/2 lg:-translate-y-1/2 lg:translate-x-8">
+                <div className="absolute transform sm:top-0 sm:left-1/2 sm:translate-x-8 lg:top-1/2 lg:left-1/2 lg:translate-x-8 sm:-translate-y-120 lg:-translate-y-130">
                   <div className="flex items-center space-x-6 lg:space-x-8">
                     <div className="grid shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
-                      <div className="h-64 w-44 overflow-hidden rounded-lg sm:opacity-0 lg:opacity-100">
+                      <div className="h-64 w-44 overflow-hidden rounded-lg lg:opacity-100">
                         <img
                           alt=""
                           src="hero-1.jpg"
@@ -87,7 +87,7 @@ export default function Example() {
               </div>
               <Link
                 href="#"
-                className="inline-flex rounded-md bg-[#b3438f] px-3.5 py-2.5 text-sm font-semibold text-white hover:text-black shadow-xs hover:bg-[#ebedeb] focus-visible:outline-2 z-50 cursor-pointer focus-visible:outline-offset-2 focus-visible:outline-white"
+                className="inline-flex rounded-md bg-[#b3438f] px-3.5 py-2.5 text-sm font-semibold text-white hover:text-black shadow-xs hover:bg-[#ebedeb] focus-visible:outline-2 cursor-pointer focus-visible:outline-offset-2 focus-visible:outline-white"
               >
                 Пазарувайте онлайн
               </Link>
@@ -98,7 +98,7 @@ export default function Example() {
       <svg
         viewBox="0 0 1024 1024"
         aria-hidden="true"
-        className="absolute top-1/2 left-10 z-10 size-[64rem] overflow-hidden -translate-x-1/2 [mask-image:radial-gradient(closest-side,white,transparent)]"
+        className="absolute top-1/2 left-10 size-[64rem] overflow-hidden -translate-x-1/2 [mask-image:radial-gradient(closest-side,white,transparent)]"
       >
         <circle
           r={512}
