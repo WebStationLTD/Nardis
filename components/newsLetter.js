@@ -1,8 +1,8 @@
 export default function Newsletter() {
   return (
-    <div className="bg-white py-16 sm:py-24">
+    <div className="bg-white">
       <div className="mx-auto w-full">
-        <div className="relative isolate flex flex-col justify-center gap-10 overflow-hidden bg-gray-900 px-6 py-24 shadow-2xl sm:px-24 xl:flex-row xl:items-center xl:py-32">
+        <div className="relative isolate flex flex-col justify-center gap-10 overflow-hidden bg-gray-800 px-6 py-24 shadow-2xl sm:px-24 xl:flex-row xl:items-center xl:py-32">
           <h2 className="max-w-xl text-3xl font-semibold tracking-tight text-balance text-white sm:text-4xl xl:flex-auto">
             Want our product updates? Sign up for our newsletter.
           </h2>
@@ -38,7 +38,7 @@ export default function Newsletter() {
           <svg
             viewBox="0 0 1024 1024"
             aria-hidden="true"
-            className="absolute top-1/2 left-1/2 -z-10 size-[64rem] -translate-x-1/2"
+            className="absolute -top-1/4 left-1/2 -z-10 size-[64rem] -translate-x-1/2"
           >
             <circle
               r={512}
@@ -56,8 +56,8 @@ export default function Newsletter() {
                 gradientUnits="userSpaceOnUse"
                 gradientTransform="translate(512 512) rotate(90) scale(512)"
               >
-                <stop stopColor="#7775D6" />
-                <stop offset={1} stopColor="#E935C1" stopOpacity={0} />
+                <stop stopColor="#b3438f" />
+                <stop offset={1} stopColor="#b3438f" stopOpacity={0} />
               </radialGradient>
             </defs>
           </svg>

@@ -4,13 +4,13 @@ export default function Example() {
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-12 lg:px-8">
         <div className="sm:flex sm:items-baseline sm:justify-between">
           <h2 className="text-2xl font-bold tracking-tight text-gray-900">
-            Shop by Category
+            Топ категории
           </h2>
           <a
             href="#"
             className="hidden text-sm font-semibold text-indigo-600 hover:text-indigo-500 sm:block"
           >
-            Browse all categories
+            Вижте всички категории
             <span aria-hidden="true"> &rarr;</span>
           </a>
         </div>

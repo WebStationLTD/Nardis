@@ -1,6 +1,6 @@
 export default function Example() {
   return (
-    <div className="relative isolate overflow-hidden bg-gray-900">
+    <div className="relative isolate overflow-hidden bg-gray-800">
       <div className="px-6 py-12 sm:px-6 sm:py-12 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-4xl font-semibold tracking-tight text-balance text-white sm:text-5xl">

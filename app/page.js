@@ -1,5 +1,5 @@
 import StoreNavigation from "../components/storeNavigation";
-import CtaHero from "../components/ctaHero";
+// import CtaHero from "../components/ctaHero";
 import CtaQuality from "../components/ctaQuality";
 import CtaMissOops from "../components/ctaMissOops";
 import CtaImage from "../components/ctaImage";
@@ -11,17 +11,19 @@ import CtaBullets from "../components/ctaBullets";
 import TrendingProduts from "../components/trendingProduts";
 import NewsLetter from "../components/newsLetter";
 import PromoProduts from "../components/promoProducts";
+import PromoSection from "../components/promoSection";
 
 export default function Home() {
   return (
     <>
       <StoreNavigation />
       <FeatureList />
-      <CtaHero />
+      <PromoSection />
+      {/* <CtaHero /> */}
       <TrendingProduts />
-      <CtaImage />
-      <ShopingByCategory />
       <CtaBullets />
+      <ShopingByCategory />
+      <CtaImage />
       <PromoProduts />
       <CtaQuality />
       <CtaMissOops />

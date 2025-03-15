@@ -1,6 +1,6 @@
 export default function Example() {
   return (
-    <div className="relative bg-gray-900">
+    <div className="relative bg-gray-800">
       <div className="relative h-80 overflow-hidden bg-indigo-600 md:absolute md:left-0 md:h-full md:w-1/3 lg:w-1/2">
         <img
           alt=""
@@ -52,9 +52,9 @@ export default function Example() {
           <div className="mt-8">
             <a
               href="#"
-              className="inline-flex rounded-md bg-white/10 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-white/20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+              className="inline-flex rounded-md bg-[#b3438f] px-3.5 py-2.5 text-sm font-semibold text-white hover:text-black shadow-xs hover:bg-[#ebedeb] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
             >
-              Visit the help center
+              Купете онлайн
             </a>
           </div>
         </div>
