@@ -27,7 +27,7 @@ const navigation = {
   categories: [
     {
       id: "women",
-      name: "Women",
+      name: "Грижа за лице",
       featured: [
         {
           name: "New Arrivals",
@@ -123,7 +123,7 @@ const navigation = {
     },
     {
       id: "men",
-      name: "Men",
+      name: "Грижа за тяло",
       featured: [
         {
           name: "Accessories",
@@ -378,7 +378,7 @@ export default function Example() {
                 <button
                   type="button"
                   onClick={() => setOpen(true)}
-                  className="-ml-2 rounded-md bg-white p-2 text-gray-400"
+                  className="-ml-2 rounded-md bg-white cursor-pointer p-2 text-gray-400"
                 >
                   <span className="sr-only">Open menu</span>
                   <Bars3Icon aria-hidden="true" className="size-6" />
@@ -405,7 +405,7 @@ export default function Example() {
                   {navigation.categories.map((category) => (
                     <Popover key={category.name} className="flex">
                       <div className="relative flex">
-                        <PopoverButton className="group relative z-10 flex items-center justify-center text-xl font-medium text-white transition-colors duration-200 ease-out hover:text-white data-open:text-white">
+                        <PopoverButton className="group relative z-10 flex items-center cursor-pointer justify-center text-xl font-medium text-white transition-colors duration-200 ease-out hover:text-white data-open:text-white">
                           {category.name}
                           <span
                             aria-hidden="true"

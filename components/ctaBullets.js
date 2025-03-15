@@ -43,8 +43,12 @@ export default function Example() {
                 ))}
               </ul>
               <div className="mt-10 flex">
-                <a href="#" className="text-sm/6 font-semibold text-indigo-400">
-                  See our job postings <span aria-hidden="true">&rarr;</span>
+                <a
+                  href="#"
+                  className="text-sm/6 font-normal text-[#ffffff] hover:text-black"
+                >
+                  Вижте всички продукти от Asian SPA{" "}
+                  <span aria-hidden="true">&rarr;</span>
                 </a>
               </div>
             </div>
@@ -59,7 +63,7 @@ export default function Example() {
               clipPath:
                 "polygon(73.6% 51.7%, 91.7% 11.8%, 100% 46.4%, 97.4% 82.2%, 92.5% 84.9%, 75.7% 64%, 55.3% 47.5%, 46.5% 49.4%, 45% 62.9%, 50.3% 87.2%, 21.3% 64.1%, 0.1% 100%, 5.4% 51.1%, 21.4% 63.9%, 58.9% 0.2%, 73.6% 51.7%)",
             }}
-            className="aspect-1318/752 w-[82.375rem] flex-none bg-linear-to-r from-[#bc4b93] to-[#bc4b93] opacity-80"
+            className="aspect-1318/752 w-[82.375rem] flex-none bg-linear-to-r from-[#bc4b93] to-[#bc4b93] opacity-60"
           />
         </div>
       </div>

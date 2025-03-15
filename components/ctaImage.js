@@ -34,9 +34,7 @@ export default function Example() {
       </div>
       <div className="relative mx-auto max-w-7xl py-12 sm:py-12 lg:px-8 lg:py-12">
         <div className="pr-6 pl-6 md:ml-auto md:w-2/3 md:pl-16 lg:w-1/2 lg:pr-0 lg:pl-24 xl:pl-32">
-          <h2 className="text-base/7 font-semibold text-indigo-400">
-            Nardis.bg
-          </h2>
+          <h2 className="text-xl font-semibold text-[#b3438f]">Nardis.bg</h2>
           <p className="mt-2 text-4xl font-semibold tracking-tight text-white sm:text-5xl">
             Маркова козметика от Nardis
           </p>

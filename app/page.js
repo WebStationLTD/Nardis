@@ -23,9 +23,9 @@ export default function Home() {
       <TrendingProduts />
       <CtaBullets />
       <ShopingByCategory />
-      <CtaImage />
-      <PromoProduts />
       <CtaQuality />
+      <PromoProduts />
+      <CtaImage />
       <CtaMissOops />
       <NewsLetter />
       <TestimonialsSection />

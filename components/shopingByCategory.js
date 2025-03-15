@@ -8,7 +8,7 @@ export default function Example() {
           </h2>
           <a
             href="#"
-            className="hidden text-sm font-semibold text-indigo-600 hover:text-indigo-500 sm:block"
+            className="hidden text-base font-normal text-[#b3438f] hover:text-black sm:block"
           >
             Вижте всички категории
             <span aria-hidden="true"> &rarr;</span>
@@ -93,9 +93,9 @@ export default function Example() {
         <div className="mt-6 sm:hidden">
           <a
             href="#"
-            className="block text-sm font-semibold text-indigo-600 hover:text-indigo-500"
+            className="block text-base font-normal text-[#b3438f] hover:text-black"
           >
-            Browse all categories
+            Вижте всички категории
             <span aria-hidden="true"> &rarr;</span>
           </a>
         </div>

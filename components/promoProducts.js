@@ -52,9 +52,9 @@ export default function Example() {
           </h2>
           <a
             href="#"
-            className="hidden text-sm font-medium text-indigo-600 hover:text-indigo-500 md:block"
+            className="hidden text-base font-normal text-[#b3438f] hover:text-black md:block"
           >
-            Вижте всички
+            Вижте всички промоции
             <span aria-hidden="true"> &rarr;</span>
           </a>
         </div>
