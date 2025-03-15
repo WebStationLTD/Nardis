@@ -15,7 +15,7 @@ export default function Example() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <div className="bg-white">
+    <div className="bg-white sticky">
       <header className="absolute inset-x-0 top-0 z-50">
         <nav
           aria-label="Global"
