@@ -1,5 +1,4 @@
 import StoreNavigation from "../components/storeNavigation";
-// import CtaHero from "../components/ctaHero";
 import CtaQuality from "../components/ctaQuality";
 import CtaMissOops from "../components/ctaMissOops";
 import CtaImage from "../components/ctaImage";
@@ -19,7 +18,6 @@ export default function Home() {
       <StoreNavigation />
       <FeatureList />
       <PromoSection />
-      {/* <CtaHero /> */}
       <TrendingProduts />
       <CtaBullets />
       <ShopingByCategory />
