@@ -86,9 +86,9 @@ export default function Example() {
         <div className="mt-8 text-sm md:hidden">
           <a
             href="#"
-            className="font-medium text-indigo-600 hover:text-indigo-500"
+            className="text-base font-normal text-[#b3438f] hover:text-black"
           >
-            Shop the collection
+            Вижте всички промоции
             <span aria-hidden="true"> &rarr;</span>
           </a>
         </div>

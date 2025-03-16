@@ -2,7 +2,7 @@ export default function Newsletter() {
   return (
     <div className="bg-white">
       <div className="mx-auto w-full">
-        <div className="relative isolate flex flex-col justify-center gap-50 overflow-hidden bg-gray-800 px-6 py-24 shadow-2xl sm:px-24 xl:flex-row xl:items-center xl:py-32">
+        <div className="relative isolate flex flex-col justify-center gap-10 xl:gap-50 overflow-hidden bg-gray-800 px-6 py-24 shadow-2xl sm:px-24 xl:flex-row xl:items-center xl:py-32">
           <h2 className="max-w-xl text-3xl font-semibold tracking-tight text-balance text-white sm:text-4xl xl:flex-auto">
             Абонирайте се за нашия имейл бюлетин
           </h2>
