@@ -1,12 +1,12 @@
 import "../styles/globals.css";
-import { Roboto } from "next/font/google";
+// import { Roboto } from "next/font/google";
 
-const roboto = Roboto({
-  subsets: ["latin"],
-  weight: ["400", "700"],
-  style: ["normal", "italic"],
-  display: "swap",
-});
+// const roboto = Roboto({
+//   subsets: ["latin"],
+//   weight: ["400", "700"],
+//   style: ["normal", "italic"],
+//   display: "swap",
+// });
 
 export const metadata = {
   title: "Create Next App",
@@ -16,7 +16,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${roboto.className} bg-[#ebedeb]`}>{children}</body>
+      <body 
+      // className={`${roboto.className} bg-[#ebedeb]`}
+      >{children}</body>
     </html>
   );
 }
