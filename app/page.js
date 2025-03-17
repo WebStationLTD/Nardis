@@ -7,7 +7,8 @@ import FooterSection from "../components/footer";
 import TestimonialsSection from "../components/testimonials";
 import ShopingByCategory from "../components/shopingByCategory";
 import CtaBullets from "../components/ctaBullets";
-import TrendingProduts from "../components/trendingProduts";
+// import TrendingProduts from "../components/trendingProduts";
+import NewProducts from "../components/newProducts";
 import NewsLetter from "../components/newsLetter";
 import PromoProduts from "../components/promoProducts";
 import PromoSection from "../components/promoSection";
@@ -18,7 +19,8 @@ export default function Home() {
       <StoreNavigation />
       <FeatureList />
       <PromoSection />
-      <TrendingProduts />
+      {/* <TrendingProduts /> */}
+      <NewProducts />
       <CtaBullets />
       <ShopingByCategory />
       <CtaQuality />
