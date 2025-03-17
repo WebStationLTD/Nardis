@@ -1,4 +1,7 @@
 import "../styles/globals.css";
+import StoreNavigation from "../components/storeNavigation";
+import FooterSection from "../components/footer";
+
 // import { Roboto } from "next/font/google";
 
 // const roboto = Roboto({
@@ -16,9 +19,13 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body 
+      <body
       // className={`${roboto.className} bg-[#ebedeb]`}
-      >{children}</body>
+      >
+        <StoreNavigation />
+        {children}
+        <FooterSection />
+      </body>
     </html>
   );
 }
