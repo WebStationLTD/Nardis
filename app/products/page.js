@@ -8,8 +8,6 @@ export default async function ProductsPage({ searchParams }) {
   const category = (await searchParams)?.category || "";
   const searchQuery = (await searchParams)?.search || "";
   const currentPage = Number((await searchParams)?.page) || 1;
-
-  // NEW
   const minPrice = Number((await searchParams)?.minPrice) || 0;
   let maxPrice = Number((await searchParams)?.maxPrice) || 10000;
 
@@ -20,7 +18,7 @@ export default async function ProductsPage({ searchParams }) {
     const response = await WooCommerce.get("products", {
       per_page: 12,
       page: currentPage,
-      category: category,
+      category,
       search: searchQuery,
       min_price: minPrice,
       max_price: maxPrice,
@@ -52,7 +50,6 @@ export default async function ProductsPage({ searchParams }) {
         <Suspense fallback={<p>Зареждане...</p>}>
           <ProductsList products={products} />
         </Suspense>
-        {/* Добавяме странициране */}
         <Pagination currentPage={currentPage} totalPages={totalPages} />
       </div>
     </div>

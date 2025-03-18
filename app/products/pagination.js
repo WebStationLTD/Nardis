@@ -11,7 +11,7 @@ export default function Pagination({ currentPage, totalPages }) {
 
     params.set("page", newPage);
 
-    router.push(`/products?${params.toString()}`);
+    router.replace(`/products?${params.toString()}`);
   };
 
   return (

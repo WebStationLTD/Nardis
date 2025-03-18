@@ -1,37 +1,24 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import { Range } from "react-range";
 import useDebounce from "../../hooks/useDebounce";
+import useProductsParams from "../../hooks/useProductsParams";
 
 export default function Filters({ maxPrice }) {
-  const router = useRouter();
-  const searchParams = useSearchParams();
+  const { getParam, getNumberParam, updateParams } = useProductsParams();
 
-  const [search, setSearch] = useState(searchParams.get("search") || "");
-  const [category, setCategory] = useState(searchParams.get("category") || "");
+  const [search, setSearch] = useState(getParam("search", ""));
+  const [category, setCategory] = useState(getParam("category", ""));
   const [categories, setCategories] = useState([]);
   const [priceRange, setPriceRange] = useState([
-    Number(searchParams.get("minPrice")) || 0,
-    Number(searchParams.get("maxPrice")) || maxPrice,
+    getNumberParam("minPrice", 0),
+    getNumberParam("maxPrice", maxPrice),
   ]);
 
   const debouncedSearch = useDebounce(search, 500);
   const debouncedPriceRange = useDebounce(priceRange, 300);
-
   const minDistance = 10;
-
-  useEffect(() => {
-    if (searchParams.get("search") !== debouncedSearch) {
-      setSearch(searchParams.get("search") || "");
-    }
-    setCategory(searchParams.get("category") || "");
-    setPriceRange([
-      Number(searchParams.get("minPrice")) || 0,
-      Number(searchParams.get("maxPrice")) || maxPrice,
-    ]);
-  }, [searchParams, maxPrice]);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -43,26 +30,24 @@ export default function Filters({ maxPrice }) {
         console.error("Грешка при зареждане на категориите:", error);
       }
     };
-
     fetchCategories();
   }, []);
 
   useEffect(() => {
-    const params = new URLSearchParams();
-
-    if (debouncedSearch) params.set("search", debouncedSearch);
-    if (category) params.set("category", category);
-    if (debouncedPriceRange[0] > 0)
-      params.set("minPrice", debouncedPriceRange[0]);
-    if (debouncedPriceRange[1] < maxPrice)
-      params.set("maxPrice", debouncedPriceRange[1]);
-
-    router.push(`/products?${params.toString()}`);
-  }, [debouncedSearch, category, debouncedPriceRange, router, maxPrice]);
+    updateParams(
+      {
+        search: debouncedSearch,
+        category,
+        minPrice: debouncedPriceRange[0] > 0 ? debouncedPriceRange[0] : "",
+        maxPrice:
+          debouncedPriceRange[1] < maxPrice ? debouncedPriceRange[1] : "",
+      },
+      true // 🔥 Нулира страницата при промяна на филтрите!
+    );
+  }, [debouncedSearch, category, debouncedPriceRange]);
 
   return (
     <div className="mb-6 flex flex-col gap-4">
-      {/* Търсачка */}
       <input
         type="text"
         value={search}
@@ -70,8 +55,6 @@ export default function Filters({ maxPrice }) {
         placeholder="Търси продукт..."
         className="border p-2 rounded-md w-full"
       />
-
-      {/* Категории */}
       <select
         value={category}
         onChange={(e) => setCategory(e.target.value)}
@@ -84,8 +67,6 @@ export default function Filters({ maxPrice }) {
           </option>
         ))}
       </select>
-
-      {/* Слайдер за цена */}
       <div className="flex flex-col">
         <label className="font-semibold">
           Цена: {priceRange[0]} лв - {priceRange[1]} лв
@@ -105,16 +86,13 @@ export default function Filters({ maxPrice }) {
               {children}
             </div>
           )}
-          renderThumb={({ props, index }) => {
-            const { key, ...restProps } = props;
-            return (
-              <div
-                key={index}
-                {...restProps}
-                className="w-4 h-4 bg-blue-500 rounded-full cursor-pointer"
-              />
-            );
-          }}
+          renderThumb={({ props }) => (
+            <div
+              {...props}
+              key={props.id || Math.random()}
+              className="w-4 h-4 bg-blue-500 rounded-full cursor-pointer"
+            />
+          )}
         />
       </div>
     </div>
