@@ -373,7 +373,7 @@ export default function Example() {
       <header className="relative bg-gray-800">
         <nav aria-label="Top" className="mx-auto w-full px-4 sm:px-6 lg:px-8">
           <div>
-            <div className="flex h-16 items-center justify-between grid grid-cols-3">
+            <div className="h-16 items-center justify-between grid grid-cols-3">
               <div className="flex flex-1 items-center lg:hidden">
                 <button
                   type="button"
