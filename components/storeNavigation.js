@@ -394,10 +394,10 @@ export default function Example() {
               </div>
 
               {/* Logo */}
-              <a href="/" className="flex">
+              <Link href="/" className="flex">
                 <span className="sr-only">Your Company</span>
                 <img alt="" src="/nardis-logo.svg" className="h-8 w-auto" />
-              </a>
+              </Link>
 
               {/* Flyout menus */}
               <PopoverGroup className="hidden lg:block mx-auto lg:flex-1 lg:self-stretch">
