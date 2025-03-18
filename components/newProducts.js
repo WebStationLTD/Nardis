@@ -33,28 +33,11 @@ const NewProducts = () => {
   }, []);
 
   return (
-    // <div className="container mx-auto py-8">
-    //   <h2 className="text-2xl font-bold mb-4">Нови продукти</h2>
-    //   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-    //     {products.map((product) => (
-    //       <div key={product.id} className="border p-4 rounded-lg">
-    //         <img
-    //           src={product.images[0]?.src}
-    //           alt={product.name}
-    //           className="w-full h-48 object-cover mb-4"
-    //         />
-    //         <h3 className="text-lg font-semibold">{product.name}</h3>
-    //         <p className="text-gray-500">{product.price} лв.</p>
-    //       </div>
-    //     ))}
-    //   </div>
-    // </div>
-
     <div className="bg-white">
       <div className="mx-auto max-w-2xl px-4 py-12 sm:px-6 sm:py-12 lg:max-w-7xl lg:px-8">
         <div className="md:flex md:items-center md:justify-between">
           <h2 className="text-2xl font-bold tracking-tight text-gray-900">
-            Топ продукти
+            Нови продукти
           </h2>
           <a
             href="#"
@@ -65,9 +48,12 @@ const NewProducts = () => {
           </a>
         </div>
 
-        <div className="mt-6 grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 md:grid-cols-4 md:gap-y-0 lg:gap-x-8">
+        <div className="mt-6 grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 md:grid-cols-3 lg:grid-cols-4 lg:gap-y-0 lg:gap-x-8">
           {products.map((product) => (
-            <div key={product.id} className="group relative">
+            <div
+              key={product.id}
+              className="group relative border-1 border-solid rounded-lg border-[#1e2939] py-4 px-4"
+            >
               <div className="h-56 w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75 lg:h-72 xl:h-80">
                 <img
                   src={product.images[0]?.src}
@@ -76,7 +62,7 @@ const NewProducts = () => {
                 />
               </div>
               <h3 className="mt-4 text-sm text-gray-700">
-                <a href={product.href}>
+                <a href={product.permalink}>
                   <span className="absolute inset-0" />
                   {product.name}
                 </a>

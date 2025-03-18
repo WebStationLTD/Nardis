@@ -9,6 +9,10 @@ export default async function ProductsPage({ searchParams }) {
   const searchQuery = (await searchParams)?.search || "";
   const currentPage = Number((await searchParams)?.page) || 1;
 
+  // NEW
+  const minPrice = Number((await searchParams)?.minPrice) || 0;
+  const maxPrice = Number((await searchParams)?.maxPrice) || 10000;
+
   let products = [];
   let totalPages = 1;
 
@@ -18,6 +22,8 @@ export default async function ProductsPage({ searchParams }) {
       page: currentPage,
       category: category,
       search: searchQuery,
+      min_price: minPrice,
+      max_price: maxPrice,
     });
 
     products = response.data;
