@@ -20,6 +20,8 @@ export default function Filters({ maxPrice }) {
   const debouncedSearch = useDebounce(search, 500);
   const debouncedPriceRange = useDebounce(priceRange, 300);
 
+  const minDistance = 10;
+
   useEffect(() => {
     if (searchParams.get("search") !== debouncedSearch) {
       setSearch(searchParams.get("search") || "");
@@ -91,9 +93,13 @@ export default function Filters({ maxPrice }) {
         <Range
           step={10}
           min={0}
-          max={maxPrice} // Получената максимална цена
+          max={maxPrice}
           values={priceRange}
-          onChange={setPriceRange} // Обновява state веднага
+          onChange={(values) => {
+            if (values[1] - values[0] >= minDistance) {
+              setPriceRange(values);
+            }
+          }}
           renderTrack={({ props, children }) => (
             <div {...props} className="h-2 bg-gray-300 rounded-md">
               {children}
