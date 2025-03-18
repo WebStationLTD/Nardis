@@ -86,13 +86,16 @@ export default function Filters({ maxPrice }) {
               {children}
             </div>
           )}
-          renderThumb={({ props }) => (
-            <div
-              {...props}
-              key={props.id || Math.random()}
-              className="w-4 h-4 bg-blue-500 rounded-full cursor-pointer"
-            />
-          )}
+          renderThumb={({ props, index }) => {
+            const { key, ...restProps } = props;
+            return (
+              <div
+                key={index}
+                {...restProps}
+                className="w-4 h-4 bg-blue-500 rounded-full cursor-pointer"
+              />
+            );
+          }}
         />
       </div>
     </div>
