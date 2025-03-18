@@ -1,5 +1,6 @@
 import WooCommerce from "../../../lib/woocomerce";
 import RelatedProducts from "@/components/relatedProducts";
+import Image from "next/image";
 
 import {
   Disclosure,
@@ -45,8 +46,8 @@ export default async function ProductDetails({ params }) {
           {/* Image gallery */}
           <TabGroup className="flex flex-col-reverse">
             {/* Image selector */}
-            <div className="mx-auto mt-6 hidden w-full max-w-2xl sm:block lg:max-w-none">
-              <TabList className="grid grid-cols-4 gap-6">
+            <div className="mx-auto mt-6 w-full max-w-2xl block lg:max-w-none">
+              <TabList className="grid grid-cols-3 gap-6">
                 {product.images.map((image) => (
                   <Tab
                     key={image.id}
@@ -54,7 +55,18 @@ export default async function ProductDetails({ params }) {
                   >
                     <span className="sr-only">{image.name}</span>
                     <span className="absolute inset-0 overflow-hidden rounded-md">
-                      <img
+                      {/* <img
+                        alt={image.alt}
+                        src={image.src}
+                        className="size-full object-cover"
+                      /> */}
+                      <Image
+                        width={200}
+                        height={200}
+                        priority
+                        fetchPriority="high"
+                        loading="eager"
+                        quality={100}
                         alt={image.alt}
                         src={image.src}
                         className="size-full object-cover"
@@ -72,10 +84,21 @@ export default async function ProductDetails({ params }) {
             <TabPanels>
               {product.images.map((image) => (
                 <TabPanel key={image.id}>
-                  <img
+                  {/* <img
                     alt={image.alt}
                     src={image.src}
                     className="aspect-square w-full object-cover sm:rounded-lg"
+                  /> */}
+                  <Image
+                    width={800}
+                    height={800}
+                    priority
+                    fetchPriority="high"
+                    loading="eager"
+                    quality={100}
+                    alt={image.alt}
+                    src={image.src}
+                    className="object-cover lg:aspect-auto lg:size-full"
                   />
                 </TabPanel>
               ))}

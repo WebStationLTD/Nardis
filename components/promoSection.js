@@ -10,9 +10,9 @@ export default function Example() {
             <h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl">
               Nardis
             </h1>
-            <quote className="text-4xl text-white">
+            <p className="text-4xl text-white">
               Когато красотата срещне съвършенството
-            </quote>
+            </p>
             <p className="mt-4 text-xl text-white">
               Вдъхновени от природата, усъвършенствани от науката – твоята кожа
               заслужава най-доброто.
