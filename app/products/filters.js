@@ -90,6 +90,7 @@ export default function Filters() {
   ]);
 
   const debouncedSearch = useDebounce(search, 300);
+  const debouncedPriceRange = useDebounce(priceRange, 300);
 
   useEffect(() => {
     setSearch(searchParams.get("search") || "");
@@ -119,11 +120,13 @@ export default function Filters() {
 
     if (debouncedSearch) params.set("search", debouncedSearch);
     if (category) params.set("category", category);
-    if (priceRange[0] > 0) params.set("minPrice", priceRange[0]);
-    if (priceRange[1] < 10000) params.set("maxPrice", priceRange[1]);
+    if (debouncedPriceRange[0] > 0)
+      params.set("minPrice", debouncedPriceRange[0]);
+    if (debouncedPriceRange[1] < 10000)
+      params.set("maxPrice", debouncedPriceRange[1]);
 
     router.push(`/products?${params.toString()}`);
-  }, [debouncedSearch, category, priceRange, router]);
+  }, [debouncedSearch, category, debouncedPriceRange, router]);
 
   return (
     <div className="mb-6 flex flex-col gap-4">
@@ -160,19 +163,18 @@ export default function Filters() {
           min={0}
           max={10000}
           values={priceRange}
-          onChange={(values) => setPriceRange(values)}
+          onChange={setPriceRange}
           renderTrack={({ props, children }) => (
             <div {...props} className="h-2 bg-gray-300 rounded-md">
               {children}
             </div>
           )}
           renderThumb={({ props, index }) => {
-            // Извличаме key, за да не се предава през {...props}
             const { key, ...restProps } = props;
             return (
               <div
-                key={index} // Използваме index за уникален ключ
-                {...restProps} // Всички останали пропс
+                key={index}
+                {...restProps}
                 className="w-4 h-4 bg-blue-500 rounded-full cursor-pointer"
               />
             );
