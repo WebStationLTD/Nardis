@@ -63,9 +63,6 @@ export default async function ProductDetails({ params }) {
                       <Image
                         width={200}
                         height={200}
-                        priority
-                        fetchPriority="high"
-                        loading="eager"
                         quality={100}
                         alt={image.alt}
                         src={image.src}
