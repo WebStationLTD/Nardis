@@ -396,7 +396,7 @@ export default function Example() {
               {/* Logo */}
               <a href="#" className="flex">
                 <span className="sr-only">Your Company</span>
-                <img alt="" src="./nardis-logo.svg" className="h-8 w-auto" />
+                <img alt="" src="/nardis-logo.svg" className="h-8 w-auto" />
               </a>
 
               {/* Flyout menus */}
