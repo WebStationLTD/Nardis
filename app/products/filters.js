@@ -1,75 +1,3 @@
-// "use client";
-
-// import { useRouter, useSearchParams } from "next/navigation";
-// import { useState, useEffect } from "react";
-// import useDebounce from "../../hooks/useDebounce";
-
-// export default function Filters() {
-//   const router = useRouter();
-//   const searchParams = useSearchParams();
-
-//   const [search, setSearch] = useState(searchParams.get("search") || "");
-//   const [category, setCategory] = useState(searchParams.get("category") || "");
-//   const [categories, setCategories] = useState([]);
-
-//   const debouncedSearch = useDebounce(search, 300);
-
-//   useEffect(() => {
-//     setSearch(searchParams.get("search") || "");
-//     setCategory(searchParams.get("category") || "");
-//   }, [searchParams]);
-
-//   useEffect(() => {
-//     const fetchCategories = async () => {
-//       try {
-//         const res = await fetch("/api/categories");
-//         const data = await res.json();
-//         setCategories(data);
-//       } catch (error) {
-//         console.error("Грешка при зареждане на категориите:", error);
-//       }
-//     };
-
-//     fetchCategories();
-//   }, []);
-
-//   useEffect(() => {
-//     const params = new URLSearchParams();
-
-//     if (debouncedSearch) params.set("search", debouncedSearch);
-//     if (category) params.set("category", category);
-
-//     router.push(`/products?${params.toString()}`);
-//   }, [debouncedSearch, category, router]);
-
-//   return (
-//     <div className="mb-6 flex gap-4">
-//       {/* Търсачка */}
-//       <input
-//         type="text"
-//         value={search}
-//         onChange={(e) => setSearch(e.target.value)}
-//         placeholder="Търси продукт..."
-//         className="border p-2 rounded-md w-full"
-//       />
-
-//       {/* Категории (динамично заредени) */}
-//       <select
-//         value={category}
-//         onChange={(e) => setCategory(e.target.value)}
-//         className="border p-2 rounded-md"
-//       >
-//         <option value="">Всички категории</option>
-//         {categories.map((cat) => (
-//           <option key={cat.id} value={cat.id}>
-//             {cat.name}
-//           </option>
-//         ))}
-//       </select>
-//     </div>
-//   );
-// }
-
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
@@ -77,7 +5,7 @@ import { useState, useEffect } from "react";
 import { Range } from "react-range";
 import useDebounce from "../../hooks/useDebounce";
 
-export default function Filters() {
+export default function Filters({ maxPrice }) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -86,20 +14,22 @@ export default function Filters() {
   const [categories, setCategories] = useState([]);
   const [priceRange, setPriceRange] = useState([
     Number(searchParams.get("minPrice")) || 0,
-    Number(searchParams.get("maxPrice")) || 10000,
+    Number(searchParams.get("maxPrice")) || maxPrice,
   ]);
 
-  const debouncedSearch = useDebounce(search, 300);
+  const debouncedSearch = useDebounce(search, 500);
   const debouncedPriceRange = useDebounce(priceRange, 300);
 
   useEffect(() => {
-    setSearch(searchParams.get("search") || "");
+    if (searchParams.get("search") !== debouncedSearch) {
+      setSearch(searchParams.get("search") || "");
+    }
     setCategory(searchParams.get("category") || "");
     setPriceRange([
       Number(searchParams.get("minPrice")) || 0,
-      Number(searchParams.get("maxPrice")) || 10000,
+      Number(searchParams.get("maxPrice")) || maxPrice,
     ]);
-  }, [searchParams]);
+  }, [searchParams, maxPrice]);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -122,11 +52,11 @@ export default function Filters() {
     if (category) params.set("category", category);
     if (debouncedPriceRange[0] > 0)
       params.set("minPrice", debouncedPriceRange[0]);
-    if (debouncedPriceRange[1] < 10000)
+    if (debouncedPriceRange[1] < maxPrice)
       params.set("maxPrice", debouncedPriceRange[1]);
 
     router.push(`/products?${params.toString()}`);
-  }, [debouncedSearch, category, debouncedPriceRange, router]);
+  }, [debouncedSearch, category, debouncedPriceRange, router, maxPrice]);
 
   return (
     <div className="mb-6 flex flex-col gap-4">
@@ -161,9 +91,9 @@ export default function Filters() {
         <Range
           step={10}
           min={0}
-          max={10000}
+          max={maxPrice} // Получената максимална цена
           values={priceRange}
-          onChange={setPriceRange}
+          onChange={setPriceRange} // Обновява state веднага
           renderTrack={({ props, children }) => (
             <div {...props} className="h-2 bg-gray-300 rounded-md">
               {children}

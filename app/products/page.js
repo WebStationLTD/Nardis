@@ -11,7 +11,7 @@ export default async function ProductsPage({ searchParams }) {
 
   // NEW
   const minPrice = Number((await searchParams)?.minPrice) || 0;
-  const maxPrice = Number((await searchParams)?.maxPrice) || 10000;
+  let maxPrice = Number((await searchParams)?.maxPrice) || 10000;
 
   let products = [];
   let totalPages = 1;
@@ -28,6 +28,16 @@ export default async function ProductsPage({ searchParams }) {
 
     products = response.data;
     totalPages = Number(response.headers["x-wp-totalpages"]) || 1;
+
+    const maxPriceResponse = await WooCommerce.get("products", {
+      per_page: 1,
+      orderby: "price",
+      order: "desc",
+      fields: "id,price",
+    });
+
+    maxPrice =
+      Math.ceil(Number(maxPriceResponse.data[0]?.price) / 10) * 10 || 10000;
   } catch (error) {
     console.error("Грешка при зареждане на продуктите:", error);
   }
@@ -38,7 +48,7 @@ export default async function ProductsPage({ searchParams }) {
         <h2 className="text-2xl font-bold tracking-tight text-gray-900">
           Нашите продукти
         </h2>
-        <Filters />
+        <Filters maxPrice={maxPrice} />
         <Suspense fallback={<p>Зареждане...</p>}>
           <ProductsList products={products} />
         </Suspense>
