@@ -1,36 +1,20 @@
-"use client";
+import Link from "next/link";
+import WooCommerce from "../lib/woocomerce";
 
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+const NewProducts = async () => {
+  let products = [];
 
-const NewProducts = () => {
-  const [products, setProducts] = useState([]);
+  try {
+    const response = await WooCommerce.get("products", {
+      per_page: 4,
+      orderby: "date",
+      order: "desc",
+    });
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await axios.get(
-          "https://nardis.rosset.website/wp-json/wc/v3/products",
-          {
-            params: {
-              per_page: 4, // Брой продукти за показване
-              orderby: "date",
-              order: "desc",
-            },
-            auth: {
-              username: "ck_a3f22ab2da4a3e114acd36558674460e5180c8cf", // Заменете с вашия Consumer Key
-              password: "cs_842ebafd31673fdf7468a64c2a3da3debe477cfc", // Заменете с вашия Consumer Secret
-            },
-          }
-        );
-        setProducts(response.data);
-      } catch (error) {
-        console.error("Грешка при извличане на продуктите:", error);
-      }
-    };
-
-    fetchProducts();
-  }, []);
+    products = response.data;
+  } catch (error) {
+    console.error("Грешка при извличане на новите продукти:", error);
+  }
 
   return (
     <div className="bg-white">
@@ -43,8 +27,7 @@ const NewProducts = () => {
             href="#"
             className="hidden text-base font-medium text-[#b3438f] hover:text-black md:block"
           >
-            Вижте всички
-            <span aria-hidden="true"> &rarr;</span>
+            Вижте всички <span aria-hidden="true"> &rarr;</span>
           </a>
         </div>
 
@@ -62,14 +45,13 @@ const NewProducts = () => {
                 />
               </div>
               <h3 className="mt-4 text-sm text-gray-700">
-                <a href={product.permalink}>
+                <Link href={`/products/${product.slug}`}>
                   <span className="absolute inset-0" />
                   {product.name}
-                </a>
+                </Link>
               </h3>
-              <p className="mt-1 text-sm text-gray-500">{product.color}</p>
               <p className="mt-1 text-sm font-medium text-gray-900">
-                {product.price}
+                {product.price} лв.
               </p>
             </div>
           ))}
@@ -80,8 +62,7 @@ const NewProducts = () => {
             href="#"
             className="text-base font-medium text-[#b3438f] hover:text-black"
           >
-            Вижте всички
-            <span aria-hidden="true"> &rarr;</span>
+            Вижте всички <span aria-hidden="true"> &rarr;</span>
           </a>
         </div>
       </div>
