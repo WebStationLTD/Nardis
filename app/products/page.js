@@ -22,6 +22,8 @@ export default async function ProductsPage({ searchParams }) {
       search: searchQuery,
       min_price: minPrice,
       max_price: maxPrice,
+      _fields:
+        "id,name,images,slug,sale_price,regular_price",
     });
 
     products = response.data;
@@ -31,7 +33,7 @@ export default async function ProductsPage({ searchParams }) {
       per_page: 1,
       orderby: "price",
       order: "desc",
-      fields: "id,price",
+      _fields: "id,price",
     });
 
     maxPrice =

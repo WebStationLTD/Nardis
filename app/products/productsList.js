@@ -1,5 +1,6 @@
-"use client"
+"use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 
@@ -34,16 +35,30 @@ export default function ProductsList({ products }) {
             key={product.id}
             href={`/products/${product.slug}`}
             className="group"
+            prefetch={true}
           >
-            <img
+            <Image
+              width={280}
+              height={320}
               alt={product.name}
-              src={product.images?.[0]?.src || "/placeholder.jpg"}
+              src={product.images?.[0]?.src || "/placeholder.webp"}
               className="aspect-square w-full rounded-lg bg-gray-200 object-cover group-hover:opacity-75 xl:aspect-7/8"
             />
             <h3 className="mt-4 text-sm text-gray-700">{product.name}</h3>
-            <p className="mt-1 text-lg font-medium text-gray-900">
-              {product.price} {product.currency || "лв."}
-            </p>
+            {product.sale_price ? (
+              <div className="flex items-center gap-2">
+                <p className="text-sm font-medium text-gray-500 line-through">
+                  {product.regular_price} лв.
+                </p>
+                <p className="text-lg font-bold text-gray-900">
+                  {product.sale_price} лв.
+                </p>
+              </div>
+            ) : (
+              <p className="mt-1 text-lg font-medium text-gray-900">
+                {product.regular_price} лв.
+              </p>
+            )}
           </Link>
         ))
       ) : (

@@ -42,7 +42,7 @@ export default function Filters({ maxPrice }) {
         maxPrice:
           debouncedPriceRange[1] < maxPrice ? debouncedPriceRange[1] : "",
       },
-      true // 🔥 Нулира страницата при промяна на филтрите!
+      true
     );
   }, [debouncedSearch, category, debouncedPriceRange]);
 
