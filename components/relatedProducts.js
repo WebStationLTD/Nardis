@@ -27,7 +27,7 @@ const RelatedProducts = async ({ relatedIds }) => {
           <Link href={`/products/${product.slug}`}>
             <div className="relative w-full h-56 overflow-hidden rounded-md">
               <Image
-                src={product.images[0]?.src || "/placeholder.jpg"}
+                src={product.images[0]?.src || "/placeholder.webp"}
                 alt={product.name}
                 width={200}
                 height={200}
