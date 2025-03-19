@@ -1,6 +1,7 @@
 import WooCommerce from "../../../lib/woocomerce";
 import RelatedProducts from "@/components/relatedProducts";
 import Image from "next/image";
+import WishlistButton from "@/components/wishlistButton"; // Import client component
 
 import {
   Disclosure,
@@ -37,8 +38,6 @@ export default async function ProductDetails({ params }) {
     );
   }
 
-  console.log(product);
-
   return (
     <div className="mx-auto max-w-7xl sm:px-6 sm:pt-16 lg:px-8">
       <div className="mx-auto max-w-2xl lg:max-w-none">
@@ -55,11 +54,6 @@ export default async function ProductDetails({ params }) {
                   >
                     <span className="sr-only">{image.name}</span>
                     <span className="absolute inset-0 overflow-hidden rounded-md">
-                      {/* <img
-                        alt={image.alt}
-                        src={image.src}
-                        className="size-full object-cover"
-                      /> */}
                       <Image
                         width={200}
                         height={200}
@@ -81,11 +75,6 @@ export default async function ProductDetails({ params }) {
             <TabPanels>
               {product.images.map((image) => (
                 <TabPanel key={image.id}>
-                  {/* <img
-                    alt={image.alt}
-                    src={image.src}
-                    className="aspect-square w-full object-cover sm:rounded-lg"
-                  /> */}
                   <Image
                     width={800}
                     height={800}
@@ -196,14 +185,7 @@ export default async function ProductDetails({ params }) {
                 >
                   Add to bag
                 </button>
-
-                <button
-                  type="button"
-                  className="ml-4 flex items-center justify-center rounded-md px-3 py-3 text-gray-400 hover:bg-gray-100 hover:text-gray-500"
-                >
-                  <HeartIcon aria-hidden="true" className="size-6 shrink-0" />
-                  <span className="sr-only">Add to favorites</span>
-                </button>
+                <WishlistButton productId={product.id} />
               </div>
             </form>
           </div>
