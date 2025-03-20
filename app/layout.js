@@ -5,7 +5,7 @@ import FooterSection from "../components/footer";
 import { Roboto } from "next/font/google";
 
 const roboto = Roboto({
-  subsets: ["cyrilic"],
+  subsets: ["cyrillic"],
 });
 
 export const metadata = {
