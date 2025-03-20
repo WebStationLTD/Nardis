@@ -7,6 +7,7 @@ import { Roboto } from "next/font/google";
 const roboto = Roboto({
   subsets: ["cyrillic"],
   variable: "--font-roboto",
+  display: "swap",
 });
 
 export const metadata = {
