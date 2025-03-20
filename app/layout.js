@@ -2,7 +2,7 @@ import "../styles/globals.css";
 import StoreNavigation from "../components/storeNavigation";
 import FooterSection from "../components/footer";
 
-import { Roboto } from "@next/font/google";
+import { Roboto } from "next/font/google";
 
 const roboto = Roboto({
   subsets: ["cyrillic"],
