@@ -2,7 +2,7 @@ import "../styles/globals.css";
 import StoreNavigation from "../components/storeNavigation";
 import FooterSection from "../components/footer";
 
-import { Roboto } from "next/font/google";
+import { Roboto } from "@next/font/google";
 
 const roboto = Roboto({
   subsets: ["cyrillic"],
@@ -17,7 +17,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={"${roboto.variable}"}>
+      <body className={roboto.className}>
         <StoreNavigation />
         {children}
         <FooterSection />
