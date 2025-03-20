@@ -11,7 +11,7 @@ import NewsLetter from "../components/newsLetter";
 import PromoProduts from "../components/promoProducts";
 import PromoSection from "../components/promoSection";
 
-export default function Home() {  
+export default function Home() {
   return (
     <>
       <FeatureList />
