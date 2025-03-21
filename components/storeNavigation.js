@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 
 import { Fragment, useState } from "react";
 import {
@@ -398,8 +399,14 @@ export default function Example() {
 
               {/* Logo */}
               <Link href="/" className="flex max-w-[150px]">
-                <span className="sr-only">Nardis</span>
-                <img alt="" src="/nardis-logo.svg" className="h-8 w-auto" />
+                <span className="sr-only">Nardis.bg</span>
+                <Image
+                  width={147}
+                  height={32}
+                  alt="Nardis.bg"
+                  src="/nardis-logo.svg"
+                  className="h-8 w-auto"
+                />
               </Link>
 
               {/* Flyout menus */}
