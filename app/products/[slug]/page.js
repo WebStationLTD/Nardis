@@ -54,11 +54,12 @@ export default async function ProductDetails({ params }) {
                   >
                     <span className="sr-only">{image.name}</span>
                     <span className="absolute inset-0 overflow-hidden rounded-md">
-                      <img
-                        src={image.src}
+                      <Image
+                        width={200}
+                        height={200}
+                        quality={100}
                         alt={image.alt}
-                        width="200"
-                        height="200"
+                        src={image.src}
                         className="size-full object-cover"
                       />
                     </span>
@@ -74,13 +75,15 @@ export default async function ProductDetails({ params }) {
             <TabPanels>
               {product.images.map((image) => (
                 <TabPanel key={image.id}>
-                  <img
-                    src={image.src}
-                    alt={image.alt}
-                    width="800"
-                    height="800"
+                  <Image
+                    width={800}
+                    height={800}
+                    priority
+                    fetchPriority="high"
                     loading="eager"
-                    fetchpriority="high"
+                    quality={100}
+                    alt={image.alt}
+                    src={image.src}
                     className="object-cover lg:aspect-auto lg:size-full"
                   />
                 </TabPanel>
