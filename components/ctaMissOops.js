@@ -21,7 +21,6 @@ export default function Example() {
           <Image
             width={415}
             height={300}
-            priority
             alt="Miss Oops"
             src="/missoops.jpg"
             className="rounded-2xl object-cover"
