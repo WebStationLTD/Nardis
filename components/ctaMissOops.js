@@ -22,7 +22,7 @@ export default function Example() {
             width={415}
             height={300}
             alt="Miss Oops"
-            src="/missoops.jpg"
+            src="https://nardis.rosset.website/wp-content/uploads/2025/03/missoops.jpg"
             className="rounded-2xl object-cover"
           />
         </div>
