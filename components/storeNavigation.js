@@ -218,6 +218,7 @@ const navigation = {
   pages: [
     { name: "Company", href: "#" },
     { name: "Stores", href: "#" },
+    { name: "Shop", href: "/products" },
   ],
 };
 
@@ -396,8 +397,8 @@ export default function Example() {
               </div>
 
               {/* Logo */}
-              <Link href="/" className="flex">
-                <span className="sr-only">Your Company</span>
+              <Link href="/" className="flex max-w-[150px]">
+                <span className="sr-only">Nardis</span>
                 <img alt="" src="/nardis-logo.svg" className="h-8 w-auto" />
               </Link>
 

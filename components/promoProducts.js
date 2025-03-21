@@ -46,7 +46,7 @@ const PromoProducts = async () => {
                 />
               </div>
               <h3 className="mt-4 text-sm text-gray-700">
-                <Link href={`/products/${product.slug}`}>
+                <Link href={`/products/${product.slug}`} prefetch={true}>
                   <span className="absolute inset-0" />
                   {product.name}
                 </Link>
