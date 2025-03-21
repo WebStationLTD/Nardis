@@ -20,11 +20,11 @@ export default function Example() {
                 </p>
               </blockquote>
               <figcaption className="mt-10 flex items-center gap-x-6">
-                <img
+                {/* <img
                   alt=""
                   src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                   className="size-14 rounded-full bg-gray-50"
-                />
+                /> */}
                 <div className="text-base">
                   <div className="font-semibold text-gray-900">
                     Judith Black
@@ -50,11 +50,11 @@ export default function Example() {
                 </p>
               </blockquote>
               <figcaption className="mt-10 flex items-center gap-x-6">
-                <img
+                {/* <img
                   alt=""
                   src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                   className="size-14 rounded-full bg-gray-50"
-                />
+                /> */}
                 <div className="text-base">
                   <div className="font-semibold text-gray-900">
                     Joseph Rodriguez

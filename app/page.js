@@ -5,7 +5,6 @@ import FeatureList from "../components/featureList";
 import TestimonialsSection from "../components/testimonials";
 import ShopingByCategory from "../components/shopingByCategory";
 import CtaBullets from "../components/ctaBullets";
-// import TrendingProduts from "../components/trendingProduts";
 import NewProducts from "../components/newProducts";
 import NewsLetter from "../components/newsLetter";
 import PromoProduts from "../components/promoProducts";
@@ -16,7 +15,6 @@ export default function Home() {
     <>
       <FeatureList />
       <PromoSection />
-      {/* <TrendingProduts /> */}
       <NewProducts />
       <CtaBullets />
       <ShopingByCategory />
