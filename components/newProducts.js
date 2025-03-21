@@ -41,7 +41,7 @@ const NewProducts = async () => {
                 <img
                   src={product.images[0]?.src}
                   alt={product.name}
-                  className="size-full object-cover"
+                  className="size-full object-cover transition-transform duration-300 group-hover:scale-105"
                 />
               </div>
               <h3 className="mt-4 text-sm text-gray-700">
@@ -50,7 +50,7 @@ const NewProducts = async () => {
                   {product.name}
                 </Link>
               </h3>
-              <p className="mt-1 text-sm font-medium text-gray-900">
+              <p className="mt-1 text-lg font-medium text-gray-900">
                 {product.price} лв.
               </p>
             </div>

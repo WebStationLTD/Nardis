@@ -22,8 +22,7 @@ export default async function ProductsPage({ searchParams }) {
       search: searchQuery,
       min_price: minPrice,
       max_price: maxPrice,
-      _fields:
-        "id,name,images,slug,sale_price,regular_price",
+      _fields: "id,name,images,slug,sale_price,regular_price",
     });
 
     products = response.data;
@@ -44,15 +43,23 @@ export default async function ProductsPage({ searchParams }) {
 
   return (
     <div className="bg-white">
-      <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
-        <h2 className="text-2xl font-bold tracking-tight text-gray-900">
-          Нашите продукти
+      <div className="mx-auto max-w-2xl px-4 py-12 sm:px-6 lg:max-w-7xl lg:px-8">
+        <h2 className="text-2xl font-bold tracking-tight text-gray-900 mb-6">
+          Филтри
         </h2>
-        <Filters maxPrice={maxPrice} />
-        <Suspense fallback={<p>Зареждане...</p>}>
-          <ProductsList products={products} />
-        </Suspense>
-        <Pagination currentPage={currentPage} totalPages={totalPages} />
+
+        <div className="grid grid-cols-1 lg:grid-cols-[15%_85%] gap-4">
+          <div>
+            <Filters maxPrice={maxPrice} />
+          </div>
+
+          <div>
+            <Suspense fallback={<p>Зареждане...</p>}>
+              <ProductsList products={products} />
+            </Suspense>
+            <Pagination currentPage={currentPage} totalPages={totalPages} />
+          </div>
+        </div>
       </div>
     </div>
   );
