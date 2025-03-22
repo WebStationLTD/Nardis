@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import WooCommerce from "../lib/woocomerce";
+import { getRelatedProducts } from "@/services/productService";
 
 const RelatedProducts = async ({ relatedIds }) => {
   let relatedProducts = [];
@@ -10,12 +10,7 @@ const RelatedProducts = async ({ relatedIds }) => {
   }
 
   try {
-    const response = await WooCommerce.get("products", {
-      include: relatedIds.join(","), // Fetch specific related products
-      per_page: 4
-    });
-
-    relatedProducts = response.data;
+    relatedProducts = await getRelatedProducts(relatedIds, 4);
   } catch (error) {
     console.error("Грешка при извличане на подобни продукти:", error);
   }

@@ -1,17 +1,17 @@
 import Link from "next/link";
-import WooCommerce from "../lib/woocomerce";
+import { getProducts } from "@/services/productService";
 
 const NewProducts = async () => {
   let products = [];
 
   try {
-    const response = await WooCommerce.get("products", {
-      per_page: 4,
-      orderby: "date",
-      order: "desc",
+    const result = await getProducts({
+      perPage: 4,
+      orderBy: "date",
+      order: "desc"
     });
 
-    products = response.data;
+    products = result.products;
   } catch (error) {
     console.error("Грешка при извличане на новите продукти:", error);
   }

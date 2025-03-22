@@ -1,18 +1,18 @@
 import Link from "next/link";
-import WooCommerce from "../lib/woocomerce";
+import { getProducts } from "@/services/productService";
 
 const PromoProducts = async () => {
   let products = [];
 
   try {
-    const response = await WooCommerce.get("products", {
-      per_page: 4,
-      orderby: "date",
+    const result = await getProducts({
+      perPage: 4,
+      orderBy: "date",
       order: "desc",
-      on_sale: true,
+      onSale: true
     });
 
-    products = response.data;
+    products = result.products;
   } catch (error) {
     console.error("Грешка при извличане на продуктите:", error);
   }

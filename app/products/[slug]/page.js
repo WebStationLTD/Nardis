@@ -1,4 +1,4 @@
-import WooCommerce from "../../../lib/woocomerce";
+import { getProduct } from "@/services/productService";
 import RelatedProducts from "@/components/relatedProducts";
 import Image from "next/image";
 import WishlistButton from "@/components/wishlistButton"; // Import client component
@@ -23,11 +23,7 @@ export default async function ProductDetails({ params }) {
   let product = null;
 
   try {
-    const response = await WooCommerce.get("products", {
-      slug: slug,
-    });
-
-    product = response.data.length > 0 ? response.data[0] : null;
+    product = await getProduct(slug, true); // true indicates search by slug
   } catch (error) {
     console.error("Грешка при извличане на продукта:", error);
   }

@@ -1,4 +1,4 @@
-import WooCommerce from "@/lib/woocomerce";
+import { getProductsByIds } from "@/services/productService";
 
 export async function POST(req) {
   try {
@@ -14,19 +14,17 @@ export async function POST(req) {
       );
     }
 
-    const response = await WooCommerce.get("products", {
-      include: productIds.join(","),
-    });
+    const products = await getProductsByIds(productIds);
 
-    if (!response || !response.data) {
-      console.error("Invalid WooCommerce response:", response);
+    if (!products) {
+      console.error("Invalid response while fetching products");
       return Response.json(
         { message: "Invalid response from WooCommerce" },
         { status: 500 }
       );
     }
 
-    return Response.json(response.data, { status: 200 });
+    return Response.json(products, { status: 200 });
   } catch (error) {
     console.error("Error fetching wishlist products:", error);
     return Response.json({ message: "Internal Server Error" }, { status: 500 });

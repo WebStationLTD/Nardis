@@ -1,4 +1,4 @@
-import WooCommerce from "../../lib/woocomerce";
+import { getProducts, getMaxProductPrice } from "@/services/productService";
 import { Suspense } from "react";
 import ProductsList from "./productsList";
 import Filters from "./filters";
@@ -15,28 +15,21 @@ export default async function ProductsPage({ searchParams }) {
   let totalPages = 1;
 
   try {
-    const response = await WooCommerce.get("products", {
-      per_page: 12,
+    const result = await getProducts({
+      perPage: 12,
       page: currentPage,
       category,
       search: searchQuery,
-      min_price: minPrice,
-      max_price: maxPrice,
-      _fields: "id,name,images,slug,sale_price,regular_price",
+      minPrice,
+      maxPrice,
+      fields: "id,name,images,slug,sale_price,regular_price"
     });
 
-    products = response.data;
-    totalPages = Number(response.headers["x-wp-totalpages"]) || 1;
+    products = result.products;
+    totalPages = result.totalPages;
 
-    const maxPriceResponse = await WooCommerce.get("products", {
-      per_page: 1,
-      orderby: "price",
-      order: "desc",
-      _fields: "id,price",
-    });
-
-    maxPrice =
-      Math.ceil(Number(maxPriceResponse.data[0]?.price) / 10) * 10 || 10000;
+    // Get max price for the price filter component
+    maxPrice = await getMaxProductPrice();
   } catch (error) {
     console.error("Грешка при зареждане на продуктите:", error);
   }
