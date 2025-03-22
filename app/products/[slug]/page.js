@@ -1,7 +1,7 @@
 import { getProduct } from "@/services/productService";
 import RelatedProducts from "@/components/relatedProducts";
 import Image from "next/image";
-import WishlistButton from "@/components/wishlistButton"; // Import client component
+import WishlistButton from "@/components/wishlistButton";
 
 import {
   Disclosure,
@@ -15,7 +15,7 @@ import {
   TabPanel,
   TabPanels,
 } from "@headlessui/react";
-import { HeartIcon, MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
+import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 import { StarIcon } from "@heroicons/react/20/solid";
 
 export default async function ProductDetails({ params }) {
@@ -179,9 +179,11 @@ export default async function ProductDetails({ params }) {
                   type="submit"
                   className="flex max-w-xs flex-1 items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50 focus:outline-hidden sm:w-full"
                 >
-                  Add to bag
+                  Добави в количката
                 </button>
-                <WishlistButton productId={product.id} />
+                <span>
+                  <WishlistButton productId={product.id} className="ml-4" />
+                </span>
               </div>
             </form>
           </div>
@@ -192,7 +194,7 @@ export default async function ProductDetails({ params }) {
           className="mt-10 border-t border-gray-200 px-4 py-16 sm:px-0"
         >
           <h2 id="related-heading" className="text-xl font-bold text-gray-900">
-            Customers also bought
+            Подобни продукти
           </h2>
 
           <RelatedProducts relatedIds={product.related_ids} />
