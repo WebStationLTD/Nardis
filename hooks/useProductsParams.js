@@ -19,7 +19,20 @@ export default function useProductsParams() {
   // Актуализира параметрите + Нулира страницата при промяна на филтрите
   const updateParams = (newParams, resetPage = false) => {
     const params = new URLSearchParams(searchParams.toString());
+    let hasFilterChange = false;
 
+    // Check if there's an actual change in filter values
+    Object.entries(newParams).forEach(([key, value]) => {
+      if (key !== 'page') {
+        const currentValue = params.get(key);
+        // If the value is different, mark as filter change
+        if (String(currentValue) !== String(value)) {
+          hasFilterChange = true;
+        }
+      }
+    });
+
+    // Apply all parameter updates
     Object.entries(newParams).forEach(([key, value]) => {
       if (value) {
         params.set(key, value);
@@ -28,8 +41,8 @@ export default function useProductsParams() {
       }
     });
 
-    // Ако трябва да нулираме страницата (напр. при нов филтър)
-    if (resetPage) {
+    // Reset page only if explicitly requested AND there's a filter change
+    if (resetPage && hasFilterChange) {
       params.delete("page");
     }
 

@@ -7,10 +7,18 @@ export default function Pagination({ currentPage, totalPages }) {
   const searchParams = useSearchParams();
 
   const handlePageChange = (newPage) => {
+    // Create a new params object from current URL params
     const params = new URLSearchParams(searchParams.toString());
+    
+    // Update or add the page parameter
+    if (newPage === 1) {
+      // Remove page parameter if it's page 1 (cleaner URLs)
+      params.delete("page");
+    } else {
+      params.set("page", newPage);
+    }
 
-    params.set("page", newPage);
-
+    // Navigate to the new URL, preserving all other filter parameters
     router.replace(`/products?${params.toString()}`);
   };
 

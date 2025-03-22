@@ -34,6 +34,17 @@ export default function Filters({ maxPrice }) {
   }, []);
 
   useEffect(() => {
+    const initialSearch = getParam("search", "");
+    const initialCategory = getParam("category", "");
+    const initialMinPrice = getNumberParam("minPrice", 0);
+    const initialMaxPrice = getNumberParam("maxPrice", maxPrice);
+
+    const hasChanges = 
+      debouncedSearch !== initialSearch || 
+      category !== initialCategory || 
+      debouncedPriceRange[0] !== initialMinPrice || 
+      debouncedPriceRange[1] !== initialMaxPrice;
+
     updateParams(
       {
         search: debouncedSearch,
@@ -42,9 +53,9 @@ export default function Filters({ maxPrice }) {
         maxPrice:
           debouncedPriceRange[1] < maxPrice ? debouncedPriceRange[1] : "",
       },
-      true
+      hasChanges
     );
-  }, [debouncedSearch, category, debouncedPriceRange]);
+  }, [debouncedSearch, category, debouncedPriceRange, maxPrice]);
 
   return (
     <div className="mb-6 flex flex-col gap-4">
