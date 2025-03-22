@@ -26,17 +26,17 @@ export default async function ProductsPage({ searchParams }) {
   const searchQuery = await getParamValue(searchParams, "search", "");
   const currentPage = await getNumericParam(searchParams, "page", 1);
   const minPrice = await getNumericParam(searchParams, "minPrice", 0);
-  let maxPrice = await getNumericParam(searchParams, "maxPrice", 10000);
+  
+  // First, get the max price for filter boundaries - always fetch this
+  const maxPossiblePrice = await getMaxProductPrice();
+  
+  // For the filter parameter, use the URL value if present
+  const maxPriceParam = await getNumericParam(searchParams, "maxPrice", null);
 
   let products = [];
   let totalPages = 1;
 
   try {
-    // First, get the max price for filter boundaries (if not already specified)
-    if (!params?.maxPrice) {
-      maxPrice = await getMaxProductPrice();
-    }
-
     // Fetch products with all the filters
     const result = await getProducts({
       perPage: 12,
@@ -44,13 +44,11 @@ export default async function ProductsPage({ searchParams }) {
       category,
       search: searchQuery,
       minPrice: minPrice || undefined, // Only send defined values
-      maxPrice: params?.maxPrice ? maxPrice : undefined, // Only send if user specified
+      maxPrice: maxPriceParam || undefined, // Only send if user specified
       fields: "id,name,images,slug,sale_price,regular_price"
     });
 
     products = result.products;
-    //console.log(products);
-    
     totalPages = result.totalPages;
   } catch (error) {
     console.error("Грешка при зареждане на продуктите:", error);
@@ -66,7 +64,7 @@ export default async function ProductsPage({ searchParams }) {
 
         <div className="grid grid-cols-1 lg:grid-cols-[15%_85%] gap-4">
           <div>
-            <Filters maxPrice={maxPrice} />
+            <Filters maxPrice={maxPossiblePrice} />
           </div>
 
           <div>
