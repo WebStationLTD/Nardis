@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { getProducts } from "@/services/productService";
-import ProductCard from "./ProductCard";
+import ProductCard from "@/components/ProductCard";
 
 const NewProducts = async () => {
   let products = [];

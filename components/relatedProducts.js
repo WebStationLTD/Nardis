@@ -1,5 +1,5 @@
 import { getRelatedProducts } from "@/services/productService";
-import ProductCard from "./ProductCard";
+import ProductCard from "@/components/ProductCard";
 
 const RelatedProducts = async ({ relatedIds }) => {
   let relatedProducts = [];

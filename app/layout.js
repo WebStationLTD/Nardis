@@ -27,11 +27,12 @@
 //   );
 // }
 
-import "../styles/globals.css";
-import StoreNavigation from "../components/storeNavigation";
-import FooterSection from "../components/footer";
+import "@/styles/globals.css";
+import StoreNavigation from "@/components/storeNavigation";
+import FooterSection from "@/components/footer";
 
 import { Roboto } from "next/font/google";
+import { getCategories } from "@/services/productService";
 
 const roboto = Roboto({
   subsets: ["cyrillic"],
