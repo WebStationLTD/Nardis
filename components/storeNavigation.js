@@ -26,209 +26,209 @@ import {
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 
-const navigation = {
-  categories: [
-    {
-      id: "women",
-      name: "Грижа за лице",
-      featured: [
-        {
-          name: "New Arrivals",
-          href: "#",
-          imageSrc:
-            "https://tailwindcss.com/plus-assets/img/ecommerce-images/mega-menu-category-01.jpg",
-          imageAlt:
-            "Models sitting back to back, wearing Basic Tee in black and bone.",
-        },
-        {
-          name: "Basic Tees",
-          href: "#",
-          imageSrc:
-            "https://tailwindcss.com/plus-assets/img/ecommerce-images/mega-menu-category-02.jpg",
-          imageAlt:
-            "Close up of Basic Tee fall bundle with off-white, ochre, olive, and black tees.",
-        },
-        {
-          name: "Accessories",
-          href: "#",
-          imageSrc:
-            "https://tailwindcss.com/plus-assets/img/ecommerce-images/mega-menu-category-03.jpg",
-          imageAlt:
-            "Model wearing minimalist watch with black wristband and white watch face.",
-        },
-      ],
-      sections: [
-        [
-          {
-            id: "shoes",
-            name: "Shoes & Accessories",
-            items: [
-              { name: "Sneakers", href: "#" },
-              { name: "Boots", href: "#" },
-              { name: "Flats", href: "#" },
-              { name: "Sandals", href: "#" },
-              { name: "Heels", href: "#" },
-              { name: "Socks", href: "#" },
-            ],
-          },
-          {
-            id: "collection",
-            name: "Shop Collection",
-            items: [
-              { name: "Everything", href: "#" },
-              { name: "Core", href: "#" },
-              { name: "New Arrivals", href: "#" },
-              { name: "Sale", href: "#" },
-              { name: "Accessories", href: "#" },
-            ],
-          },
-        ],
-        [
-          {
-            id: "clothing",
-            name: "All Clothing",
-            items: [
-              { name: "Basic Tees", href: "#" },
-              { name: "Artwork Tees", href: "#" },
-              { name: "Tops", href: "#" },
-              { name: "Bottoms", href: "#" },
-              { name: "Swimwear", href: "#" },
-              { name: "Underwear", href: "#" },
-            ],
-          },
-          {
-            id: "accessories",
-            name: "All Accessories",
-            items: [
-              { name: "Watches", href: "#" },
-              { name: "Wallets", href: "#" },
-              { name: "Bags", href: "#" },
-              { name: "Sunglasses", href: "#" },
-              { name: "Hats", href: "#" },
-              { name: "Belts", href: "#" },
-            ],
-          },
-        ],
-        [
-          {
-            id: "brands",
-            name: "Brands",
-            items: [
-              { name: "Full Nelson", href: "#" },
-              { name: "My Way", href: "#" },
-              { name: "Re-Arranged", href: "#" },
-              { name: "Counterfeit", href: "#" },
-              { name: "Significant Other", href: "#" },
-            ],
-          },
-        ],
-      ],
-    },
-    {
-      id: "men",
-      name: "Грижа за тяло",
-      featured: [
-        {
-          name: "Accessories",
-          href: "#",
-          imageSrc:
-            "https://tailwindcss.com/plus-assets/img/ecommerce-images/home-page-03-category-01.jpg",
-          imageAlt:
-            "Wooden shelf with gray and olive drab green baseball caps, next to wooden clothes hanger with sweaters.",
-        },
-        {
-          name: "New Arrivals",
-          href: "#",
-          imageSrc:
-            "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-04-detail-product-shot-01.jpg",
-          imageAlt:
-            "Drawstring top with elastic loop closure and textured interior padding.",
-        },
-        {
-          name: "Artwork Tees",
-          href: "#",
-          imageSrc:
-            "https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-02-image-card-06.jpg",
-          imageAlt:
-            "Three shirts in gray, white, and blue arranged on table with same line drawing of hands and shapes overlapping on front of shirt.",
-        },
-      ],
-      sections: [
-        [
-          {
-            id: "shoes",
-            name: "Shoes & Accessories",
-            items: [
-              { name: "Sneakers", href: "#" },
-              { name: "Boots", href: "#" },
-              { name: "Sandals", href: "#" },
-              { name: "Socks", href: "#" },
-            ],
-          },
-          {
-            id: "collection",
-            name: "Shop Collection",
-            items: [
-              { name: "Everything", href: "#" },
-              { name: "Core", href: "#" },
-              { name: "New Arrivals", href: "#" },
-              { name: "Sale", href: "#" },
-            ],
-          },
-        ],
-        [
-          {
-            id: "clothing",
-            name: "All Clothing",
-            items: [
-              { name: "Basic Tees", href: "#" },
-              { name: "Artwork Tees", href: "#" },
-              { name: "Pants", href: "#" },
-              { name: "Hoodies", href: "#" },
-              { name: "Swimsuits", href: "#" },
-            ],
-          },
-          {
-            id: "accessories",
-            name: "All Accessories",
-            items: [
-              { name: "Watches", href: "#" },
-              { name: "Wallets", href: "#" },
-              { name: "Bags", href: "#" },
-              { name: "Sunglasses", href: "#" },
-              { name: "Hats", href: "#" },
-              { name: "Belts", href: "#" },
-            ],
-          },
-        ],
-        [
-          {
-            id: "brands",
-            name: "Brands",
-            items: [
-              { name: "Re-Arranged", href: "#" },
-              { name: "Counterfeit", href: "#" },
-              { name: "Full Nelson", href: "#" },
-              { name: "My Way", href: "#" },
-            ],
-          },
-        ],
-      ],
-    },
-  ],
-  pages: [
-    { name: "Company", href: "#" },
-    { name: "Stores", href: "#" },
-    { name: "Shop", href: "/products" },
-  ],
-};
-
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Example() {
+export default function Example({ categories }) {
+  //
+  // console.log("🔍 subcategories:", subcategories);
+  console.dir(categories, { depth: null });
+
   const [open, setOpen] = useState(false);
+
+  const navigation = {
+    categories: [
+      {
+        id: "women",
+        name: "Магазин",
+        featured: [
+          {
+            name: "New Arrivals",
+            href: "#",
+            imageSrc:
+              "https://tailwindcss.com/plus-assets/img/ecommerce-images/mega-menu-category-01.jpg",
+            imageAlt:
+              "Models sitting back to back, wearing Basic Tee in black and bone.",
+          },
+          {
+            name: "Basic Tees",
+            href: "#",
+            imageSrc:
+              "https://tailwindcss.com/plus-assets/img/ecommerce-images/mega-menu-category-02.jpg",
+            imageAlt:
+              "Close up of Basic Tee fall bundle with off-white, ochre, olive, and black tees.",
+          },
+          {
+            name: "Accessories",
+            href: "#",
+            imageSrc:
+              "https://tailwindcss.com/plus-assets/img/ecommerce-images/mega-menu-category-03.jpg",
+            imageAlt:
+              "Model wearing minimalist watch with black wristband and white watch face.",
+          },
+        ],
+        // sections: [
+        //   [
+        //     {
+        //       id: "asian-spa",
+        //       name: "Artdeco ASIAN SPA",
+        //       items: subcategories.map((subcategory) => ({
+        //         name: subcategory.name,
+        //         href: `/category/${subcategory.slug}`,
+        //       })),
+        //     },
+        //     {
+        //       id: "collection",
+        //       name: "Shop Collection",
+        //       items: [
+        //         { name: "Everything", href: "#" },
+        //         { name: "Core", href: "#" },
+        //         { name: "New Arrivals", href: "#" },
+        //         { name: "Sale", href: "#" },
+        //         { name: "Accessories", href: "#" },
+        //       ],
+        //     },
+        //   ],
+        //   [
+        //     {
+        //       id: "clothing",
+        //       name: "All Clothing",
+        //       items: [
+        //         { name: "Basic Tees", href: "#" },
+        //         { name: "Artwork Tees", href: "#" },
+        //         { name: "Tops", href: "#" },
+        //         { name: "Bottoms", href: "#" },
+        //         { name: "Swimwear", href: "#" },
+        //         { name: "Underwear", href: "#" },
+        //       ],
+        //     },
+        //     {
+        //       id: "accessories",
+        //       name: "All Accessories",
+        //       items: [
+        //         { name: "Watches", href: "#" },
+        //         { name: "Wallets", href: "#" },
+        //         { name: "Bags", href: "#" },
+        //         { name: "Sunglasses", href: "#" },
+        //         { name: "Hats", href: "#" },
+        //         { name: "Belts", href: "#" },
+        //       ],
+        //     },
+        //   ],
+        //   [
+        //     {
+        //       id: "brands",
+        //       name: "Brands",
+        //       items: [
+        //         { name: "Full Nelson", href: "#" },
+        //         { name: "My Way", href: "#" },
+        //         { name: "Re-Arranged", href: "#" },
+        //         { name: "Counterfeit", href: "#" },
+        //         { name: "Significant Other", href: "#" },
+        //       ],
+        //     },
+        //   ],
+        // ],
+      },
+      {
+        id: "men",
+        name: "Грижа за тяло",
+        featured: [
+          {
+            name: "Accessories",
+            href: "#",
+            imageSrc:
+              "https://tailwindcss.com/plus-assets/img/ecommerce-images/home-page-03-category-01.jpg",
+            imageAlt:
+              "Wooden shelf with gray and olive drab green baseball caps, next to wooden clothes hanger with sweaters.",
+          },
+          {
+            name: "New Arrivals",
+            href: "#",
+            imageSrc:
+              "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-04-detail-product-shot-01.jpg",
+            imageAlt:
+              "Drawstring top with elastic loop closure and textured interior padding.",
+          },
+          {
+            name: "Artwork Tees",
+            href: "#",
+            imageSrc:
+              "https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-02-image-card-06.jpg",
+            imageAlt:
+              "Three shirts in gray, white, and blue arranged on table with same line drawing of hands and shapes overlapping on front of shirt.",
+          },
+        ],
+        sections: [
+          [
+            {
+              id: "shoes",
+              name: "Shoes & Accessories",
+              items: [
+                { name: "Sneakers", href: "#" },
+                { name: "Boots", href: "#" },
+                { name: "Sandals", href: "#" },
+                { name: "Socks", href: "#" },
+              ],
+            },
+            {
+              id: "collection",
+              name: "Shop Collection",
+              items: [
+                { name: "Everything", href: "#" },
+                { name: "Core", href: "#" },
+                { name: "New Arrivals", href: "#" },
+                { name: "Sale", href: "#" },
+              ],
+            },
+          ],
+          [
+            {
+              id: "clothing",
+              name: "All Clothing",
+              items: [
+                { name: "Basic Tees", href: "#" },
+                { name: "Artwork Tees", href: "#" },
+                { name: "Pants", href: "#" },
+                { name: "Hoodies", href: "#" },
+                { name: "Swimsuits", href: "#" },
+              ],
+            },
+            {
+              id: "accessories",
+              name: "All Accessories",
+              items: [
+                { name: "Watches", href: "#" },
+                { name: "Wallets", href: "#" },
+                { name: "Bags", href: "#" },
+                { name: "Sunglasses", href: "#" },
+                { name: "Hats", href: "#" },
+                { name: "Belts", href: "#" },
+              ],
+            },
+          ],
+          [
+            {
+              id: "brands",
+              name: "Brands",
+              items: [
+                { name: "Re-Arranged", href: "#" },
+                { name: "Counterfeit", href: "#" },
+                { name: "Full Nelson", href: "#" },
+                { name: "My Way", href: "#" },
+              ],
+            },
+          ],
+        ],
+      },
+    ],
+    pages: [
+      { name: "Company", href: "#" },
+      { name: "Stores", href: "#" },
+      { name: "Shop", href: "/products" },
+    ],
+  };
 
   return (
     <div className="bg-white sticky top-0 z-50">
@@ -309,7 +309,7 @@ export default function Example() {
                         </div>
                       ))}
                     </div>
-                    {category.sections.map((column, columnIdx) => (
+                    {/* {category.sections.map((column, columnIdx) => (
                       <div key={columnIdx} className="space-y-10">
                         {column.map((section) => (
                           <div key={section.name}>
@@ -337,6 +337,25 @@ export default function Example() {
                             </ul>
                           </div>
                         ))}
+                      </div>
+                    ))} */}
+                    {categories.map((category) => (
+                      <div key={category.id}>
+                        <p className="font-medium text-gray-900">
+                          {category.name}
+                        </p>
+                        <ul className="mt-4 space-y-4">
+                          {category.subcategories.map((subcat) => (
+                            <li key={subcat.id}>
+                              <Link
+                                href={`/category/${subcat.slug}`}
+                                className="text-gray-500"
+                              >
+                                {subcat.name}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
                       </div>
                     ))}
                   </TabPanel>
@@ -479,7 +498,7 @@ export default function Example() {
                                   </div>
                                 ))}
                               </div>
-                              <div className="grid grid-cols-3 gap-x-8 gap-y-10 text-sm text-gray-500">
+                              {/* <div className="grid grid-cols-3 gap-x-8 gap-y-10 text-sm text-gray-500">
                                 {category.sections.map((column, columnIdx) => (
                                   <div key={columnIdx} className="space-y-10">
                                     {column.map((section) => (
@@ -511,6 +530,27 @@ export default function Example() {
                                         </ul>
                                       </div>
                                     ))}
+                                  </div>
+                                ))}
+                              </div> */}
+                              <div className="grid grid-cols-3 gap-x-8 gap-y-10 text-sm text-gray-500">
+                                {categories.map((category) => (
+                                  <div key={category.id}>
+                                    <h3 className="font-medium text-gray-900">
+                                      {category.name}
+                                    </h3>
+                                    <ul className="mt-4 space-y-4">
+                                      {category.subcategories.map((subcat) => (
+                                        <li key={subcat.id}>
+                                          <Link
+                                            href={`/category/${subcat.slug}`}
+                                            className="hover:text-gray-800"
+                                          >
+                                            {subcat.name}
+                                          </Link>
+                                        </li>
+                                      ))}
+                                    </ul>
                                   </div>
                                 ))}
                               </div>

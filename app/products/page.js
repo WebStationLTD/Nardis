@@ -43,7 +43,8 @@ export default async function ProductsPage({ searchParams }) {
 
   return (
     <div className="bg-white">
-      <div className="mx-auto max-w-2xl px-4 py-12 sm:px-6 lg:max-w-7xl lg:px-8">
+      {/* <div className="mx-auto max-w-2xl px-4 py-12 sm:px-6 lg:max-w-7xl lg:px-8"> */}
+      <div className="w-full max-w-[80%] xl:max-w-[80%] mx-auto px-4 py-12 sm:px-6 lg:px-8">
         <h2 className="text-2xl font-bold tracking-tight text-gray-900 mb-6">
           Филтри
         </h2>
