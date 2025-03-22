@@ -37,9 +37,6 @@ export default function ProductsList({ products }) {
     
     handleProductChange();
   }, [products, searchParams.toString()]);
-
-  // For debugging
-  console.log("Products array:", products?.length, "Display products:", displayProducts?.length);
   
   // Loading skeleton
   if (loading) {
