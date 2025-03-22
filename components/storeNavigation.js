@@ -31,10 +31,6 @@ function classNames(...classes) {
 }
 
 export default function Example({ categories }) {
-  //
-  // console.log("🔍 subcategories:", subcategories);
-  console.dir(categories, { depth: null });
-
   const [open, setOpen] = useState(false);
 
   const navigation = {
@@ -68,68 +64,6 @@ export default function Example({ categories }) {
               "Model wearing minimalist watch with black wristband and white watch face.",
           },
         ],
-        // sections: [
-        //   [
-        //     {
-        //       id: "asian-spa",
-        //       name: "Artdeco ASIAN SPA",
-        //       items: subcategories.map((subcategory) => ({
-        //         name: subcategory.name,
-        //         href: `/category/${subcategory.slug}`,
-        //       })),
-        //     },
-        //     {
-        //       id: "collection",
-        //       name: "Shop Collection",
-        //       items: [
-        //         { name: "Everything", href: "#" },
-        //         { name: "Core", href: "#" },
-        //         { name: "New Arrivals", href: "#" },
-        //         { name: "Sale", href: "#" },
-        //         { name: "Accessories", href: "#" },
-        //       ],
-        //     },
-        //   ],
-        //   [
-        //     {
-        //       id: "clothing",
-        //       name: "All Clothing",
-        //       items: [
-        //         { name: "Basic Tees", href: "#" },
-        //         { name: "Artwork Tees", href: "#" },
-        //         { name: "Tops", href: "#" },
-        //         { name: "Bottoms", href: "#" },
-        //         { name: "Swimwear", href: "#" },
-        //         { name: "Underwear", href: "#" },
-        //       ],
-        //     },
-        //     {
-        //       id: "accessories",
-        //       name: "All Accessories",
-        //       items: [
-        //         { name: "Watches", href: "#" },
-        //         { name: "Wallets", href: "#" },
-        //         { name: "Bags", href: "#" },
-        //         { name: "Sunglasses", href: "#" },
-        //         { name: "Hats", href: "#" },
-        //         { name: "Belts", href: "#" },
-        //       ],
-        //     },
-        //   ],
-        //   [
-        //     {
-        //       id: "brands",
-        //       name: "Brands",
-        //       items: [
-        //         { name: "Full Nelson", href: "#" },
-        //         { name: "My Way", href: "#" },
-        //         { name: "Re-Arranged", href: "#" },
-        //         { name: "Counterfeit", href: "#" },
-        //         { name: "Significant Other", href: "#" },
-        //       ],
-        //     },
-        //   ],
-        // ],
       },
       {
         id: "men",
@@ -309,55 +243,60 @@ export default function Example({ categories }) {
                         </div>
                       ))}
                     </div>
-                    {/* {category.sections.map((column, columnIdx) => (
-                      <div key={columnIdx} className="space-y-10">
-                        {column.map((section) => (
-                          <div key={section.name}>
-                            <p
-                              id={`${category.id}-${section.id}-heading-mobile`}
-                              className="font-medium text-gray-900"
-                            >
-                              {section.name}
-                            </p>
-                            <ul
-                              role="list"
-                              aria-labelledby={`${category.id}-${section.id}-heading-mobile`}
-                              className="mt-6 flex flex-col space-y-6"
-                            >
-                              {section.items.map((item) => (
-                                <li key={item.name} className="flow-root">
-                                  <a
-                                    href={item.href}
-                                    className="-m-2 block p-2 text-gray-500"
+                    {categories.map((category) => {
+                      const chunkSize = 10;
+                      const chunks = [];
+                      for (
+                        let i = 0;
+                        i < category.subcategories.length;
+                        i += chunkSize
+                      ) {
+                        chunks.push(
+                          category.subcategories.slice(i, i + chunkSize)
+                        );
+                      }
+
+                      return (
+                        <div key={category.id} className="min-w-[200px] flex-1">
+                          {/* LEFT column: заглавие + първите 10 */}
+                          <div className="space-y-4 min-w-[150px]">
+                            <h3 className="font-medium text-gray-900">
+                              {category.name}
+                            </h3>
+                            <ul className="space-y-2 text-gray-500 text-sm">
+                              {chunks[0]?.map((subcat) => (
+                                <li key={subcat.id}>
+                                  <Link
+                                    href={`/category/${subcat.slug}`}
+                                    className="hover:text-gray-800"
                                   >
-                                    {item.name}
-                                  </a>
+                                    {subcat.name}
+                                  </Link>
                                 </li>
                               ))}
                             </ul>
                           </div>
-                        ))}
-                      </div>
-                    ))} */}
-                    {categories.map((category) => (
-                      <div key={category.id}>
-                        <p className="font-medium text-gray-900">
-                          {category.name}
-                        </p>
-                        <ul className="mt-4 space-y-4">
-                          {category.subcategories.map((subcat) => (
-                            <li key={subcat.id}>
-                              <Link
-                                href={`/category/${subcat.slug}`}
-                                className="text-gray-500"
-                              >
-                                {subcat.name}
-                              </Link>
-                            </li>
+
+                          {chunks.slice(1).map((chunk, index) => (
+                            <ul
+                              key={index}
+                              className="space-y-2 text-gray-500 text-sm mt-4"
+                            >
+                              {chunk.map((subcat) => (
+                                <li key={subcat.id}>
+                                  <Link
+                                    href={`/category/${subcat.slug}`}
+                                    className="hover:text-gray-800"
+                                  >
+                                    {subcat.name}
+                                  </Link>
+                                </li>
+                              ))}
+                            </ul>
                           ))}
-                        </ul>
-                      </div>
-                    ))}
+                        </div>
+                      );
+                    })}
                   </TabPanel>
                 ))}
               </TabPanels>
@@ -498,61 +437,67 @@ export default function Example({ categories }) {
                                   </div>
                                 ))}
                               </div>
-                              {/* <div className="grid grid-cols-3 gap-x-8 gap-y-10 text-sm text-gray-500">
-                                {category.sections.map((column, columnIdx) => (
-                                  <div key={columnIdx} className="space-y-10">
-                                    {column.map((section) => (
-                                      <div key={section.name}>
-                                        <p
-                                          id={`${category.id}-${section.id}-heading`}
-                                          className="font-medium text-gray-900"
-                                        >
-                                          {section.name}
-                                        </p>
-                                        <ul
-                                          role="list"
-                                          aria-labelledby={`${category.id}-${section.id}-heading`}
-                                          className="mt-4 space-y-4"
-                                        >
-                                          {section.items.map((item) => (
-                                            <li
-                                              key={item.name}
-                                              className="flex"
-                                            >
-                                              <a
-                                                href={item.href}
+                              <div className="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-x-8 gap-y-10 text-sm text-gray-500 max-w-full">
+                                {categories.map((category) => {
+                                  const chunkSize = 10;
+                                  const chunks = [];
+                                  for (
+                                    let i = 0;
+                                    i < category.subcategories.length;
+                                    i += chunkSize
+                                  ) {
+                                    chunks.push(
+                                      category.subcategories.slice(
+                                        i,
+                                        i + chunkSize
+                                      )
+                                    );
+                                  }
+
+                                  return (
+                                    <Fragment key={category.id}>
+                                      {/* Първата колона редом до Artdeco */}
+                                      <div className="space-y-4 min-w-[150px]">
+                                        <h3 className="font-medium text-gray-900 mb-2">
+                                          {category.name}
+                                        </h3>
+                                        <ul className="space-y-2 text-gray-500 text-sm">
+                                          {chunks[0]?.map((subcat) => (
+                                            <li key={subcat.id}>
+                                              <Link
+                                                href={`/category/${subcat.slug}`}
                                                 className="hover:text-gray-800"
                                               >
-                                                {item.name}
-                                              </a>
+                                                {subcat.name}
+                                              </Link>
                                             </li>
                                           ))}
                                         </ul>
                                       </div>
-                                    ))}
-                                  </div>
-                                ))}
-                              </div> */}
-                              <div className="grid grid-cols-3 gap-x-8 gap-y-10 text-sm text-gray-500">
-                                {categories.map((category) => (
-                                  <div key={category.id}>
-                                    <h3 className="font-medium text-gray-900">
-                                      {category.name}
-                                    </h3>
-                                    <ul className="mt-4 space-y-4">
-                                      {category.subcategories.map((subcat) => (
-                                        <li key={subcat.id}>
-                                          <Link
-                                            href={`/category/${subcat.slug}`}
-                                            className="hover:text-gray-800"
-                                          >
-                                            {subcat.name}
-                                          </Link>
-                                        </li>
+
+                                      {/* Всички останали падат отдолу */}
+                                      {chunks.slice(1).map((chunk, index) => (
+                                        <div
+                                          key={index}
+                                          className="space-y-4 min-w-[150px]"
+                                        >
+                                          <ul className="space-y-2 text-gray-500 text-sm">
+                                            {chunk.map((subcat) => (
+                                              <li key={subcat.id}>
+                                                <Link
+                                                  href={`/category/${subcat.slug}`}
+                                                  className="hover:text-gray-800"
+                                                >
+                                                  {subcat.name}
+                                                </Link>
+                                              </li>
+                                            ))}
+                                          </ul>
+                                        </div>
                                       ))}
-                                    </ul>
-                                  </div>
-                                ))}
+                                    </Fragment>
+                                  );
+                                })}
                               </div>
                             </div>
                           </div>
