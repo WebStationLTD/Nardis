@@ -18,7 +18,7 @@ export const options = {
       async authorize(credentials) {
         try {
           const res = await fetch(
-            `https://nardis.rosset.website/?rest_route=/simple-jwt-login/v1/auth&email=${credentials.email}&password=${credentials.password}`,
+            `${process.env.WORDPRESS_SITE_URL}/?rest_route=/simple-jwt-login/v1/auth&email=${credentials.email}&password=${credentials.password}`,
             {
               method: "POST",
               headers: { "Content-Type": "application/json" },
