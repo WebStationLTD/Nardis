@@ -1,7 +1,7 @@
 import "@/styles/globals.css";
 import StoreNavigation from "@/components/storeNavigation";
 import FooterSection from "@/components/footer";
-
+import CookieConsentBanner from "@/components/cookieConsentBanner";
 import { Roboto } from "next/font/google";
 // import { getCategories } from "@/services/productService";
 
@@ -80,8 +80,8 @@ export default async function RootLayout({ children }) {
     <html lang="en">
       <body className={roboto.className}>
         <StoreNavigation categories={categoriesWithChildren} />
-
         {children}
+        <CookieConsentBanner />
         <FooterSection />
       </body>
     </html>
