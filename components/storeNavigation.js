@@ -33,6 +33,16 @@ function classNames(...classes) {
 export default function Example({ categories }) {
   const [open, setOpen] = useState(false);
 
+  // Добавяме масив с желания ред на категориите
+  const categoryOrder = [26, 17]; // Първо Artdeco ASIAN SPA (17), после Грим (26)
+
+  // Сортираме категориите според желания ред
+  const sortedCategories = [...categories].sort((a, b) => {
+    const indexA = categoryOrder.indexOf(a.id);
+    const indexB = categoryOrder.indexOf(b.id);
+    return indexA - indexB;
+  });
+
   const navigation = {
     categories: [
       {
@@ -243,7 +253,7 @@ export default function Example({ categories }) {
                         </div>
                       ))}
                     </div>
-                    {categories.map((category) => {
+                    {sortedCategories.map((category) => {
                       const chunkSize = 10;
                       const chunks = [];
                       for (
@@ -438,7 +448,7 @@ export default function Example({ categories }) {
                                 ))}
                               </div>
                               <div className="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-x-8 gap-y-10 text-sm text-gray-500 max-w-full">
-                                {categories.map((category) => {
+                                {sortedCategories.map((category) => {
                                   const chunkSize = 10;
                                   const chunks = [];
                                   for (

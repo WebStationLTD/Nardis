@@ -81,7 +81,7 @@ export default function WishlistButton({
       <button
         type="button"
         onClick={toggleWishlist}
-        className={`relative flex items-center justify-center rounded-md ${
+        className={`relative flex items-center justify-center cursor-pointer rounded-md ${
           sizeClasses[size]
         } transition-all duration-300 ${
           isWishlisted ? "bg-pink-50" : "hover:bg-gray-100"
@@ -93,13 +93,13 @@ export default function WishlistButton({
           <HeartSolid
             className={`${
               iconSizeClasses[size]
-            } text-red-500 transition-all duration-300 ${
+            } text-[#b3438f] transition-all duration-300 ${
               isAnimating && animation === "add" ? "scale-125" : ""
             }`}
           />
         ) : (
           <HeartOutline
-            className={`${iconSizeClasses[size]} text-gray-400 hover:text-red-500 transition-all duration-300`}
+            className={`${iconSizeClasses[size]} text-[#b3438f] hover:text-[#b3438f] transition-all duration-300`}
           />
         )}
       </button>
