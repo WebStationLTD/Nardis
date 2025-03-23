@@ -1,7 +1,17 @@
+import dynamic from "next/dynamic";
+
 import { getProduct } from "@/services/productService";
-import RelatedProducts from "@/components/relatedProducts";
+// import RelatedProducts from "@/components/relatedProducts";
 import Image from "next/image";
-import WishlistButton from "@/components/wishlistButton";
+// import WishlistButton from "@/components/wishlistButton";
+
+// Компоненти, които не са критични за първоначалното зареждане
+const RelatedProducts = dynamic(() => import("@/components/relatedProducts"), {
+  loading: () => <p>Зареждане...</p>,
+});
+const WishlistButton = dynamic(() => import("@/components/wishlistButton"), {
+  loading: () => <p>Зареждане...</p>,
+});
 
 import {
   Disclosure,
