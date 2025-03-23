@@ -220,12 +220,13 @@ export default function Example({ categories }) {
             <div className="space-y-6 border-t border-gray-200 px-4 py-6">
               {navigation.pages.map((page) => (
                 <div key={page.name} className="flow-root">
-                  <a
+                  <Link
+                    prefetch={true}
                     href={page.href}
                     className="-m-2 block p-2 font-medium text-gray-900"
                   >
                     {page.name}
-                  </a>
+                  </Link>
                 </div>
               ))}
             </div>
@@ -422,13 +423,14 @@ export default function Example({ categories }) {
                   ))}
 
                   {navigation.pages.map((page) => (
-                    <a
+                    <Link
+                      prefetch={true}
                       key={page.name}
                       href={page.href}
                       className="flex items-center text-xl font-medium text-white hover:text-white"
                     >
                       {page.name}
-                    </a>
+                    </Link>
                   ))}
                 </div>
               </PopoverGroup>
