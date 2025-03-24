@@ -52,20 +52,20 @@ export default function Example({ categories }) {
           {
             name: "Всички продукти",
             href: "/products",
-            imageSrc: "./nardis-online-shop-for-luxury-cosmetics.jpg",
+            imageSrc: "/nardis-online-shop-for-luxury-cosmetics.jpg",
             imageAlt: "Кателог продукти на Nardis.bg",
           },
           {
             name: "Artdeco ASIAN SPA",
             href: "#",
-            imageSrc: "./artdeco-asian-spa-mega-menu-bg.jpg",
+            imageSrc: "/artdeco-asian-spa-mega-menu-bg.jpg",
             imageAlt:
               "Close up of Basic Tee fall bundle with off-white, ochre, olive, and black tees.",
           },
           {
             name: "Грим",
             href: "#",
-            imageSrc: "./makeup-mega-menu-bg.jpg",
+            imageSrc: "/makeup-mega-menu-bg.jpg",
             imageAlt:
               "Model wearing minimalist watch with black wristband and white watch face.",
           },
