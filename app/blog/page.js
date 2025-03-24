@@ -42,9 +42,7 @@ export default async function Blog({ searchParams }) {
                 От нашия блог
               </h1>
               <p className="mt-6 text-lg/8 text-white">
-                Актуални правни анализи, експертни мнения и ценни съвети –
-                всичко, което трябва да знаете, за да сте информирани и
-                защитени.
+                Съвети и полезна информация от екипа на Nardis!
               </p>
             </div>
             <svg
@@ -57,12 +55,12 @@ export default async function Blog({ searchParams }) {
                 cx={512}
                 cy={512}
                 fill="url(#827591b1-ce8c-4110-b064-7cb85a0b1217)"
-                fillOpacity="0.7"
+                fillOpacity="0.9"
               />
               <defs>
                 <radialGradient id="827591b1-ce8c-4110-b064-7cb85a0b1217">
-                  <stop stopColor="#95161C" />
-                  <stop offset={1} stopColor="#95161C" />
+                  <stop stopColor="#bc4b93" />
+                  <stop offset={1} stopColor="#bc4b93" />
                 </radialGradient>
               </defs>
             </svg>

@@ -10,8 +10,7 @@ import Link from "next/link";
 export async function generateMetadata() {
   return {
     title: "Контакти - ",
-    description:
-      "Свържете се с Адвокатско дружество „Бурков, Радев, Дюлгерска“ за правна консултация. Нашият екип е на разположение да отговори на вашите въпроси и да предложи експертни решения. Намерете нашите контакти и адрес тук.",
+    description: "Контакти - НАРДИЗ",
   };
 }
 
@@ -53,12 +52,12 @@ export default async function ContactPage() {
               </svg>
             </div>
             <h2 className="text-4xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-5xl">
-              Get in touch
+              Свържете се с нас
             </h2>
             <p className="mt-6 text-lg/8 text-gray-600">
-              Proin volutpat consequat porttitor cras nullam gravida at. Orci
-              molestie a eu arcu. Sed ut tincidunt integer elementum id sem.
-              Arcu sed malesuada et magna.
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
+              quos. Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              Quisquam, quos.
             </p>
             <dl className="mt-10 space-y-4 text-base text-gray-600">
               {contactInfo && (
