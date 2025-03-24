@@ -140,6 +140,7 @@ export default function Example({ categories }) {
                               <a
                                 href={item.href}
                                 className="font-medium text-gray-900"
+                                onClick={() => setOpen(false)}
                               >
                                 <span
                                   aria-hidden="true"
@@ -184,6 +185,7 @@ export default function Example({ categories }) {
                                   <Link
                                     href={`/category/${subcat.slug}`}
                                     className="hover:text-gray-800"
+                                    onClick={() => setOpen(false)}
                                   >
                                     {subcat.name}
                                   </Link>
@@ -202,6 +204,7 @@ export default function Example({ categories }) {
                                   <Link
                                     href={`/category/${subcat.slug}`}
                                     className="hover:text-gray-800"
+                                    onClick={() => setOpen(false)}
                                   >
                                     {subcat.name}
                                   </Link>
@@ -224,6 +227,7 @@ export default function Example({ categories }) {
                     prefetch={true}
                     href={page.href}
                     className="-m-2 block p-2 font-medium text-gray-900"
+                    onClick={() => setOpen(false)}
                   >
                     {page.name}
                   </Link>

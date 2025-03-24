@@ -69,7 +69,36 @@ export default async function ProductsPage({ searchParams }) {
 
   return (
     <div className="bg-white">
-      {/* <div className="mx-auto max-w-2xl px-4 py-12 sm:px-6 lg:max-w-7xl lg:px-8"> */}
+      <div className="bg-white">
+        <div className="mx-auto max-w-10/10 py-0 sm:px-6 sm:py-0 lg:px-0">
+          <div className="relative isolate overflow-hidden bg-gray-900 px-6 py-12 text-center shadow-2xl sm:px-12">
+            <div className="mx-auto max-w-2xl text-center">
+              <h1 className="text-4xl font-semibold tracking-tight text-white sm:text-5xl">
+                Магазин
+              </h1>
+            </div>
+            <svg
+              viewBox="0 0 1024 1024"
+              aria-hidden="true"
+              className="absolute -top-50 left-1/2 -z-10 size-[64rem] -translate-x-1/2 [mask-image:radial-gradient(closest-side,white,transparent)]"
+            >
+              <circle
+                r={512}
+                cx={512}
+                cy={512}
+                fill="url(#827591b1-ce8c-4110-b064-7cb85a0b1217)"
+                fillOpacity="0.9"
+              />
+              <defs>
+                <radialGradient id="827591b1-ce8c-4110-b064-7cb85a0b1217">
+                  <stop stopColor="#bc4b93" />
+                  <stop offset={1} stopColor="#bc4b93" />
+                </radialGradient>
+              </defs>
+            </svg>
+          </div>
+        </div>
+      </div>
       <div className="w-full max-w-[80%] xl:max-w-[80%] mx-auto px-4 py-12 sm:px-6 lg:px-8">
         <h2 className="text-2xl font-bold tracking-tight text-gray-900 mb-6">
           Филтри
