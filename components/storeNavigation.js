@@ -446,13 +446,13 @@ export default function Example({ categories }) {
                 </a>
 
                 {/* Account */}
-                <a
-                  href="#"
+                <Link
+                  href="/my-account"
                   className="p-2 text-white hover:text-gray-500 lg:ml-4"
                 >
                   <span className="sr-only">Account</span>
                   <UserIcon aria-hidden="true" className="size-6" />
-                </a>
+                </Link>
 
                 {/* Cart */}
                 <div className="ml-4 flow-root lg:ml-6">

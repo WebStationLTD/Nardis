@@ -4,7 +4,7 @@ import FooterSection from "@/components/footer";
 import CookieConsentBanner from "@/components/cookieConsentBanner";
 import { Roboto } from "next/font/google";
 // import { getCategories } from "@/services/productService";
-
+import AuthProvider from "@/context/AuthProvider";
 const roboto = Roboto({
   subsets: ["cyrillic"],
   variable: "--font-roboto",
@@ -79,10 +79,12 @@ export default async function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={roboto.className}>
-        <StoreNavigation categories={categoriesWithChildren} />
-        {children}
-        <CookieConsentBanner />
-        <FooterSection />
+        <AuthProvider>
+          <StoreNavigation categories={categoriesWithChildren} />
+          {children}
+          <CookieConsentBanner />
+          <FooterSection />
+        </AuthProvider>
       </body>
     </html>
   );
