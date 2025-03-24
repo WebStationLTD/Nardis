@@ -1,4 +1,4 @@
-const API_BASE_URL = `${process.env.WORDPRESS_SITE_URL}/wp-json/wp/v2`;
+const API_BASE_URL = `${process.env.NEXT_PUBLIC_WORDPRESS_SITE_URL}/wp-json/wp/v2`;
 
 /**
  * Universal fetch function

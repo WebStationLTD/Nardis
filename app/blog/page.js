@@ -14,7 +14,7 @@ export default async function Blog({ searchParams }) {
 
   // Fetch posts from WordPress API with caching enabled
   const response = await fetch(
-    `${process.env.WORDPRESS_SITE_URL}/wp-json/wp/v2/posts?page=${currentPage}&per_page=${perPage}&_fields=id,yoast_head_json,date,slug,title,content`,
+    `${process.env.NEXT_PUBLIC_WORDPRESS_SITE_URL}/wp-json/wp/v2/posts?page=${currentPage}&per_page=${perPage}&_fields=id,yoast_head_json,date,slug,title,content`,
     {
       next: { revalidate: 120 },
     }

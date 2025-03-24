@@ -75,7 +75,7 @@ export default function Example({ categories }) {
     pages: [
       { name: "За нас", href: "/about-us" },
       { name: "Блог", href: "/blog" },
-      { name: "Контакти", href: "/contacts" },
+      { name: "Контакти", href: "/contact" },
     ],
   };
 
