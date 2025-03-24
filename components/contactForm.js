@@ -3,8 +3,7 @@
 import { useState } from "react";
 import Swal from "sweetalert2";
 
-const URL_FORM =
-  `${process.env.NEXT_PUBLIC_WORDPRESS_SITE_URL}/wp-json/contact-form-7/v1/contact-forms/5407/feedback`;
+const URL_FORM = `${process.env.NEXT_PUBLIC_WORDPRESS_SITE_URL}/wp-json/contact-form-7/v1/contact-forms/5407/feedback`;
 
 export default function ContactForm() {
   const [errors, setErrors] = useState({});
@@ -195,10 +194,10 @@ export default function ContactForm() {
           <div className="mt-8 flex justify-end">
             <button
               type="submit"
-              className="rounded-md bg-[#95161c] px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-xs hover:bg-gray-300 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              className="flex-none rounded-md bg-[#b3438f] hover:bg-[#ebedeb] px-3.5 cursor-pointer py-2.5 text-sm font-semibold text-white hover:text-black shadow-xs focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
               disabled={loading}
             >
-              Изпрати запитване
+              Изпратете запитване
             </button>
           </div>
         </div>
