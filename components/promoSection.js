@@ -16,13 +16,13 @@ export default function Example() {
       <div className="pt-16 pb-80 sm:pt-24 sm:pb-40 lg:pt-40 lg:pb-48">
         <div className="relative mx-auto max-w-7xl px-4 sm:static sm:px-6 lg:px-8">
           <div className="sm:max-w-lg">
-            <h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl text-balance">
+            <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-white sm:text-6xl text-balance">
               Nardis
             </h1>
-            <p className="text-4xl text-white text-balance font-medium">
+            <p className="text-2xl md:text-3xl lg:text-4xl text-white text-balance font-medium">
               Когато красотата срещне съвършенството
             </p>
-            <p className="mt-4 text-xl text-white text-balance">
+            <p className="mt-4 text-lg md:text-xl text-white text-balance">
               Вдъхновени от природата, усъвършенствани от науката – твоята кожа
               заслужава най-доброто.
             </p>
@@ -41,6 +41,9 @@ export default function Example() {
                           width={176}
                           height={256}
                           placeholder="blur"
+                          priority
+                          fetchPriority="high"
+                          loading="eager"
                           className="object-cover"
                         />
                       </div>

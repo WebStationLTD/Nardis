@@ -1,0 +1,56 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-sans: var(--font-inter);
+}
+
+body {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+/* Оптимизация за по-бързо рендериране на текст */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 500px;
+}
+
+/* Оптимизации за мобилни устройства */
+@media (max-width: 768px) {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p {
+    content-visibility: auto;
+    contain-intrinsic-size: 0 300px;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+    max-width: 100%;
+    overflow-wrap: break-word;
+  }
+}
+
+/* Предотвратяване на layout shift */
+.sm\:max-w-lg {
+  contain: layout paint;
+  contain-intrinsic-size: 0 400px;
+}
