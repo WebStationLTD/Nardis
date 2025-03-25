@@ -1,5 +1,7 @@
 import { getPostBySlug } from "@/services/postService";
 import { cache } from "react";
+import StructuredData from "@/components/StructuredData";
+import { generateArticleSchema } from "@/utils/structuredData";
 
 // Cached data fetching function to ensure it only runs once
 const getPost = cache(async (slug) => {
@@ -40,7 +42,7 @@ export default async function PostPage({ params }) {
   try {
     const { slug } = await params;
     const post = await getPost(slug);
-    
+
     const meta = post?.yoast_head_json || {};
     const ogImage =
       meta?.og_image && meta.og_image.length > 0
@@ -49,6 +51,7 @@ export default async function PostPage({ params }) {
 
     return (
       <>
+        <StructuredData data={generateArticleSchema(post)} />
         <div className="bg-white">
           <div className="mx-auto max-w-10/10 py-0 sm:px-6 sm:py-0 lg:px-0">
             <div className="relative isolate overflow-hidden bg-gray-900 px-6 py-23 text-center shadow-2xl sm:px-23">
@@ -67,12 +70,12 @@ export default async function PostPage({ params }) {
                   cx={512}
                   cy={512}
                   fill="url(#827591b1-ce8c-4110-b064-7cb85a0b1217)"
-                  fillOpacity="0.7"
+                  fillOpacity="0.9"
                 />
                 <defs>
                   <radialGradient id="827591b1-ce8c-4110-b064-7cb85a0b1217">
-                    <stop stopColor="#95161C" />
-                    <stop offset={1} stopColor="#95161C" />
+                    <stop stopColor="#bc4b93" />
+                    <stop offset={1} stopColor="#bc4b93" />
                   </radialGradient>
                 </defs>
               </svg>

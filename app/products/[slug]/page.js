@@ -66,6 +66,8 @@ export default async function ProductDetails({ params }) {
                         quality={100}
                         alt={image.alt}
                         src={image.src}
+                        placeholder="blur"
+                        blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlhZWiAAAAAAAABvogAAOPUAAAOQWFlaIAAAAAAAAGKZAAC3hQAAGNpYWVogAAAAAAAAJKAAAA+EAAC2z2Rlc2MAAAAAAAAAFklFQyBodHRwOi8vd3d3LmllYy5nZQAAAAAAAAAAAAAAAFklFQyBodHRwOi8vd3d3LmllYy5nZQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWFlaIAAAAAAAAPbWAAEAAAAA0y1zZjMyAAAAAAABDEIAAAXe///zJgAAB5IAAP2R///7ov///aMAAAPcAADAbA=="
                         className="size-full object-cover"
                       />
                     </span>
@@ -85,11 +87,11 @@ export default async function ProductDetails({ params }) {
                     width={800}
                     height={800}
                     priority
-                    fetchPriority="high"
-                    loading="eager"
                     quality={100}
                     alt={image.alt}
                     src={image.src}
+                    placeholder="blur"
+                    blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlhZWiAAAAAAAABvogAAOPUAAAOQWFlaIAAAAAAAAGKZAAC3hQAAGNpYWVogAAAAAAAAJKAAAA+EAAC2z2Rlc2MAAAAAAAAAFklFQyBodHRwOi8vd3d3LmllYy5nZQAAAAAAAAAAAAAAAFklFQyBodHRwOi8vd3d3LmllYy5nZQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWFlaIAAAAAAAAPbWAAEAAAAA0y1zZjMyAAAAAAABDEIAAAXe///zJgAAB5IAAP2R///7ov///aMAAAPcAADAbA=="
                     className="object-cover lg:aspect-auto lg:size-full"
                   />
                 </TabPanel>
@@ -144,10 +146,31 @@ export default async function ProductDetails({ params }) {
             <div className="mt-6">
               <h3 className="sr-only">Description</h3>
 
-              <div
-                dangerouslySetInnerHTML={{ __html: product.description }}
-                className="space-y-6 text-base text-gray-700 prose max-h-90 overflow-auto"
-              />
+              {product.short_description && (
+                <div className="mb-8">
+                  <h4 className="text-lg font-semibold text-gray-900 mb-4">
+                    Кратко описание
+                  </h4>
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: product.short_description,
+                    }}
+                    className="space-y-6 text-base text-gray-700 prose max-h-90 overflow-auto"
+                  />
+                </div>
+              )}
+
+              {product.description && (
+                <div>
+                  <h4 className="text-lg font-semibold text-gray-900 mb-4">
+                    Пълно описание
+                  </h4>
+                  <div
+                    dangerouslySetInnerHTML={{ __html: product.description }}
+                    className="space-y-6 text-base text-gray-700 prose max-h-90 overflow-auto"
+                  />
+                </div>
+              )}
             </div>
 
             <form className="mt-6">

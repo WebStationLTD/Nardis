@@ -1,4 +1,6 @@
 import dynamic from "next/dynamic";
+import StructuredData from "@/components/StructuredData";
+import { generateOrganizationSchema } from "@/utils/structuredData";
 
 // Компоненти, които не са критични за първоначалното зареждане
 const NewProducts = dynamic(() => import("@/components/newProducts"), {
@@ -56,6 +58,7 @@ import PromoSection from "@/components/promoSection";
 export default function Home() {
   return (
     <>
+      <StructuredData data={generateOrganizationSchema()} />
       <FeatureList />
       <PromoSection />
       <NewProducts />

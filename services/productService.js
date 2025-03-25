@@ -28,7 +28,7 @@ export async function getProducts(options = {}) {
     orderBy = "date",
     order = "desc",
     fields,
-    include
+    include,
   } = options;
 
   try {
@@ -45,14 +45,17 @@ export async function getProducts(options = {}) {
     if (maxPrice !== undefined) queryParams.max_price = maxPrice;
     if (onSale !== undefined) queryParams.on_sale = onSale;
     if (fields) queryParams._fields = fields;
-    if (include) queryParams.include = Array.isArray(include) ? include.join(",") : include;
+    if (include)
+      queryParams.include = Array.isArray(include)
+        ? include.join(",")
+        : include;
 
     const response = await WooCommerce.get("products", queryParams);
 
     return {
       products: response.data,
       totalPages: Number(response.headers["x-wp-totalpages"]) || 1,
-      totalProducts: Number(response.headers["x-wp-total"]) || 0
+      totalProducts: Number(response.headers["x-wp-total"]) || 0,
     };
   } catch (error) {
     console.error("Error fetching products:", error);
@@ -71,14 +74,22 @@ export async function getProduct(identifier, bySlug = false) {
     if (bySlug) {
       const response = await WooCommerce.get("products", {
         slug: identifier,
+        _fields:
+          "id,name,images,slug,sale_price,regular_price,description,short_description,price,related_ids,attributes,meta_data",
       });
       return response.data.length > 0 ? response.data[0] : null;
     }
-    
-    const response = await WooCommerce.get(`products/${identifier}`);
+
+    const response = await WooCommerce.get(`products/${identifier}`, {
+      _fields:
+        "id,name,images,slug,sale_price,regular_price,description,short_description,price,related_ids,attributes,meta_data",
+    });
     return response.data;
   } catch (error) {
-    console.error(`Error fetching product ${bySlug ? 'by slug' : 'by ID'}:`, error);
+    console.error(
+      `Error fetching product ${bySlug ? "by slug" : "by ID"}:`,
+      error
+    );
     throw error;
   }
 }
@@ -97,9 +108,9 @@ export async function getRelatedProducts(productIds, limit = 4) {
   try {
     const response = await WooCommerce.get("products", {
       include: Array.isArray(productIds) ? productIds.join(",") : productIds,
-      per_page: limit
+      per_page: limit,
     });
-    
+
     return response.data;
   } catch (error) {
     console.error("Error fetching related products:", error);
@@ -119,7 +130,7 @@ export async function getMaxProductPrice() {
       order: "desc",
       _fields: "id,price",
     });
-    
+
     return Math.ceil(Number(response.data[0]?.price) / 10) * 10 || 10000;
   } catch (error) {
     console.error("Error fetching max product price:", error);
@@ -141,7 +152,7 @@ export async function getProductsByIds(productIds) {
     const response = await WooCommerce.get("products", {
       include: Array.isArray(productIds) ? productIds.join(",") : productIds,
     });
-    
+
     return response.data;
   } catch (error) {
     console.error("Error fetching products by IDs:", error);
@@ -158,16 +169,12 @@ export async function getProductsByIds(productIds) {
  * @returns {Promise<Array>} - Array of category data
  */
 export async function getCategories(options = {}) {
-  const {
-    perPage = 100,
-    page = 1,
-    parent
-  } = options;
+  const { perPage = 100, page = 1, parent } = options;
 
   try {
     const queryParams = {
       per_page: perPage,
-      page
+      page,
     };
 
     if (parent !== undefined) queryParams.parent = parent;
@@ -178,4 +185,4 @@ export async function getCategories(options = {}) {
     console.error("Error fetching product categories:", error);
     throw error;
   }
-} 
+}

@@ -18,16 +18,15 @@ export default function ProductCard({ product, className = "" }) {
   const imageUrl = product.images?.[0]?.src || "/placeholder.webp";
 
   return (
-    <div className={`group relative border border-solid rounded-lg border-[#1e2939] py-4 px-4 flex flex-col h-full transition-transform hover:shadow-md ${className}`}>
+    <div
+      className={`group relative border border-solid rounded-lg border-[#1e2939] py-4 px-4 flex flex-col h-full transition-transform hover:shadow-md ${className}`}
+    >
       <div className="relative flex-shrink-0 h-52 sm:h-60 lg:h-64 w-full overflow-hidden rounded-md bg-gray-100 mb-4">
         {/* Wishlist button overlay */}
         <div className="absolute top-2 right-2 z-10">
-          <WishlistButton 
-            productId={product.id} 
-            size="small"
-          />
+          <WishlistButton productId={product.id} size="small" />
         </div>
-        
+
         <Link href={`/products/${product.slug}`} prefetch={true}>
           <Image
             width={280}
@@ -35,6 +34,8 @@ export default function ProductCard({ product, className = "" }) {
             alt={product.name}
             src={imageError ? "/placeholder.webp" : imageUrl}
             onError={() => setImageError(true)}
+            placeholder="blur"
+            blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlhZWiAAAAAAAABvogAAOPUAAAOQWFlaIAAAAAAAAGKZAAC3hQAAGNpYWVogAAAAAAAAJKAAAA+EAAC2z2Rlc2MAAAAAAAAAFklFQyBodHRwOi8vd3d3LmllYy5nZQAAAAAAAAAAAAAAAFklFQyBodHRwOi8vd3d3LmllYy5nZQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWFlaIAAAAAAAAPbWAAEAAAAA0y1zZjMyAAAAAAABDEIAAAXe///zJgAAB5IAAP2R///7ov///aMAAAPcAADAbA=="
             className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105 group-hover:opacity-75"
           />
           {hasSale && (
@@ -46,11 +47,15 @@ export default function ProductCard({ product, className = "" }) {
       </div>
 
       <div className="flex-grow flex flex-col">
-        <Link href={`/products/${product.slug}`} prefetch={true} className="flex-grow">
+        <Link
+          href={`/products/${product.slug}`}
+          prefetch={true}
+          className="flex-grow"
+        >
           <h3 className="text-sm text-gray-700 font-medium mb-2 line-clamp-2">
             {product.name}
           </h3>
-          
+
           <div className="mt-auto">
             {hasSale ? (
               <div className="flex items-center gap-2">
@@ -71,4 +76,4 @@ export default function ProductCard({ product, className = "" }) {
       </div>
     </div>
   );
-} 
+}
