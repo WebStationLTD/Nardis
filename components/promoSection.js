@@ -1,5 +1,14 @@
-// import Image from "next/image";
+import Image from "next/image";
 import Link from "next/link";
+
+// Импортираме всички изображения
+import hero1 from "@/public/hero-1.jpg";
+import hero2 from "@/public/hero-2.jpg";
+import hero3 from "@/public/hero-3.jpg";
+import hero4 from "@/public/hero-4.jpg";
+import hero5 from "@/public/hero-5.jpg";
+import hero6 from "@/public/hero-6.jpg";
+import hero7 from "@/public/hero-7.jpg";
 
 export default function Example() {
   return (
@@ -7,13 +16,13 @@ export default function Example() {
       <div className="pt-16 pb-80 sm:pt-24 sm:pb-40 lg:pt-40 lg:pb-48">
         <div className="relative mx-auto max-w-7xl px-4 sm:static sm:px-6 lg:px-8">
           <div className="sm:max-w-lg">
-            <h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl">
+            <h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl text-balance">
               Nardis
             </h1>
-            <p className="text-4xl text-white">
+            <p className="text-4xl text-white text-balance font-medium">
               Когато красотата срещне съвършенството
             </p>
-            <p className="mt-4 text-xl text-white">
+            <p className="mt-4 text-xl text-white text-balance">
               Вдъхновени от природата, усъвършенствани от науката – твоята кожа
               заслужава най-доброто.
             </p>
@@ -26,56 +35,77 @@ export default function Example() {
                   <div className="flex items-center space-x-6 lg:space-x-8">
                     <div className="grid shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
                       <div className="h-64 w-44 overflow-hidden rounded-lg lg:opacity-100">
-                        <img
-                          alt=""
-                          src="hero-1.jpg"
-                          className="size-full object-cover"
+                        <Image
+                          alt="Козметични продукти Nardis"
+                          src={hero1}
+                          width={176}
+                          height={256}
+                          placeholder="blur"
+                          className="object-cover"
                         />
                       </div>
                       <div className="h-64 w-44 overflow-hidden rounded-lg">
-                        <img
-                          alt=""
-                          src="hero-2.jpg"
-                          className="size-full object-cover"
-                        />
-                      </div>
-                    </div>
-                    <div className="grid shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
-                      <div className="h-64 w-44 overflow-hidden rounded-lg">
-                        <img
-                          alt=""
-                          src="hero-3.jpg"
-                          className="size-full object-cover"
-                        />
-                      </div>
-                      <div className="h-64 w-44 overflow-hidden rounded-lg">
-                        <img
-                          alt=""
-                          src="hero-4.jpg"
-                          className="size-full object-cover"
-                        />
-                      </div>
-                      <div className="h-64 w-44 overflow-hidden rounded-lg">
-                        <img
-                          alt=""
-                          src="hero-5.jpg"
-                          className="size-full object-cover"
+                        <Image
+                          alt="Козметични продукти Nardis"
+                          src={hero2}
+                          width={176}
+                          height={256}
+                          placeholder="blur"
+                          className="object-cover"
                         />
                       </div>
                     </div>
                     <div className="grid shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
                       <div className="h-64 w-44 overflow-hidden rounded-lg">
-                        <img
-                          alt=""
-                          src="hero-6.jpg"
-                          className="size-full object-cover"
+                        <Image
+                          alt="Козметични продукти Nardis"
+                          src={hero3}
+                          width={176}
+                          height={256}
+                          placeholder="blur"
+                          className="object-cover"
                         />
                       </div>
                       <div className="h-64 w-44 overflow-hidden rounded-lg">
-                        <img
-                          alt=""
-                          src="hero-7.jpg"
-                          className="size-full object-cover"
+                        <Image
+                          alt="Козметични продукти Nardis"
+                          src={hero4}
+                          width={176}
+                          height={256}
+                          placeholder="blur"
+                          className="object-cover"
+                        />
+                      </div>
+                      <div className="h-64 w-44 overflow-hidden rounded-lg">
+                        <Image
+                          alt="Козметични продукти Nardis"
+                          src={hero5}
+                          width={176}
+                          height={256}
+                          placeholder="blur"
+                          className="object-cover"
+                        />
+                      </div>
+                    </div>
+                    <div className="grid shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
+                      <div className="h-64 w-44 overflow-hidden rounded-lg">
+                        <Image
+                          alt="Козметични продукти Nardis"
+                          src={hero6}
+                          width={176}
+                          height={256}
+                          placeholder="blur"
+                          className="object-cover"
+                        />
+                      </div>
+                      <div className="h-64 w-44 overflow-hidden rounded-lg">
+                        <Image
+                          alt="Козметични продукти Nardis"
+                          src={hero7}
+                          width={176}
+                          height={256}
+                          placeholder="blur"
+                          className="object-cover"
                         />
                       </div>
                     </div>
