@@ -41,8 +41,6 @@ export default function Example() {
                           width={176}
                           height={256}
                           placeholder="blur"
-                          priority
-                          fetchPriority="high"
                           loading="eager"
                           className="object-cover"
                         />
