@@ -6,12 +6,14 @@ import ProductsList from "./productsList";
 // import Filters from "./filters";
 // import Pagination from "./pagination";
 
-// Компоненти, които не са критични за първоначалното зареждане
+// Компоненти, които поддържат SSR, но се зареждат лениво
 const Pagination = dynamic(() => import("./pagination"), {
+  ssr: true,
   loading: () => <p>Зареждане...</p>,
 });
 
 const Filters = dynamic(() => import("./filters"), {
+  ssr: true,
   loading: () => <p>Зареждане...</p>,
 });
 

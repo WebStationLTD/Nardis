@@ -1,15 +1,18 @@
 import dynamic from "next/dynamic";
-
 import { getProduct } from "@/services/productService";
 // import RelatedProducts from "@/components/relatedProducts";
 import Image from "next/image";
 // import WishlistButton from "@/components/wishlistButton";
+import StructuredData from "@/components/StructuredData";
+import { generateProductSchema } from "@/utils/structuredData";
 
-// Компоненти, които не са критични за първоначалното зареждане
+// Компоненти с SSR поддръжка, но зареждани лениво
 const RelatedProducts = dynamic(() => import("@/components/relatedProducts"), {
+  ssr: true,
   loading: () => <p>Зареждане...</p>,
 });
 const WishlistButton = dynamic(() => import("@/components/wishlistButton"), {
+  ssr: true,
   loading: () => <p>Зареждане...</p>,
 });
 
@@ -27,6 +30,49 @@ import {
 } from "@headlessui/react";
 import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 import { StarIcon } from "@heroicons/react/20/solid";
+
+export async function generateMetadata({ params }) {
+  const { slug } = await params;
+
+  try {
+    // Извличане на данните за продукта използвайки slug параметъра
+    const product = await getProduct(slug, true);
+
+    if (!product) {
+      return {
+        title: "Продуктът не е намерен | Nardis",
+        description: "Продуктът, който търсите, не беше намерен.",
+      };
+    }
+
+    // Премахване на HTML тагове от описанието за описанието в метаданните
+    const plainDescription = product.short_description
+      ? product.short_description.replace(/<[^>]*>/g, "")
+      : product.description
+      ? product.description.replace(/<[^>]*>/g, "")
+      : `Купете ${product.name} от официалния магазин на Nardis.`;
+
+    return {
+      title: `${product.name} | Nardis`,
+      description: plainDescription.substring(0, 160),
+      openGraph: {
+        title: `${product.name} | Nardis`,
+        description: plainDescription.substring(0, 160),
+        images: product.images.length > 0 ? [product.images[0].src] : [],
+        type: "website",
+      },
+      alternates: {
+        canonical: `https://nardis.vercel.app/products/${product.slug}`,
+      },
+    };
+  } catch (error) {
+    console.error("Грешка при генериране на метаданни:", error);
+    return {
+      title: "Продукт | Nardis",
+      description: "Разгледайте нашите висококачествени козметични продукти.",
+    };
+  }
+}
 
 export default async function ProductDetails({ params }) {
   const { slug } = await params;
@@ -46,6 +92,7 @@ export default async function ProductDetails({ params }) {
 
   return (
     <div className="mx-auto max-w-7xl sm:px-6 sm:pt-16 lg:px-8">
+      {product && <StructuredData data={generateProductSchema(product)} />}
       <div className="mx-auto max-w-2xl lg:max-w-none">
         <div className="lg:grid lg:grid-cols-2 lg:items-start lg:gap-x-8">
           {/* Image gallery */}

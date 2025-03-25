@@ -6,16 +6,19 @@ import {
 } from "@/services/productService";
 import { Suspense } from "react";
 
-// Dynamically import components that are not critical for initial loading
+// Dynamically import components with SSR support
 const Pagination = dynamic(() => import("./pagination"), {
+  ssr: true,
   loading: () => <p>Зареждане...</p>,
 });
 
 const Filters = dynamic(() => import("./filters"), {
+  ssr: true,
   loading: () => <p>Зареждане...</p>,
 });
 
 const ProductsList = dynamic(() => import("./productsList"), {
+  ssr: true,
   loading: () => <p>Зареждане...</p>,
 });
 
