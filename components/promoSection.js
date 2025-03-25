@@ -63,6 +63,7 @@ export default function Example() {
                           src={hero3}
                           width={176}
                           height={256}
+                          priority
                           placeholder="blur"
                           className="object-cover"
                         />
