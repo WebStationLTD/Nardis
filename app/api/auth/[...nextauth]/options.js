@@ -17,12 +17,8 @@ export const options = {
       },
       async authorize(credentials) {
         try {
-          if (!credentials?.email || !credentials?.password) {
-            throw new Error("Email and password are required");
-          }
-
           const res = await fetch(
-            `${process.env.NEXT_PUBLIC_WORDPRESS_SITE_URL}/?rest_route=/simple-jwt-login/v1/auth&email=${encodeURIComponent(credentials.email)}&password=${encodeURIComponent(credentials.password)}`,
+            `${process.env.NEXT_PUBLIC_WORDPRESS_SITE_URL}/?rest_route=/simple-jwt-login/v1/auth&email=${credentials.email}&password=${credentials.password}`,
             {
               method: "POST",
               headers: { "Content-Type": "application/json" },
@@ -35,8 +31,8 @@ export const options = {
 
           const response = await res.json();
 
+          console.log("WordPress API response:", JSON.stringify(response));
           if (!res.ok || response.code) {
-            console.log("WordPress API error:", JSON.stringify(response));
             throw new Error(response.message || "Invalid credentials");
           }
 
@@ -52,14 +48,15 @@ export const options = {
               const tokenParts = token.split('.');
               if (tokenParts.length === 3) {
                 const tokenPayload = JSON.parse(Buffer.from(tokenParts[1], 'base64').toString());
+                console.log("JWT payload:", JSON.stringify(tokenPayload));
                 
                 // If token has the ID, use it
                 if (tokenPayload.id) {
+                  console.log("Found user ID in token payload:", tokenPayload.id);
                   return {
                     id: tokenPayload.id,
                     name: tokenPayload.username || userData.user_display_name || credentials.email,
                     email: tokenPayload.email || userData.user_email || credentials.email,
-                    token: token, // Store token for future API requests
                   };
                 }
               }
@@ -70,12 +67,12 @@ export const options = {
           
           // Fallback to looking for ID in response data
           const userId = userData.id || userData.ID || userData.user_id || "unknown";
+          console.log("Using user ID from response:", userId);
           
           return {
             id: userId,
             name: userData.username || userData.user_display_name || credentials.email,
             email: userData.email || userData.user_email || credentials.email,
-            token: token, // Store token for future API requests
           };
         } catch (error) {
           console.error("Authentication error:", error);
@@ -86,25 +83,18 @@ export const options = {
   ],
   pages: {
     signIn: '/login',
-    error: '/login', // Redirect to login page on error
-    newUser: '/my-account', // Redirect new users after sign up
   },
   callbacks: {
-    async jwt({ token, user, account }) {
+    async jwt({ token, user }) {
       // When signIn succeeds, user object is passed
       if (user) {
         // Store user info in the JWT token
-        token.user = {
-          id: user.id,
-          name: user.name,
-          email: user.email,
-        };
+        console.log("User object in JWT callback:", JSON.stringify(user));
+        token.user = user;
         
         // Make sure we store the ID exactly as WordPress provides it
         token.wordpress_user_id = user.id;
-        
-        // Store the JWT token for WordPress API requests
-        token.access_token = user.token;
+        console.log("Setting wordpress_user_id in token:", token.wordpress_user_id);
       }
       return token;
     },
@@ -115,32 +105,16 @@ export const options = {
       // Store the WordPress user ID directly on the user object for easy access
       session.user.id = token.wordpress_user_id;
       
-      // Add token to session for API requests
-      session.access_token = token.access_token;
-      
+      console.log("Session user ID set to:", session.user.id);
       return session;
     },
   },
-  // Enhanced security configs
-  secret: process.env.NEXTAUTH_SECRET, // Make sure this is set in your env vars
-  debug: process.env.NODE_ENV === "development",
+  debug: false,
   session: {
     strategy: "jwt",
     maxAge: 30 * 24 * 60 * 60, // 30 days
   },
-  // Cookie configuration
-  cookies: {
-    sessionToken: {
-      name: `next-auth.session-token`,
-      options: {
-        httpOnly: true,
-        sameSite: "lax",
-        path: "/",
-        secure: process.env.NODE_ENV === "production",
-      },
-    },
-  },
-  // Site configuration 
+  // Add site URL configuration
   useSecureCookies: process.env.NODE_ENV === "production",
-  url: process.env.NEXTAUTH_URL || "http://localhost:3000",
+  url: process.env.NEXTAUTH_URL,
 };

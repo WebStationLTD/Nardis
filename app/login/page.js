@@ -1,59 +1,48 @@
 "use client";
 
-import { useEffect, useState, Suspense } from "react";
+import { useEffect, Suspense } from "react";
 import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { LoginSchema } from "@/utils/validationSchemas";
 
 function LoginForm() {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl") || "/my-account";
-  const error = searchParams.get("error");
-  const [errorMessage, setErrorMessage] = useState("");
+  const callbackUrl = "/my-account";
 
-  const { data: session, status } = useSession();
-
-  // Handle error from URL parameter
-  useEffect(() => {
-    if (error) {
-      const errorMessages = {
-        "CredentialsSignin": "Invalid email or password",
-        "SessionRequired": "Please sign in to access this page",
-        "default": "An error occurred during authentication"
-      };
-      setErrorMessage(errorMessages[error] || errorMessages.default);
-    }
-  }, [error]);
+  const { data: status } = useSession();
 
   // Redirect if already authenticated
   useEffect(() => {
     if (status === "authenticated") {
       router.push(callbackUrl);
     }
-  }, [status, router, callbackUrl]);
+  }, [status, router]);
 
   const handleSubmit = async (values, { setSubmitting, setStatus }) => {
     setStatus(null);
-    setErrorMessage("");
-    
+
     try {
       const result = await signIn("credentials", {
         email: values.email,
         password: values.password,
         redirect: false,
-        callbackUrl,
       });
 
       if (result.error) {
-        setErrorMessage(result.error);
-      } else if (result.ok) {
+        setStatus({
+          success: false,
+          message: result.error,
+        });
+      } else {
         router.push(callbackUrl);
       }
     } catch (err) {
-      setErrorMessage("An unexpected error occurred. Please try again.");
+      setStatus({
+        success: false,
+        message: "An unexpected error occurred. Please try again.",
+      });
     } finally {
       setSubmitting(false);
     }
@@ -80,15 +69,6 @@ function LoginForm() {
           </h2>
         </div>
 
-        {errorMessage && (
-          <div
-            className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
-            role="alert"
-          >
-            <span className="block sm:inline">{errorMessage}</span>
-          </div>
-        )}
-
         <Formik
           initialValues={{
             email: "",
@@ -99,6 +79,15 @@ function LoginForm() {
         >
           {({ isSubmitting, status }) => (
             <Form className="mt-8 space-y-6">
+              {status && !status.success && (
+                <div
+                  className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+                  role="alert"
+                >
+                  <span className="block sm:inline">{status.message}</span>
+                </div>
+              )}
+
               <div className="rounded-md shadow-sm -space-y-px">
                 <div>
                   <label htmlFor="email" className="sr-only">
