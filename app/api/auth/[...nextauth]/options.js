@@ -2,18 +2,13 @@ import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 export const options = {
+  // Configure authentication providers
   providers: [
     CredentialsProvider({
       name: "Credentials",
       credentials: {
-        email: {
-          label: "Email: ",
-          type: "email",
-        },
-        password: {
-          label: "Password: ",
-          type: "password",
-        },
+        email: { label: "Email: ", type: "email" },
+        password: { label: "Password: ", type: "password" },
       },
       async authorize(credentials) {
         try {
@@ -31,90 +26,84 @@ export const options = {
 
           const response = await res.json();
 
-          console.log("WordPress API response:", JSON.stringify(response));
           if (!res.ok || response.code) {
             throw new Error(response.message || "Invalid credentials");
           }
 
-          // The WordPress JWT plugin returns data in different formats depending on configuration
-          // Let's handle all possible locations of the user ID
+          // Extract JWT token and user data from response
           const token = response.data?.jwt || response.jwt;
           const userData = response.data || response;
-          
-          // Log the token data to help debug
+
+          // Try to extract user ID from JWT token payload
           if (token) {
             try {
-              // Decode the JWT token to see what's inside
-              const tokenParts = token.split('.');
+              const tokenParts = token.split(".");
               if (tokenParts.length === 3) {
-                const tokenPayload = JSON.parse(Buffer.from(tokenParts[1], 'base64').toString());
-                console.log("JWT payload:", JSON.stringify(tokenPayload));
-                
-                // If token has the ID, use it
+                const tokenPayload = JSON.parse(
+                  Buffer.from(tokenParts[1], "base64").toString()
+                );
+
                 if (tokenPayload.id) {
-                  console.log("Found user ID in token payload:", tokenPayload.id);
                   return {
                     id: tokenPayload.id,
-                    name: tokenPayload.username || userData.user_display_name || credentials.email,
-                    email: tokenPayload.email || userData.user_email || credentials.email,
+                    name:
+                      tokenPayload.username ||
+                      userData.user_display_name ||
+                      credentials.email,
+                    email:
+                      tokenPayload.email ||
+                      userData.user_email ||
+                      credentials.email,
                   };
                 }
               }
             } catch (e) {
-              console.log("Error decoding JWT token:", e);
+              // Continue with fallback if token parsing fails
             }
           }
-          
-          // Fallback to looking for ID in response data
-          const userId = userData.id || userData.ID || userData.user_id || "unknown";
-          console.log("Using user ID from response:", userId);
-          
+
+          // Fallback to user ID from response data
+          const userId =
+            userData.id || userData.ID || userData.user_id || "unknown";
+
           return {
             id: userId,
-            name: userData.username || userData.user_display_name || credentials.email,
+            name:
+              userData.username ||
+              userData.user_display_name ||
+              credentials.email,
             email: userData.email || userData.user_email || credentials.email,
           };
         } catch (error) {
-          console.error("Authentication error:", error);
           throw new Error(error.message || "Login failed");
         }
       },
     }),
   ],
+
+  // Custom pages
   pages: {
-    signIn: '/login',
+    signIn: "/login",
+    error: "/login",
   },
-  // callbacks: {
-  //   async jwt({ token, user }) {
-  //     // When signIn succeeds, user object is passed
-  //     if (user) {
-  //       // Store user info in the JWT token
-  //       console.log("User object in JWT callback:", JSON.stringify(user));
-  //       token.user = user;
-        
-  //       // Make sure we store the ID exactly as WordPress provides it
-  //       token.wordpress_user_id = user.id;
-  //       console.log("Setting wordpress_user_id in token:", token.wordpress_user_id);
-  //     }
-  //     return token;
-  //   },
-  //   async session({ session, token }) {
-  //     // Make user info available in session
-  //     session.user = token.user || {};
-      
-  //     // Store the WordPress user ID directly on the user object for easy access
-  //     session.user.id = token.wordpress_user_id;
-      
-  //     console.log("Session user ID set to:", session.user.id);
-  //     return session;
-  //   },
-  // },
-  // debug: false,
-  // session: {
-  //   strategy: "jwt",
-  //   maxAge: 30 * 24 * 60 * 60, // 30 days
-  // },
-  // // Add site URL configuration
+
+  // Callbacks for JWT and session handling
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.user = user;
+        token.wordpress_user_id = user.id;
+      }
+      return token;
+    },
+
+    async session({ session, token }) {
+      session.user = token.user || {};
+      session.user.id = token.wordpress_user_id;
+      return session;
+    },
+  },
+
+  // Security settings
   // useSecureCookies: process.env.NODE_ENV === "production",
-  // url: process.env.NEXTAUTH_URL,
 };

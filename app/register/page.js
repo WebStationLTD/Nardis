@@ -1,14 +1,18 @@
 "use client";
 
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { RegisterSchema } from "@/utils/validationSchemas";
+import { PublicRoute } from "@/components/RouteGuard";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
-export default function RegisterPage() {
+function RegisterForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get('callbackUrl') || "/my-account";
   const [serverError, setServerError] = useState("");
 
   const handleSubmit = async (values, { setSubmitting, setStatus }) => {
@@ -39,11 +43,11 @@ export default function RegisterPage() {
         email: values.email,
         password: values.password,
         redirect: false,
-        callbackUrl: "/my-account",
+        callbackUrl: callbackUrl,
       });
 
       // Redirect to my-account page
-      router.push("/my-account");
+      router.push(callbackUrl);
     } catch (err) {
       setServerError(err.message || "Регистрацията неуспешна");
       setStatus({ success: false });
@@ -184,5 +188,15 @@ export default function RegisterPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function RegisterPage() {
+  return (
+    <Suspense fallback={<LoadingSpinner />}>
+      <PublicRoute>
+        <RegisterForm />
+      </PublicRoute>
+    </Suspense>
   );
 }

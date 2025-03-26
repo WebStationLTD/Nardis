@@ -1,21 +1,15 @@
 import { getOrders } from "@/services/orderService";
 import { getServerSession } from "next-auth";
 import { options } from "@/app/api/auth/[...nextauth]/options";
-import { redirect } from "next/navigation";
 import Link from "next/link";
 import SignOutButton from "@/components/SignOutButton";
 
 export default async function MyAccount() {
-
   // Get server session
   const session = await getServerSession(options);
   
-  if (!session) {
-    redirect("/login");
-  }
-
   // Get user ID - check various possible locations
-  const userId = session.user?.id
+  const userId = session?.user?.id || "";
   
   // Fetch orders for the current user
   const orders = await getOrders(userId);
@@ -29,11 +23,11 @@ export default async function MyAccount() {
         <div className="grid md:grid-cols-2 gap-6">
           <div>
             <p className="text-gray-600 mb-1">Име:</p>
-            <p className="font-medium">{session.user?.name || "Не е посочено"}</p>
+            <p className="font-medium">{session?.user?.name || "Не е посочено"}</p>
           </div>
           <div>
             <p className="text-gray-600 mb-1">Имейл:</p>
-            <p className="font-medium">{session.user?.email || "Не е посочен"}</p>
+            <p className="font-medium">{session?.user?.email || "Не е посочен"}</p>
           </div>
           <div>
             <p className="text-gray-600 mb-1">Потребителски ID:</p>
