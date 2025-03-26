@@ -6,19 +6,33 @@ import Link from "next/link";
 import SignOutButton from "@/components/SignOutButton";
 
 export default async function MyAccount() {
-
   // Get server session
   const session = await getServerSession(options);
   
+  // Redirect to login if no session
   if (!session) {
-    redirect("/login");
+    redirect("/login?callbackUrl=/my-account");
   }
 
   // Get user ID - check various possible locations
-  const userId = session.user?.id
+  const userId = session.user?.id;
+  
+  // Handle missing user ID
+  if (!userId || userId === "unknown") {
+    console.error("User ID missing or invalid:", userId);
+    // You could handle this differently, like showing an error message
+    // For now, we'll attempt to fetch orders anyway but log the issue
+  }
   
   // Fetch orders for the current user
-  const orders = await getOrders(userId);
+  let orders = [];
+  try {
+    orders = await getOrders(userId);
+  } catch (error) {
+    console.error("Error fetching orders:", error);
+    // We'll show an empty orders list if there's an error
+    orders = [];
+  }
 
   return (
     <div className="container mx-auto py-8 px-4">
