@@ -7,14 +7,8 @@ export default function SignOutButton() {
   const router = useRouter();
 
   const handleSignOut = async () => {
-    try {
-      await signOut({ redirect: false });
-      // Use Next.js router for SPA navigation
-      router.refresh(); // Force revalidation of session data
-      router.push('/');
-    } catch (error) {
-      console.error('Error signing out:', error);
-    }
+    const data = await signOut({ redirect: false, callbackUrl: '/' });
+    router.push(data.url);
   };
 
   return (

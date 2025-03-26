@@ -109,22 +109,12 @@ export const options = {
       return session;
     },
   },
-  debug: process.env.NODE_ENV === "development",
+  debug: false,
   session: {
     strategy: "jwt",
     maxAge: 30 * 24 * 60 * 60, // 30 days
   },
-  // Secure cookies and site URL configuration
+  // Add site URL configuration
   useSecureCookies: process.env.NODE_ENV === "production",
-  cookies: {
-    sessionToken: {
-      name: `next-auth.session-token`,
-      options: {
-        httpOnly: true,
-        sameSite: "lax",
-        path: "/",
-        secure: process.env.NODE_ENV === "production",
-      }
-    }
-  }
+  url: process.env.NEXTAUTH_URL,
 };
