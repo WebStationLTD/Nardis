@@ -141,7 +141,7 @@ export default function Example({ categories }) {
                           </div>
                           <div className="absolute inset-0 flex flex-col justify-end">
                             <div className="bg-white/60 p-4 text-base sm:text-sm">
-                              <a
+                              <Link
                                 href={item.href}
                                 className="font-medium text-gray-900"
                                 onClick={() => setOpen(false)}
@@ -151,7 +151,7 @@ export default function Example({ categories }) {
                                   className="absolute inset-0"
                                 />
                                 {item.name}
-                              </a>
+                              </Link>
                               <p
                                 aria-hidden="true"
                                 className="mt-0.5 text-gray-700 sm:mt-1"
@@ -256,13 +256,13 @@ export default function Example({ categories }) {
                   <Bars3Icon aria-hidden="true" className="size-6" />
                 </button>
 
-                <a
+                <Link
                   href="#"
                   className="ml-2 p-2 text-gray-400 hover:text-gray-500"
                 >
                   <span className="sr-only">Search</span>
                   <MagnifyingGlassIcon aria-hidden="true" className="size-6" />
-                </a>
+                </Link>
               </div>
 
               {/* Logo */}
@@ -435,13 +435,13 @@ export default function Example({ categories }) {
 
               <div className="flex flex-1 items-center justify-end">
                 {/* Search */}
-                <a
+                <Link
                   href="#"
                   className="ml-6 hidden p-2 text-white hover:text-gray-500 lg:block"
                 >
                   <span className="sr-only">Search</span>
                   <MagnifyingGlassIcon aria-hidden="true" className="size-6" />
-                </a>
+                </Link>
 
                 {/* Log in */}
                 <Link
@@ -463,7 +463,7 @@ export default function Example({ categories }) {
 
                 {/* Cart */}
                 <div className="ml-4 flow-root lg:ml-6">
-                  <a href="#" className="group -m-2 flex items-center p-2">
+                  <Link href="#" className="group -m-2 flex items-center p-2">
                     <ShoppingBagIcon
                       aria-hidden="true"
                       className="size-6 shrink-0 text-white group-hover:text-gray-500"
@@ -472,7 +472,7 @@ export default function Example({ categories }) {
                       0
                     </span>
                     <span className="sr-only">items in cart, view bag</span>
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>

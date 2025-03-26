@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Example() {
   return (
     <div className="relative isolate overflow-hidden bg-gray-800">
@@ -11,15 +13,15 @@ export default function Example() {
             потребителите в България.
           </p>
           <div className="mt-10 flex items-center justify-center gap-x-6">
-            <a
+            <Link
               href="#"
               className="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-xs hover:bg-gray-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
             >
               Вижте повече
-            </a>
-            <a href="#" className="text-sm/6 font-semibold text-white">
+            </Link>
+            <Link href="#" className="text-sm/6 font-semibold text-white">
               Контакти <span aria-hidden="true">→</span>
-            </a>
+            </Link>
           </div>
         </div>
       </div>

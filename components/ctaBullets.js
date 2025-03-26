@@ -1,5 +1,6 @@
 import { CheckCircleIcon } from "@heroicons/react/20/solid";
 import Image from "next/image";
+import Link from "next/link";
 
 const benefits = [
   "Competitive salaries",
@@ -47,13 +48,13 @@ export default function Example() {
                 ))}
               </ul>
               <div className="mt-10 flex">
-                <a
+                <Link
                   href="#"
                   className="text-sm/6 font-normal text-[#ffffff] hover:text-black"
                 >
                   Вижте всички продукти от Asian SPA{" "}
                   <span aria-hidden="true">&rarr;</span>
-                </a>
+                </Link>
               </div>
             </div>
           </div>

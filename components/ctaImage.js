@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Example() {
   return (
@@ -51,12 +52,12 @@ export default function Example() {
             продукти, като крем коректор, база за сенки за очи и база за грим.
           </p>
           <div className="mt-8">
-            <a
+            <Link
               href="#"
               className="inline-flex rounded-md bg-[#b3438f] px-3.5 py-2.5 text-sm font-semibold text-white hover:text-black shadow-xs hover:bg-[#ebedeb] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
             >
               Купете онлайн
-            </a>
+            </Link>
           </div>
         </div>
       </div>

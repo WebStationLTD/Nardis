@@ -24,12 +24,12 @@ const NewProducts = async () => {
           <h2 className="text-2xl font-bold tracking-tight text-gray-900">
             Нови продукти
           </h2>
-          <a
+          <Link
             href="#"
             className="hidden text-base font-medium text-[#b3438f] hover:text-black md:block"
           >
             Вижте всички <span aria-hidden="true"> &rarr;</span>
-          </a>
+          </Link>
         </div>
 
         <div className="mt-6 grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 md:grid-cols-3 lg:grid-cols-4 lg:gap-y-0 lg:gap-x-8">
@@ -39,12 +39,12 @@ const NewProducts = async () => {
         </div>
 
         <div className="mt-8 text-sm md:hidden">
-          <a
+          <Link
             href="#"
             className="text-base font-medium text-[#b3438f] hover:text-black"
           >
             Вижте всички <span aria-hidden="true"> &rarr;</span>
-          </a>
+          </Link>
         </div>
       </div>
     </div>
