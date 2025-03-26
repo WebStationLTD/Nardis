@@ -142,5 +142,5 @@ export const options = {
   },
   // Site configuration 
   useSecureCookies: process.env.NODE_ENV === "production",
-  url: process.env.NEXTAUTH_URL,
+  url: process.env.NEXTAUTH_URL || "http://localhost:3000",
 };
