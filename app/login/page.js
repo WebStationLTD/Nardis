@@ -11,7 +11,7 @@ function LoginForm() {
   const router = useRouter();
   const callbackUrl = "/my-account";
 
-  const { data: status } = useSession();
+  const { data: session, status } = useSession();
 
   // Redirect if already authenticated
   useEffect(() => {
@@ -36,6 +36,9 @@ function LoginForm() {
           message: result.error,
         });
       } else {
+        // Use the Next.js router for client-side navigation
+        // This triggers a revalidation of the session
+        router.refresh(); // Force Next.js to revalidate data
         router.push(callbackUrl);
       }
     } catch (err) {

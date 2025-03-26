@@ -84,37 +84,47 @@ export const options = {
   pages: {
     signIn: '/login',
   },
-  // callbacks: {
-  //   async jwt({ token, user }) {
-  //     // When signIn succeeds, user object is passed
-  //     if (user) {
-  //       // Store user info in the JWT token
-  //       console.log("User object in JWT callback:", JSON.stringify(user));
-  //       token.user = user;
+  callbacks: {
+    async jwt({ token, user }) {
+      // When signIn succeeds, user object is passed
+      if (user) {
+        // Store user info in the JWT token
+        console.log("User object in JWT callback:", JSON.stringify(user));
+        token.user = user;
         
-  //       // Make sure we store the ID exactly as WordPress provides it
-  //       token.wordpress_user_id = user.id;
-  //       console.log("Setting wordpress_user_id in token:", token.wordpress_user_id);
-  //     }
-  //     return token;
-  //   },
-  //   async session({ session, token }) {
-  //     // Make user info available in session
-  //     session.user = token.user || {};
+        // Make sure we store the ID exactly as WordPress provides it
+        token.wordpress_user_id = user.id;
+        console.log("Setting wordpress_user_id in token:", token.wordpress_user_id);
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      // Make user info available in session
+      session.user = token.user || {};
       
-  //     // Store the WordPress user ID directly on the user object for easy access
-  //     session.user.id = token.wordpress_user_id;
+      // Store the WordPress user ID directly on the user object for easy access
+      session.user.id = token.wordpress_user_id;
       
-  //     console.log("Session user ID set to:", session.user.id);
-  //     return session;
-  //   },
-  // },
-  // debug: false,
-  // session: {
-  //   strategy: "jwt",
-  //   maxAge: 30 * 24 * 60 * 60, // 30 days
-  // },
-  // // Add site URL configuration
-  // useSecureCookies: process.env.NODE_ENV === "production",
-  // url: process.env.NEXTAUTH_URL,
+      console.log("Session user ID set to:", session.user.id);
+      return session;
+    },
+  },
+  debug: process.env.NODE_ENV === "development",
+  session: {
+    strategy: "jwt",
+    maxAge: 30 * 24 * 60 * 60, // 30 days
+  },
+  // Secure cookies and site URL configuration
+  useSecureCookies: process.env.NODE_ENV === "production",
+  cookies: {
+    sessionToken: {
+      name: `next-auth.session-token`,
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        secure: process.env.NODE_ENV === "production",
+      }
+    }
+  }
 };
