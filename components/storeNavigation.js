@@ -143,7 +143,8 @@ export default function StoreNavigation({ navigationData }) {
                             <Image
                               src={item.imageSrc}
                               alt={item.imageAlt}
-                              fill
+                              width={280}
+                              height={256}
                               className="object-cover object-center"
                             />
                           </div>
@@ -307,7 +308,8 @@ export default function StoreNavigation({ navigationData }) {
                                           <Image
                                             src={item.imageSrc}
                                             alt={item.imageAlt}
-                                            fill
+                                            width={600}
+                                            height={256}
                                             className="object-cover object-center"
                                           />
                                         </div>
