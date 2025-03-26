@@ -1,21 +1,16 @@
 'use client';
 
-import { signOut, useSession } from 'next-auth/react';
+import { signOut } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 
 export default function SignOutButton() {
   const router = useRouter();
-  const { update } = useSession();
 
   const handleSignOut = async () => {
     try {
-      // Sign out without redirect
       await signOut({ redirect: false });
-      
-      // Update the session data
-      await update();
-      
-      // Navigate to home page
+      // Use Next.js router for SPA navigation
+      router.refresh(); // Force revalidation of session data
       router.push('/');
     } catch (error) {
       console.error('Error signing out:', error);

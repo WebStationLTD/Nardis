@@ -3,9 +3,7 @@ import StoreNavigation from "@/components/storeNavigation";
 import FooterSection from "@/components/footer";
 import CookieConsentBanner from "@/components/cookieConsentBanner";
 import { Inter } from "next/font/google";
-import AuthProvider from "@/components/AuthProvider";
-import { getServerSession } from "next-auth";
-import { options } from "@/app/api/auth/[...nextauth]/options";
+import AuthProvider from "@/context/AuthProvider";
 import { getNavigationData } from "@/services/navigationService";
 
 const inter = Inter({
@@ -23,16 +21,13 @@ export const metadata = {
 };
 
 export default async function RootLayout({ children }) {
-  // Get session from server for hydration
-  const session = await getServerSession(options);
-  
   // Fetch navigation data for the store
   const navigationData = await getNavigationData();
 
   return (
     <html lang="bg" className={inter.variable}>
       <body>
-        <AuthProvider session={session}>
+        <AuthProvider>
           <StoreNavigation navigationData={navigationData} />
           {children}
           <CookieConsentBanner />

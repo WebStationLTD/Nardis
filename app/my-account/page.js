@@ -4,14 +4,12 @@ import { options } from "@/app/api/auth/[...nextauth]/options";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import SignOutButton from "@/components/SignOutButton";
-import RequireAuth from "@/components/RequireAuth";
 
-// Server component wrapped with client-side RequireAuth
-export default async function MyAccountPage() {
+export default async function MyAccount() {
+
   // Get server session
   const session = await getServerSession(options);
   
-  // Server-side redirect if not authenticated
   if (!session) {
     redirect("/login");
   }
@@ -21,19 +19,6 @@ export default async function MyAccountPage() {
   
   // Fetch orders for the current user
   const orders = await getOrders(userId);
-
-  // Wrap the content in the client-side RequireAuth component
-  // This provides double protection - server and client side
-  return (
-    <RequireAuth>
-      <MyAccountContent session={session} orders={orders} />
-    </RequireAuth>
-  );
-}
-
-// Client component that will receive session and orders data
-function MyAccountContent({ session, orders }) {
-  const userId = session?.user?.id;
 
   return (
     <div className="container mx-auto py-8 px-4">

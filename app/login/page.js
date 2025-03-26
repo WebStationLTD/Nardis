@@ -11,14 +11,14 @@ function LoginForm() {
   const router = useRouter();
   const callbackUrl = "/my-account";
 
-  const { data: session, status, update } = useSession();
+  const { data: session, status } = useSession();
 
   // Redirect if already authenticated
   useEffect(() => {
     if (status === "authenticated") {
       router.push(callbackUrl);
     }
-  }, [status, router, callbackUrl]);
+  }, [status, router]);
 
   const handleSubmit = async (values, { setSubmitting, setStatus }) => {
     setStatus(null);
@@ -36,9 +36,9 @@ function LoginForm() {
           message: result.error,
         });
       } else {
-        // Update the session with the latest data
-        await update(); 
-        // Use Next.js router for client-side navigation
+        // Use the Next.js router for client-side navigation
+        // This triggers a revalidation of the session
+        router.refresh(); // Force Next.js to revalidate data
         router.push(callbackUrl);
       }
     } catch (err) {
