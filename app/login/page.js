@@ -8,17 +8,17 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { LoginSchema } from "@/utils/validationSchemas";
 
 function LoginForm() {
-  const router = useRouter();
-  const callbackUrl = "/my-account";
+  // const router = useRouter();
+  // const callbackUrl = "/my-account";
 
-  const { data: status } = useSession();
+  // const { data: status } = useSession();
 
-  // Redirect if already authenticated
-  useEffect(() => {
-    if (status === "authenticated") {
-      router.push(callbackUrl);
-    }
-  }, [status, router]);
+  // // Redirect if already authenticated
+  // useEffect(() => {
+  //   if (status === "authenticated") {
+  //     router.push(callbackUrl);
+  //   }
+  // }, [status, router]);
 
   const handleSubmit = async (values, { setSubmitting, setStatus }) => {
     setStatus(null);
@@ -27,18 +27,19 @@ function LoginForm() {
       const result = await signIn("credentials", {
         email: values.email,
         password: values.password,
-        redirect: false,
+        callbackUrl: "/my-account",
       });
 
-      if (result.error) {
-        setStatus({
-          success: false,
-          message: result.error,
-        });
-      } else {
-        router.push(callbackUrl);
-      }
+      // if (result.error) {
+      //   setStatus({
+      //     success: false,
+      //     message: result.error,
+      //   });
+      // } else {
+      //   router.push(callbackUrl);
+      // }
     } catch (err) {
+      console.log(err);
       setStatus({
         success: false,
         message: "An unexpected error occurred. Please try again.",
@@ -49,16 +50,16 @@ function LoginForm() {
   };
 
   // Show loading state while checking authentication
-  if (status === "loading") {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-center">
-          <div className="w-12 h-12 rounded-full border-4 border-gray-200 border-t-indigo-600 animate-spin mx-auto"></div>
-          <p className="mt-2 text-gray-600">Зареждане...</p>
-        </div>
-      </div>
-    );
-  }
+  // if (status === "loading") {
+  //   return (
+  //     <div className="flex items-center justify-center min-h-screen">
+  //       <div className="text-center">
+  //         <div className="w-12 h-12 rounded-full border-4 border-gray-200 border-t-indigo-600 animate-spin mx-auto"></div>
+  //         <p className="mt-2 text-gray-600">Зареждане...</p>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
