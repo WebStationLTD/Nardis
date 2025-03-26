@@ -1,17 +1,17 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, Suspense } from "react";
 import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { LoginSchema } from "@/utils/validationSchemas";
 
-export default function LoginPage() {
+function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") || "/my-account";
-  
+
   const { data: session, status } = useSession();
 
   // Redirect if already authenticated
@@ -103,6 +103,11 @@ export default function LoginPage() {
                     className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                     placeholder="Имейл адрес"
                   />
+                  <ErrorMessage
+                    name="email"
+                    component="div"
+                    className="text-red-500 text-xs"
+                  />
                 </div>
                 <div>
                   <label htmlFor="password" className="sr-only">
@@ -114,6 +119,11 @@ export default function LoginPage() {
                     type="password"
                     className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                     placeholder="Парола"
+                  />
+                  <ErrorMessage
+                    name="password"
+                    component="div"
+                    className="text-red-500 text-xs"
                   />
                 </div>
               </div>
@@ -138,19 +148,6 @@ export default function LoginPage() {
                   {isSubmitting ? "Влизане..." : "Вход"}
                 </button>
               </div>
-
-              <div className="flex justify-between mt-2">
-                <ErrorMessage
-                  name="email"
-                  component="div"
-                  className="text-red-500 text-xs"
-                />
-                <ErrorMessage
-                  name="password"
-                  component="div"
-                  className="text-red-500 text-xs"
-                />
-              </div>
             </Form>
           )}
         </Formik>
@@ -168,5 +165,22 @@ export default function LoginPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex items-center justify-center min-h-screen">
+          <div className="text-center">
+            <div className="w-12 h-12 rounded-full border-4 border-gray-200 border-t-indigo-600 animate-spin mx-auto"></div>
+            <p className="mt-2 text-gray-600">Зареждане...</p>
+          </div>
+        </div>
+      }
+    >
+      <LoginForm />
+    </Suspense>
   );
 }
