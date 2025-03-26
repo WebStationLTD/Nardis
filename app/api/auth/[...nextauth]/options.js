@@ -81,6 +81,9 @@ export const options = {
       },
     }),
   ],
+  pages: {
+    signIn: '/login',
+  },
   callbacks: {
     async jwt({ token, user }) {
       // When signIn succeeds, user object is passed

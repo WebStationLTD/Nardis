@@ -10,7 +10,7 @@ export default async function OrderDetails({ params }) {
 
   // If no session, redirect to login
   if (!session) {
-    redirect("/api/auth/signin?callbackUrl=/my-account/orders/" + params.id);
+    redirect("/login?callbackUrl=/my-account/orders/" + params.id);
   }
 
   try {

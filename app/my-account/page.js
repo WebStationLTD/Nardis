@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth";
 import { options } from "@/app/api/auth/[...nextauth]/options";
 import { redirect } from "next/navigation";
 import Link from "next/link";
+import SignOutButton from "@/components/SignOutButton";
 
 export default async function MyAccount() {
 
@@ -10,7 +11,7 @@ export default async function MyAccount() {
   const session = await getServerSession(options);
   
   if (!session) {
-    redirect("/api/auth/signin?callbackUrl=/my-account");
+    redirect("/login?callbackUrl=/my-account");
   }
 
   // Get user ID - check various possible locations
@@ -39,6 +40,9 @@ export default async function MyAccount() {
             <p className="font-medium">{userId || "Не е наличен"}</p>
           </div>
         </div>
+        <div className="mt-6">
+          <SignOutButton />
+        </div>
       </div>
 
       <div className="bg-white shadow-md rounded-lg p-6">
@@ -49,7 +53,7 @@ export default async function MyAccount() {
             <p className="text-gray-500 mb-4">Все още нямате поръчки</p>
             <Link 
               href="/shop" 
-              className="inline-block bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-md"
+              className="inline-block bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-md cursor-pointer"
             >
               Разгледай продукти
             </Link>
@@ -97,7 +101,7 @@ export default async function MyAccount() {
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                       <Link 
                         href={`/my-account/orders/${order.id}`}
-                        className="text-blue-600 hover:text-blue-800"
+                        className="text-blue-600 hover:text-blue-800 cursor-pointer"
                       >
                         Преглед
                       </Link>

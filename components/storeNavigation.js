@@ -416,20 +416,12 @@ export default function StoreNavigation({ navigationData }) {
 
                 {/* Log in */}
                 <Link
-                  href="/login"
+                  href="/my-account"
+                  prefetch={true}
                   className="p-2 text-white hover:text-gray-500 lg:ml-4"
                 >
                   <span className="sr-only">Вход</span>
                   <UserIcon aria-hidden="true" className="size-6" />
-                </Link>
-
-                {/* Register */}
-                <Link
-                  href="/register"
-                  className="p-2 text-white hover:text-gray-500 lg:ml-4"
-                >
-                  <span className="sr-only">Регистрация</span>
-                  <UserPlusIcon aria-hidden="true" className="size-6" />
                 </Link>
 
                 {/* Cart */}
