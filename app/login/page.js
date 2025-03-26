@@ -3,23 +3,22 @@
 import { useEffect, Suspense } from "react";
 import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { LoginSchema } from "@/utils/validationSchemas";
 
 function LoginForm() {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl") || "/my-account";
+  const callbackUrl = "/my-account";
 
-  const { data: session, status } = useSession();
+  const { data: status } = useSession();
 
   // Redirect if already authenticated
   useEffect(() => {
     if (status === "authenticated") {
       router.push(callbackUrl);
     }
-  }, [status, router, callbackUrl]);
+  }, [status, router]);
 
   const handleSubmit = async (values, { setSubmitting, setStatus }) => {
     setStatus(null);
@@ -29,7 +28,6 @@ function LoginForm() {
         email: values.email,
         password: values.password,
         redirect: false,
-        callbackUrl: callbackUrl,
       });
 
       if (result.error) {
@@ -38,7 +36,6 @@ function LoginForm() {
           message: result.error,
         });
       } else {
-        // Redirect to callback URL on successful login
         router.push(callbackUrl);
       }
     } catch (err) {
