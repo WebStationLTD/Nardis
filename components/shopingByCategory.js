@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Example() {
   return (
@@ -8,13 +9,13 @@ export default function Example() {
           <h2 className="text-2xl font-bold tracking-tight text-gray-900">
             Топ категории
           </h2>
-          <a
+          <Link
             href="#"
             className="hidden text-base font-normal text-[#b3438f] hover:text-black sm:block"
           >
             Вижте всички категории
             <span aria-hidden="true"> &rarr;</span>
-          </a>
+          </Link>
         </div>
 
         <div className="mt-6 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:grid-rows-2 sm:gap-x-6 lg:gap-8">
@@ -32,10 +33,10 @@ export default function Example() {
             <div className="absolute inset-0 flex items-end p-6">
               <div>
                 <h3 className="font-semibold text-white">
-                  <a href="/products">
+                  <Link href="/products">
                     <span className="absolute inset-0" />
                     Всички продукти
-                  </a>
+                  </Link>
                 </h3>
                 <p aria-hidden="true" className="mt-1 text-sm text-white">
                   Пазарувайте сега
@@ -57,10 +58,10 @@ export default function Example() {
             <div className="absolute inset-0 flex items-end p-6">
               <div>
                 <h3 className="font-semibold text-white">
-                  <a href="/category/artdeco-asian-spa">
+                  <Link href="/category/artdeco-asian-spa">
                     <span className="absolute inset-0" />
                     Artdeco ASIAN SPA
-                  </a>
+                  </Link>
                 </h3>
                 <p aria-hidden="true" className="mt-1 text-sm text-white">
                   Пазарувайте сега
@@ -82,10 +83,10 @@ export default function Example() {
             <div className="absolute inset-0 flex items-end p-6">
               <div>
                 <h3 className="font-semibold text-white">
-                  <a href="/category/grim">
+                  <Link href="/category/grim">
                     <span className="absolute inset-0" />
                     Грим
-                  </a>
+                  </Link>
                 </h3>
                 <p aria-hidden="true" className="mt-1 text-sm text-white">
                   Пазарувайте сега
@@ -96,13 +97,13 @@ export default function Example() {
         </div>
 
         <div className="mt-6 sm:hidden">
-          <a
+          <Link
             href="#"
             className="block text-base font-normal text-[#b3438f] hover:text-black"
           >
             Вижте всички категории
             <span aria-hidden="true"> &rarr;</span>
-          </a>
+          </Link>
         </div>
       </div>
     </div>
