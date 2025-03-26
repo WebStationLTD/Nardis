@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import Image from "next/image";
-
 import { Fragment, useState } from "react";
 import {
   Dialog,
@@ -31,53 +30,61 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Example({ categories }) {
+export default function StoreNavigation({ navigationData }) {
   const [open, setOpen] = useState(false);
 
-  // Добавяме масив с желания ред на категориите
-  const categoryOrder = [26, 17]; // Първо Artdeco ASIAN SPA (17), после Грим (26)
+  // Extract data from props
+  const { categories, featuredItems, pages } = navigationData;
 
-  // Сортираме категориите според желания ред
-  const sortedCategories = [...categories].sort((a, b) => {
-    const indexA = categoryOrder.indexOf(a.id);
-    const indexB = categoryOrder.indexOf(b.id);
-    return indexA - indexB;
-  });
+  // Transform categories into sections format similar to exampleNav
+  const transformCategories = () => {
+    // Group categories into columns of 3 items each for better organization
+    const sectionsData = [];
+    const mainCategories = categories.slice(0, 9); // Limit to 9 main categories
 
+    // Create sections from categories
+    for (let i = 0; i < mainCategories.length; i += 3) {
+      const column = [];
+
+      // Take up to 3 categories for this column
+      const columnCategories = mainCategories.slice(i, i + 3);
+
+      // Transform each category into a section
+      columnCategories.forEach((category) => {
+        column.push({
+          id: category.slug,
+          name: category.name,
+          items: [
+            {
+              name: `Всички в ${category.name}`,
+              href: `/category/${category.slug}`,
+            },
+            // Add up to 5 subcategories for each
+            ...category.subcategories.slice(0, 5).map((subcat) => ({
+              name: subcat.name,
+              href: `/category/${subcat.slug}`,
+            })),
+          ],
+        });
+      });
+
+      sectionsData.push(column);
+    }
+
+    return sectionsData;
+  };
+
+  // Structure for navigation
   const navigation = {
     categories: [
       {
-        id: "women",
+        id: "shop",
         name: "Магазин",
-        featured: [
-          {
-            name: "Всички продукти",
-            href: "/products",
-            imageSrc: "/nardis-online-shop-for-luxury-cosmetics.jpg",
-            imageAlt: "Кателог продукти на Nardis.bg",
-          },
-          {
-            name: "Artdeco ASIAN SPA",
-            href: "#",
-            imageSrc: "/artdeco-asian-spa-mega-menu-bg.jpg",
-            imageAlt:
-              "Close up of Basic Tee fall bundle with off-white, ochre, olive, and black tees.",
-          },
-          {
-            name: "Грим",
-            href: "#",
-            imageSrc: "/makeup-mega-menu-bg.jpg",
-            imageAlt:
-              "Model wearing minimalist watch with black wristband and white watch face.",
-          },
-        ],
+        featured: featuredItems,
+        sections: transformCategories(),
       },
     ],
-    pages: [
-      { name: "За нас", href: "/about-us" },
-      { name: "Блог", href: "/blog" },
-      { name: "Контакти", href: "/contact" },
-    ],
+    pages: pages,
   };
 
   return (
@@ -125,13 +132,14 @@ export default function Example({ categories }) {
                     key={category.name}
                     className="space-y-10 px-4 pt-10 pb-8"
                   >
+                    {/* Featured Items */}
                     <div className="space-y-4">
                       {category.featured.map((item, itemIdx) => (
                         <div
                           key={itemIdx}
                           className="group relative overflow-hidden rounded-md bg-gray-100"
                         >
-                          <div className="relative h-80 w-full overflow-hidden rounded-lg">
+                          <div className="relative h-48 w-full overflow-hidden rounded-lg">
                             <Image
                               src={item.imageSrc}
                               alt={item.imageAlt}
@@ -140,8 +148,9 @@ export default function Example({ categories }) {
                             />
                           </div>
                           <div className="absolute inset-0 flex flex-col justify-end">
-                            <div className="bg-white/60 p-4 text-base sm:text-sm">
+                            <div className="bg-white/60 p-3 text-sm">
                               <Link
+                                prefetch={true}
                                 href={item.href}
                                 className="font-medium text-gray-900"
                                 onClick={() => setOpen(false)}
@@ -154,7 +163,7 @@ export default function Example({ categories }) {
                               </Link>
                               <p
                                 aria-hidden="true"
-                                className="mt-0.5 text-gray-700 sm:mt-1"
+                                className="mt-0.5 text-gray-700 text-xs"
                               >
                                 Пазарувайте сега
                               </p>
@@ -163,62 +172,40 @@ export default function Example({ categories }) {
                         </div>
                       ))}
                     </div>
-                    {sortedCategories.map((category) => {
-                      const chunkSize = 10;
-                      const chunks = [];
-                      for (
-                        let i = 0;
-                        i < category.subcategories.length;
-                        i += chunkSize
-                      ) {
-                        chunks.push(
-                          category.subcategories.slice(i, i + chunkSize)
-                        );
-                      }
 
-                      return (
-                        <div key={category.id} className="min-w-[200px] flex-1">
-                          {/* LEFT column: заглавие + първите 10 */}
-                          <div className="space-y-4 min-w-[150px]">
-                            <h3 className="font-medium text-gray-900">
-                              {category.name}
-                            </h3>
-                            <ul className="space-y-2 text-gray-500 text-sm">
-                              {chunks[0]?.map((subcat) => (
-                                <li key={subcat.id}>
+                    {/* Columns of category sections */}
+                    {category.sections.map((column, columnIdx) => (
+                      <div key={columnIdx} className="space-y-10">
+                        {column.map((section) => (
+                          <div key={section.name}>
+                            <p
+                              id={`${category.id}-${section.id}-heading-mobile`}
+                              className="font-medium text-gray-900"
+                            >
+                              {section.name}
+                            </p>
+                            <ul
+                              role="list"
+                              aria-labelledby={`${category.id}-${section.id}-heading-mobile`}
+                              className="mt-6 flex flex-col space-y-6"
+                            >
+                              {section.items.map((item) => (
+                                <li key={item.name} className="flow-root">
                                   <Link
-                                    href={`/category/${subcat.slug}`}
-                                    className="hover:text-gray-800"
+                                    prefetch={true}
+                                    href={item.href}
+                                    className="-m-2 block p-2 text-gray-500"
                                     onClick={() => setOpen(false)}
                                   >
-                                    {subcat.name}
+                                    {item.name}
                                   </Link>
                                 </li>
                               ))}
                             </ul>
                           </div>
-
-                          {chunks.slice(1).map((chunk, index) => (
-                            <ul
-                              key={index}
-                              className="space-y-2 text-gray-500 text-sm mt-4"
-                            >
-                              {chunk.map((subcat) => (
-                                <li key={subcat.id}>
-                                  <Link
-                                    href={`/category/${subcat.slug}`}
-                                    className="hover:text-gray-800"
-                                    onClick={() => setOpen(false)}
-                                  >
-                                    {subcat.name}
-                                  </Link>
-                                </li>
-                              ))}
-                            </ul>
-                          ))}
-                        </div>
-                      );
-                    })}
+                        ))}
+                      </div>
+                    ))}
                   </TabPanel>
                 ))}
               </TabPanels>
@@ -266,7 +253,7 @@ export default function Example({ categories }) {
               </div>
 
               {/* Logo */}
-              <Link href="/" className="flex max-w-[150px]">
+              <Link href="/" className="flex max-w-[150px]" prefetch={true}>
                 <span className="sr-only">Nardis.bg</span>
                 <Image
                   width={147}
@@ -285,7 +272,7 @@ export default function Example({ categories }) {
                       {({ open, close }) => (
                         <>
                           <div className="relative flex">
-                            <PopoverButton className="group relative z-10 flex items-center cursor-pointer justify-center text-xl font-medium text-white transition-colors duration-200 ease-out hover:text-white data-open:text-white">
+                            <PopoverButton className="group relative z-10 flex items-center cursor-pointer justify-center text-lg font-medium text-white transition-colors duration-200 ease-out hover:text-white data-open:text-white">
                               {category.name}
                               <span
                                 aria-hidden="true"
@@ -304,8 +291,9 @@ export default function Example({ categories }) {
                             />
 
                             <div className="relative bg-white">
-                              <div className="mx-auto relative z-2 bg-white max-w-7xl px-8">
+                              <div className="mx-auto max-w-7xl px-8">
                                 <div className="grid grid-cols-2 gap-x-8 gap-y-10 py-16">
+                                  {/* Featured items section */}
                                   <div className="grid grid-cols-2 grid-rows-1 gap-8 text-sm">
                                     {category.featured.map((item, itemIdx) => (
                                       <div
@@ -315,7 +303,7 @@ export default function Example({ categories }) {
                                           "group relative overflow-hidden rounded-md bg-gray-100"
                                         )}
                                       >
-                                        <div className="relative h-80 w-full overflow-hidden rounded-lg">
+                                        <div className="relative h-64 w-full overflow-hidden rounded-lg">
                                           <Image
                                             src={item.imageSrc}
                                             alt={item.imageAlt}
@@ -326,6 +314,7 @@ export default function Example({ categories }) {
                                         <div className="absolute inset-0 flex flex-col justify-end">
                                           <div className="bg-white/60 p-4 text-sm">
                                             <Link
+                                              prefetch={true}
                                               href={item.href}
                                               className="font-medium text-gray-900"
                                               onClick={close}
@@ -347,69 +336,49 @@ export default function Example({ categories }) {
                                       </div>
                                     ))}
                                   </div>
-                                  <div className="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-x-8 gap-y-10 text-sm text-gray-500 max-w-full">
-                                    {sortedCategories.map((category) => {
-                                      const chunkSize = 10;
-                                      const chunks = [];
-                                      for (
-                                        let i = 0;
-                                        i < category.subcategories.length;
-                                        i += chunkSize
-                                      ) {
-                                        chunks.push(
-                                          category.subcategories.slice(
-                                            i,
-                                            i + chunkSize
-                                          )
-                                        );
-                                      }
 
-                                      return (
-                                        <Fragment key={category.id}>
-                                          <div className="space-y-4 min-w-[150px]">
-                                            <h3 className="font-medium text-gray-900 mb-2">
-                                              {category.name}
-                                            </h3>
-                                            <ul className="space-y-2 text-gray-500 text-sm">
-                                              {chunks[0]?.map((subcat) => (
-                                                <li key={subcat.id}>
-                                                  <Link
-                                                    href={`/category/${subcat.slug}`}
-                                                    className="hover:text-gray-800"
-                                                    onClick={close}
-                                                  >
-                                                    {subcat.name}
-                                                  </Link>
-                                                </li>
-                                              ))}
-                                            </ul>
-                                          </div>
-
-                                          {chunks
-                                            .slice(1)
-                                            .map((chunk, index) => (
-                                              <div
-                                                key={index}
-                                                className="space-y-4 min-w-[150px]"
+                                  {/* Categories organized in columns, matching the exampleNav structure */}
+                                  <div className="grid grid-cols-3 gap-x-8 gap-y-10 text-sm text-gray-500">
+                                    {category.sections.map(
+                                      (column, columnIdx) => (
+                                        <div
+                                          key={columnIdx}
+                                          className="space-y-10"
+                                        >
+                                          {column.map((section) => (
+                                            <div key={section.name}>
+                                              <p
+                                                id={`${category.id}-${section.id}-heading`}
+                                                className="font-medium text-gray-900"
                                               >
-                                                <ul className="space-y-2 text-gray-500 text-sm">
-                                                  {chunk.map((subcat) => (
-                                                    <li key={subcat.id}>
-                                                      <Link
-                                                        href={`/category/${subcat.slug}`}
-                                                        className="hover:text-gray-800"
-                                                        onClick={close}
-                                                      >
-                                                        {subcat.name}
-                                                      </Link>
-                                                    </li>
-                                                  ))}
-                                                </ul>
-                                              </div>
-                                            ))}
-                                        </Fragment>
-                                      );
-                                    })}
+                                                {section.name}
+                                              </p>
+                                              <ul
+                                                role="list"
+                                                aria-labelledby={`${category.id}-${section.id}-heading`}
+                                                className="mt-4 space-y-4"
+                                              >
+                                                {section.items.map((item) => (
+                                                  <li
+                                                    key={item.name}
+                                                    className="flex"
+                                                  >
+                                                    <Link
+                                                      prefetch={true}
+                                                      href={item.href}
+                                                      className="hover:text-gray-800"
+                                                      onClick={close}
+                                                    >
+                                                      {item.name}
+                                                    </Link>
+                                                  </li>
+                                                ))}
+                                              </ul>
+                                            </div>
+                                          ))}
+                                        </div>
+                                      )
+                                    )}
                                   </div>
                                 </div>
                               </div>
@@ -425,7 +394,7 @@ export default function Example({ categories }) {
                       prefetch={true}
                       key={page.name}
                       href={page.href}
-                      className="flex items-center text-xl font-medium text-white hover:text-white"
+                      className="flex items-center text-lg font-medium text-white hover:text-white"
                     >
                       {page.name}
                     </Link>
@@ -463,7 +432,10 @@ export default function Example({ categories }) {
 
                 {/* Cart */}
                 <div className="ml-4 flow-root lg:ml-6">
-                  <Link href="#" className="group -m-2 flex items-center p-2">
+                  <Link
+                    href="/cart"
+                    className="group -m-2 flex items-center p-2"
+                  >
                     <ShoppingBagIcon
                       aria-hidden="true"
                       className="size-6 shrink-0 text-white group-hover:text-gray-500"

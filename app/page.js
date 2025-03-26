@@ -54,16 +54,6 @@ const TestimonialsSection = dynamic(() => import("@/components/testimonials"), {
 import FeatureList from "@/components/featureList";
 import PromoSection from "@/components/promoSection";
 
-// import NewProducts from "@/components/newProducts";
-// import CtaBullets from "@/components/ctaBullets";
-// import ShopingByCategory from "@/components/shopingByCategory";
-// import CtaQuality from "@/components/ctaQuality";
-// import PromoProduts from "@/components/promoProducts";
-// import CtaImage from "@/components/ctaImage";
-// import CtaMissOops from "@/components/ctaMissOops";
-// import NewsLetter from "@/components/newsLetter";
-// import TestimonialsSection from "@/components/testimonials";
-
 export default function Home() {
   return (
     <>
