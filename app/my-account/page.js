@@ -11,7 +11,7 @@ export default async function MyAccount() {
   const session = await getServerSession(options);
   
   if (!session) {
-    redirect("/login?callbackUrl=/my-account");
+    redirect("/login");
   }
 
   // Get user ID - check various possible locations
