@@ -27,7 +27,7 @@ function LoginForm() {
       const result = await signIn("credentials", {
         email: values.email,
         password: values.password,
-        redirect: false,
+        redirect: true,
       });
 
       if (result.error) {
