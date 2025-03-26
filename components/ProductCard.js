@@ -20,6 +20,7 @@ export default function ProductCard({
   // Format price display based on sale status
   const hasSale = product.sale_price && parseFloat(product.sale_price) > 0;
   const imageUrl = product.images?.[0]?.src || "/placeholder.webp";
+  const isOutOfStock = product.stock_status === "outofstock";
 
   return (
     <div
@@ -74,7 +75,9 @@ export default function ProductCard({
           </h3>
 
           <div className="mt-auto">
-            {hasSale ? (
+            {isOutOfStock ? (
+              <p className="text-base font-medium text-red-600">Не е наличен</p>
+            ) : hasSale ? (
               <div className="flex items-center gap-2">
                 <p className="text-sm font-medium text-gray-500 line-through">
                   {product.regular_price} лв.

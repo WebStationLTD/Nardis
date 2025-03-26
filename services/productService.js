@@ -45,7 +45,15 @@ export const getProducts = cache(async (options = {}) => {
     if (minPrice !== undefined) queryParams.min_price = minPrice;
     if (maxPrice !== undefined) queryParams.max_price = maxPrice;
     if (onSale !== undefined) queryParams.on_sale = onSale;
-    if (fields) queryParams._fields = fields;
+    if (fields) {
+      if (!fields.includes("stock_status")) {
+        queryParams._fields = `${fields},stock_status`;
+      } else {
+        queryParams._fields = fields;
+      }
+    } else {
+      queryParams._fields = "id,name,images,slug,price,sale_price,regular_price,stock_status";
+    }
     if (include)
       queryParams.include = Array.isArray(include)
         ? include.join(",")
@@ -76,14 +84,14 @@ export const getProduct = cache(async (identifier, bySlug = false) => {
       const response = await WooCommerce.get("products", {
         slug: identifier,
         _fields:
-          "id,name,images,slug,sale_price,regular_price,description,short_description,price,related_ids,attributes,meta_data",
+          "id,name,images,slug,sale_price,regular_price,description,short_description,price,related_ids,attributes,meta_data,stock_status",
       });
       return response.data.length > 0 ? response.data[0] : null;
     }
 
     const response = await WooCommerce.get(`products/${identifier}`, {
       _fields:
-        "id,name,images,slug,sale_price,regular_price,description,short_description,price,related_ids,attributes,meta_data",
+        "id,name,images,slug,sale_price,regular_price,description,short_description,price,related_ids,attributes,meta_data,stock_status",
     });
     return response.data;
   } catch (error) {
@@ -110,6 +118,7 @@ export async function getRelatedProducts(productIds, limit = 4) {
     const response = await WooCommerce.get("products", {
       include: Array.isArray(productIds) ? productIds.join(",") : productIds,
       per_page: limit,
+      _fields: "id,name,images,slug,price,sale_price,regular_price,stock_status"
     });
 
     return response.data;
@@ -152,6 +161,7 @@ export async function getProductsByIds(productIds) {
   try {
     const response = await WooCommerce.get("products", {
       include: Array.isArray(productIds) ? productIds.join(",") : productIds,
+      _fields: "id,name,images,slug,price,sale_price,regular_price,stock_status"
     });
 
     return response.data;
