@@ -1,12 +1,16 @@
+import Image from "next/image";
+
 export default function Example() {
   return (
     <section className="bg-white py-12 sm:py-12">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto grid max-w-2xl grid-cols-1 lg:mx-0 lg:max-w-none lg:grid-cols-2">
           <div className="flex flex-col pb-10 sm:pb-16 lg:pr-8 lg:pb-0 xl:pr-20">
-            <img
-              alt=""
-              src="https://tailwindcss.com/plus-assets/img/logos/tuple-logo-gray-900.svg"
+            <Image
+              alt="Tuple Logo"
+              src="/nardis-logo.svg"
+              width={48}
+              height={48}
               className="h-12 self-start"
             />
             <figure className="mt-10 flex flex-auto flex-col justify-between">
@@ -35,9 +39,11 @@ export default function Example() {
             </figure>
           </div>
           <div className="flex flex-col border-t border-gray-900/10 pt-10 sm:pt-16 lg:border-t-0 lg:border-l lg:pt-0 lg:pl-8 xl:pl-20">
-            <img
-              alt=""
-              src="https://tailwindcss.com/plus-assets/img/logos/reform-logo-gray-900.svg"
+            <Image
+              alt="Reform Logo"
+              src="/nardis-logo.svg"
+              width={48}
+              height={48}
               className="h-12 self-start"
             />
             <figure className="mt-10 flex flex-auto flex-col justify-between">

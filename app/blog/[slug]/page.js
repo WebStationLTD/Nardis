@@ -2,6 +2,7 @@ import { getPostBySlug } from "@/services/postService";
 import { cache } from "react";
 import StructuredData from "@/components/StructuredData";
 import { generateArticleSchema } from "@/utils/structuredData";
+import Image from "next/image";
 
 // Cached data fetching function to ensure it only runs once
 const getPost = cache(async (slug) => {
@@ -86,10 +87,13 @@ export default async function PostPage({ params }) {
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <article className="mx-auto max-w-8xl w-full">
               {ogImage && (
-                <img
+                <Image
                   src={ogImage}
                   alt={meta.og_title || post.title.rendered}
+                  width={1200}
+                  height={630}
                   className="w-full h-auto mb-8 rounded-xl shadow-lg"
+                  priority
                 />
               )}
               <time

@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default function Example() {
   return (
     <div className="bg-gray-50">
@@ -17,10 +19,11 @@ export default function Example() {
 
         <div className="mt-6 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:grid-rows-2 sm:gap-x-6 lg:gap-8">
           <div className="group relative aspect-2/1 overflow-hidden rounded-lg sm:row-span-2 sm:aspect-square">
-            <img
+            <Image
               alt="Two models wearing women's black cotton crewneck tee and off-white cotton crewneck tee."
-              src="https://tailwindcss.com/plus-assets/img/ecommerce-images/home-page-03-featured-category.jpg"
-              className="absolute size-full object-cover group-hover:opacity-75"
+              src="/nardis-online-shop-for-luxury-cosmetics.jpg"
+              fill
+              className="object-cover group-hover:opacity-75"
             />
             <div
               aria-hidden="true"
@@ -29,22 +32,23 @@ export default function Example() {
             <div className="absolute inset-0 flex items-end p-6">
               <div>
                 <h3 className="font-semibold text-white">
-                  <a href="#">
+                  <a href="/products">
                     <span className="absolute inset-0" />
-                    New Arrivals
+                    Всички продукти
                   </a>
                 </h3>
                 <p aria-hidden="true" className="mt-1 text-sm text-white">
-                  Shop now
+                  Пазарувайте сега
                 </p>
               </div>
             </div>
           </div>
           <div className="group relative aspect-2/1 overflow-hidden rounded-lg sm:aspect-auto">
-            <img
+            <Image
               alt="Wooden shelf with gray and olive drab green baseball caps, next to wooden clothes hanger with sweaters."
-              src="https://tailwindcss.com/plus-assets/img/ecommerce-images/home-page-03-category-01.jpg"
-              className="absolute size-full object-cover group-hover:opacity-75"
+              src="/artdeco-asian-spa-mega-menu-bg.jpg"
+              fill
+              className="object-cover group-hover:opacity-75"
             />
             <div
               aria-hidden="true"
@@ -53,22 +57,23 @@ export default function Example() {
             <div className="absolute inset-0 flex items-end p-6">
               <div>
                 <h3 className="font-semibold text-white">
-                  <a href="#">
+                  <a href="/category/artdeco-asian-spa">
                     <span className="absolute inset-0" />
-                    Accessories
+                    Artdeco ASIAN SPA
                   </a>
                 </h3>
                 <p aria-hidden="true" className="mt-1 text-sm text-white">
-                  Shop now
+                  Пазарувайте сега
                 </p>
               </div>
             </div>
           </div>
           <div className="group relative aspect-2/1 overflow-hidden rounded-lg sm:aspect-auto">
-            <img
+            <Image
               alt="Walnut desk organizer set with white modular trays, next to porcelain mug on wooden desk."
-              src="https://tailwindcss.com/plus-assets/img/ecommerce-images/home-page-03-category-02.jpg"
-              className="absolute size-full object-cover group-hover:opacity-75"
+              src="/makeup-mega-menu-bg.jpg"
+              fill
+              className="object-cover group-hover:opacity-75"
             />
             <div
               aria-hidden="true"
@@ -77,13 +82,13 @@ export default function Example() {
             <div className="absolute inset-0 flex items-end p-6">
               <div>
                 <h3 className="font-semibold text-white">
-                  <a href="#">
+                  <a href="/category/grim">
                     <span className="absolute inset-0" />
-                    Workspace
+                    Грим
                   </a>
                 </h3>
                 <p aria-hidden="true" className="mt-1 text-sm text-white">
-                  Shop now
+                  Пазарувайте сега
                 </p>
               </div>
             </div>

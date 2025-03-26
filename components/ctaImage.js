@@ -1,11 +1,14 @@
+import Image from "next/image";
+
 export default function Example() {
   return (
     <div className="relative bg-gray-800">
       <div className="relative h-80 overflow-hidden bg-indigo-600 md:absolute md:left-0 md:h-full md:w-1/3 lg:w-1/2">
-        <img
-          alt=""
+        <Image
+          alt="Nardis маркова козметика"
           src="https://nardis.bg/wp-content/uploads/webimage-51190EDE-28E3-4A42-BC51691E2236AFC8.jpg"
-          className="size-full object-cover"
+          fill
+          className="object-cover"
         />
         <svg
           viewBox="0 0 926 676"

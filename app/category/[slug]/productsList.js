@@ -24,20 +24,20 @@ export default function ProductsList({ products }) {
       // Only show loading if products are different
       if (JSON.stringify(displayProducts) !== JSON.stringify(products)) {
         setLoading(true);
-        
+
         // Short timeout for smooth transition
         const timer = setTimeout(() => {
           setDisplayProducts(products);
           setLoading(false);
         }, 300);
-        
+
         return () => clearTimeout(timer);
       }
     };
-    
+
     handleProductChange();
   }, [products, searchParams.toString()]);
-  
+
   // Loading skeleton
   if (loading) {
     return (
@@ -65,9 +65,9 @@ export default function ProductsList({ products }) {
   // Render products
   return (
     <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8 mt-0">
-      {displayProducts.map((product) => (
-        <ProductCard key={product.id} product={product} />
+      {displayProducts.map((product, index) => (
+        <ProductCard key={product.id} product={product} isFirst={index === 0} />
       ))}
     </div>
   );
-} 
+}

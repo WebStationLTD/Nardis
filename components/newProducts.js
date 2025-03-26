@@ -9,7 +9,7 @@ const NewProducts = async () => {
     const result = await getProducts({
       perPage: 4,
       orderBy: "date",
-      order: "desc"
+      order: "desc",
     });
 
     products = result.products;

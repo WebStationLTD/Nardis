@@ -1,4 +1,5 @@
 import { CheckCircleIcon } from "@heroicons/react/20/solid";
+import Image from "next/image";
 
 const benefits = [
   "Competitive salaries",
@@ -15,11 +16,14 @@ export default function Example() {
       <div className="relative isolate">
         <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
           <div className="mx-auto flex max-w-2xl flex-col gap-16 bg-white/5 px-6 py-12 ring-1 ring-white/10 sm:rounded-3xl sm:p-8 lg:mx-0 lg:max-w-none lg:flex-row lg:items-center lg:py-12 xl:gap-x-20 xl:px-20">
-            <img
-              alt=""
-              src="https://nardis.bg/wp-content/uploads/webimage-60C17F8B-F56E-4A71-96CDAA4CBEBA9F9F.png"
-              className="h-96 w-full flex-none rounded-2xl object-cover shadow-xl lg:aspect-square lg:h-auto lg:max-w-sm"
-            />
+            <div className="relative h-96 w-full flex-none rounded-2xl shadow-xl lg:aspect-square lg:h-auto lg:max-w-sm">
+              <Image
+                alt="Asian SPA продукти"
+                src="https://nardis.bg/wp-content/uploads/webimage-60C17F8B-F56E-4A71-96CDAA4CBEBA9F9F.png"
+                fill
+                className="object-cover"
+              />
+            </div>
             <div className="w-full flex-auto">
               <h2 className="text-4xl font-semibold tracking-tight text-pretty text-white sm:text-5xl">
                 Asian SPA

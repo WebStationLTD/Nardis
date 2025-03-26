@@ -23,6 +23,7 @@ import {
   MagnifyingGlassIcon,
   ShoppingBagIcon,
   UserIcon,
+  UserPlusIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 
@@ -130,11 +131,14 @@ export default function Example({ categories }) {
                           key={itemIdx}
                           className="group relative overflow-hidden rounded-md bg-gray-100"
                         >
-                          <img
-                            alt={item.imageAlt}
-                            src={item.imageSrc}
-                            className="aspect-square w-full object-cover group-hover:opacity-75"
-                          />
+                          <div className="relative h-80 w-full overflow-hidden rounded-lg">
+                            <Image
+                              src={item.imageSrc}
+                              alt={item.imageAlt}
+                              fill
+                              className="object-cover object-center"
+                            />
+                          </div>
                           <div className="absolute inset-0 flex flex-col justify-end">
                             <div className="bg-white/60 p-4 text-base sm:text-sm">
                               <a
@@ -234,20 +238,6 @@ export default function Example({ categories }) {
                 </div>
               ))}
             </div>
-
-            <div className="border-t border-gray-200 px-4 py-6">
-              <a href="#" className="-m-2 flex items-center p-2">
-                <img
-                  alt=""
-                  src="https://tailwindcss.com/plus-assets/img/flags/flag-canada.svg"
-                  className="block h-auto w-5 shrink-0"
-                />
-                <span className="ml-3 block text-base font-medium text-gray-900">
-                  CAD
-                </span>
-                <span className="sr-only">, change currency</span>
-              </a>
-            </div>
           </DialogPanel>
         </div>
       </Dialog>
@@ -325,16 +315,14 @@ export default function Example({ categories }) {
                                           "group relative overflow-hidden rounded-md bg-gray-100"
                                         )}
                                       >
-                                        <img
-                                          alt={item.imageAlt}
-                                          src={item.imageSrc}
-                                          className={classNames(
-                                            itemIdx === 0
-                                              ? "aspect-2/1"
-                                              : "aspect-square",
-                                            "w-full object-cover group-hover:opacity-75"
-                                          )}
-                                        />
+                                        <div className="relative h-80 w-full overflow-hidden rounded-lg">
+                                          <Image
+                                            src={item.imageSrc}
+                                            alt={item.imageAlt}
+                                            fill
+                                            className="object-cover object-center"
+                                          />
+                                        </div>
                                         <div className="absolute inset-0 flex flex-col justify-end">
                                           <div className="bg-white/60 p-4 text-sm">
                                             <Link
@@ -455,13 +443,22 @@ export default function Example({ categories }) {
                   <MagnifyingGlassIcon aria-hidden="true" className="size-6" />
                 </a>
 
-                {/* Account */}
+                {/* Log in */}
                 <Link
-                  href="/my-account"
+                  href="/login"
                   className="p-2 text-white hover:text-gray-500 lg:ml-4"
                 >
-                  <span className="sr-only">Account</span>
+                  <span className="sr-only">Вход</span>
                   <UserIcon aria-hidden="true" className="size-6" />
+                </Link>
+
+                {/* Register */}
+                <Link
+                  href="/register"
+                  className="p-2 text-white hover:text-gray-500 lg:ml-4"
+                >
+                  <span className="sr-only">Регистрация</span>
+                  <UserPlusIcon aria-hidden="true" className="size-6" />
                 </Link>
 
                 {/* Cart */}

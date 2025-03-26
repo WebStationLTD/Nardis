@@ -6,6 +6,9 @@ import ProductsList from "./productsList";
 // import Filters from "./filters";
 // import Pagination from "./pagination";
 
+// Конфигурация за ISR
+export const revalidate = 3600; // Ревалидиране на всеки час
+
 // Компоненти, които поддържат SSR, но се зареждат лениво
 const Pagination = dynamic(() => import("./pagination"), {
   ssr: true,

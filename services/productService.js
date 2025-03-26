@@ -1,4 +1,5 @@
 import WooCommerce from "@/lib/woocomerce";
+import { cache } from "react";
 
 /**
  * Fetch products with optional filtering parameters
@@ -16,7 +17,7 @@ import WooCommerce from "@/lib/woocomerce";
  * @param {string|number[]} [options.include] - Specific product IDs to include
  * @returns {Promise<{products: Array, totalPages: number, maxPrice: number}>}
  */
-export async function getProducts(options = {}) {
+export const getProducts = cache(async (options = {}) => {
   const {
     page = 1,
     perPage = 12,
@@ -61,7 +62,7 @@ export async function getProducts(options = {}) {
     console.error("Error fetching products:", error);
     throw error;
   }
-}
+});
 
 /**
  * Get a single product by ID or slug
@@ -69,7 +70,7 @@ export async function getProducts(options = {}) {
  * @param {boolean} [bySlug=false] - Whether to search by slug instead of ID
  * @returns {Promise<Object>} - Product data
  */
-export async function getProduct(identifier, bySlug = false) {
+export const getProduct = cache(async (identifier, bySlug = false) => {
   try {
     if (bySlug) {
       const response = await WooCommerce.get("products", {
@@ -92,7 +93,7 @@ export async function getProduct(identifier, bySlug = false) {
     );
     throw error;
   }
-}
+});
 
 /**
  * Get related products by product IDs
@@ -168,7 +169,7 @@ export async function getProductsByIds(productIds) {
  * @param {number} [options.parent] - Parent category ID to filter by
  * @returns {Promise<Array>} - Array of category data
  */
-export async function getCategories(options = {}) {
+export const getCategories = cache(async (options = {}) => {
   const { perPage = 100, page = 1, parent } = options;
 
   try {
@@ -185,4 +186,4 @@ export async function getCategories(options = {}) {
     console.error("Error fetching product categories:", error);
     throw error;
   }
-}
+});

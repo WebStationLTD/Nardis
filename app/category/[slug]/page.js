@@ -6,6 +6,9 @@ import {
 } from "@/services/productService";
 import { Suspense } from "react";
 
+// Конфигурация за ISR
+export const revalidate = 3600; // Ревалидиране на всеки час
+
 // Dynamically import components with SSR support
 const Pagination = dynamic(() => import("./pagination"), {
   ssr: true,
@@ -86,6 +89,16 @@ export async function generateMetadata({ params }) {
       };
     }
 
+    // Fetch first product image for preload
+    const result = await getProducts({
+      perPage: 1,
+      page: 1,
+      category: category.id.toString(),
+      fields: "images",
+    });
+
+    const firstProductImageUrl = result.products[0]?.images?.[0]?.src;
+
     return {
       title: `${category.name} | Nardis`,
       description:
@@ -98,6 +111,15 @@ export async function generateMetadata({ params }) {
           `Browse our selection of ${category.name} products.`,
         type: "website",
       },
+      other: firstProductImageUrl
+        ? {
+            'link[rel="preload"]': {
+              as: "image",
+              href: firstProductImageUrl,
+              fetchPriority: "high",
+            },
+          }
+        : {},
     };
   } catch (error) {
     console.error("Error generating metadata:", error);
@@ -171,6 +193,9 @@ export default async function CategoryPage({ params, searchParams }) {
   } catch (error) {
     console.error("Грешка при зареждане на продуктите:", error);
   }
+
+  // Get the first product image URL for preloading
+  const firstProductImageUrl = products[0]?.images?.[0]?.src || null;
 
   return (
     <div className="bg-white">
