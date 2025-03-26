@@ -142,4 +142,5 @@ export const options = {
   },
   // Site configuration 
   useSecureCookies: process.env.NODE_ENV === "production",
+  url: process.env.NEXTAUTH_URL,
 };
