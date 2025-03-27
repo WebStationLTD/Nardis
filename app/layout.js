@@ -3,7 +3,6 @@ import StoreNavigation from "@/components/storeNavigation";
 import FooterSection from "@/components/footer";
 import CookieConsentBanner from "@/components/cookieConsentBanner";
 import { Inter } from "next/font/google";
-import AuthProvider from "@/context/AuthProvider";
 import { getNavigationData } from "@/services/navigationService";
 
 const inter = Inter({
@@ -27,12 +26,10 @@ export default async function RootLayout({ children }) {
   return (
     <html lang="bg" className={inter.variable}>
       <body>
-        <AuthProvider>
-          <StoreNavigation navigationData={navigationData} />
-          {children}
-          <CookieConsentBanner />
-          <FooterSection />
-        </AuthProvider>
+        <StoreNavigation navigationData={navigationData} />
+        {children}
+        <CookieConsentBanner />
+        <FooterSection />
       </body>
     </html>
   );

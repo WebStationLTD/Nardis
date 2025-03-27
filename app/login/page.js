@@ -1,37 +1,12 @@
 "use client";
 
-import { Suspense } from "react";
-import { signIn } from "next-auth/react";
+import { useActionState } from "react";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import { LoginSchema } from "@/utils/validationSchemas";
-import { PublicRoute } from "@/components/RouteGuard";
-import LoadingSpinner from "@/components/LoadingSpinner";
+import { login } from "./actions";
+import { useFormStatus } from "react-dom";
 
-function LoginForm() {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get('callbackUrl') || "/my-account";
-
-  const handleSubmit = async (values, { setSubmitting, setStatus }) => {
-    setStatus(null);
-
-    try {
-      await signIn("credentials", {
-        email: values.email,
-        password: values.password,
-        callbackUrl: callbackUrl,
-      });
-    } catch (err) {
-      setStatus({
-        success: false,
-        message: "An unexpected error occurred. Please try again.",
-      });
-    } finally {
-      setSubmitting(false);
-    }
-  };
+export default function LoginForm() {
+  const [state, loginAction] = useActionState(login, undefined);
 
   return (
     <div className="flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
@@ -41,86 +16,49 @@ function LoginForm() {
             Вход във вашия акаунт
           </h2>
         </div>
-
-        <Formik
-          initialValues={{
-            email: "",
-            password: "",
-          }}
-          validationSchema={LoginSchema}
-          onSubmit={handleSubmit}
-        >
-          {({ isSubmitting, status }) => (
-            <Form className="mt-8 space-y-6">
-              {status && !status.success && (
-                <div
-                  className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
-                  role="alert"
-                >
-                  <span className="block sm:inline">{status.message}</span>
-                </div>
-              )}
-
-              <div className="rounded-md shadow-sm -space-y-px">
-                <div>
-                  <label htmlFor="email" className="sr-only">
-                    Имейл адрес
-                  </label>
-                  <Field
-                    id="email"
-                    name="email"
-                    type="email"
-                    className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                    placeholder="Имейл адрес"
-                  />
-                  <ErrorMessage
-                    name="email"
-                    component="div"
-                    className="text-red-500 text-xs"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="password" className="sr-only">
-                    Парола
-                  </label>
-                  <Field
-                    id="password"
-                    name="password"
-                    type="password"
-                    className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                    placeholder="Парола"
-                  />
-                  <ErrorMessage
-                    name="password"
-                    component="div"
-                    className="text-red-500 text-xs"
-                  />
-                </div>
-              </div>
-
-              <div className="flex items-center justify-end">
-                <div className="text-sm">
-                  <Link
-                    href="/forgot-password"
-                    className="font-medium text-indigo-600 hover:text-indigo-500"
-                  >
-                    Забравена парола?
-                  </Link>
-                </div>
-              </div>
-
-              <div>
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 cursor-pointer"
-                >
-                  {isSubmitting ? "Влизане..." : "Вход"}
-                </button>
-              </div>
-            </Form>
-          )}
-        </Formik>
+        <form className="mt-8 space-y-6" action={loginAction}>
+          <div className="rounded-md shadow-sm -space-y-px">
+            <div>
+              <label htmlFor="email" className="sr-only">
+                Имейл адрес
+              </label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                placeholder="Имейл адрес"
+              />
+              <p className="text-red-500 text-xs">{state?.errors?.email}</p>
+            </div>
+            <div>
+              <label htmlFor="password" className="sr-only">
+                Парола
+              </label>
+              <input
+                id="password"
+                name="password"
+                type="password"
+                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                placeholder="Парола"
+              />
+              <p className="text-red-500 text-xs">{state?.errors?.password}</p>
+            </div>
+          </div>
+          <div className="flex items-center justify-end">
+            <div className="text-sm">
+              <Link
+                href="/forgot-password"
+                className="font-medium text-indigo-600 hover:text-indigo-500"
+              >
+                Забравена парола?
+              </Link>
+            </div>
+          </div>
+          <div>
+            <SubmitButton />
+          </div>
+        </form>
 
         <div className="text-center">
           <p className="text-sm text-gray-600">
@@ -138,12 +76,16 @@ function LoginForm() {
   );
 }
 
-export default function LoginPage() {
+function SubmitButton() {
+  const { pending } = useFormStatus();
+
   return (
-    <Suspense fallback={<LoadingSpinner />}>
-      <PublicRoute>
-        <LoginForm />
-      </PublicRoute>
-    </Suspense>
+    <button
+      type="submit"
+      disabled={pending}
+      className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 cursor-pointer"
+    >
+      {pending ? "Влизане..." : "Вход"}
+    </button>
   );
 }

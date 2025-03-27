@@ -1,10 +1,10 @@
 "use client";
 
-import { signOut } from "next-auth/react";
+import { logout } from "@/app/login/actions";
 
 export default function SignOutButton() {
   const handleSignOut = async () => {
-    await signOut({ callbackUrl: "/" });
+    await logout();
   };
 
   return (
