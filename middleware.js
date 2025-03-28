@@ -2,12 +2,15 @@ import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import { decrypt } from "./lib/session";
 
-const protectedRoutes = ["/my-account"];
+// Using patterns instead of exact strings
+const protectedRoutePatterns = [/^\/my-account(\/.*)?$/];
 const publicRoutes = ["/login", "/register"];
 
 export default async function middleware(req) {
   const path = req.nextUrl.pathname;
-  const isProtectedRoute = protectedRoutes.includes(path);
+  const isProtectedRoute = protectedRoutePatterns.some((pattern) =>
+    pattern.test(path)
+  );
   const isPublicRoute = publicRoutes.includes(path);
 
   const cookie = await cookies();
