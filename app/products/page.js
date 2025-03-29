@@ -3,6 +3,9 @@ import dynamic from "next/dynamic";
 import { getProducts, getMaxProductPrice } from "@/services/productService";
 import { Suspense } from "react";
 import ProductsList from "./productsList";
+import SkeletonProductsList from "./skeletonProductsList";
+import SkeletonFilters from "./skeletonFilters";
+import SkeletonPagination from "./skeletonPagination";
 // import Filters from "./filters";
 // import Pagination from "./pagination";
 
@@ -12,12 +15,12 @@ export const revalidate = 3600; // Ревалидиране на всеки ча
 // Компоненти, които поддържат SSR, но се зареждат лениво
 const Pagination = dynamic(() => import("./pagination"), {
   ssr: true,
-  loading: () => <p>Зареждане...</p>,
+  loading: () => <SkeletonPagination />,
 });
 
 const Filters = dynamic(() => import("./filters"), {
   ssr: true,
-  loading: () => <p>Зареждане...</p>,
+  loading: () => <SkeletonFilters />,
 });
 
 // Use this function to safely extract parameters from searchParams
@@ -115,7 +118,7 @@ export default async function ProductsPage({ searchParams }) {
           </div>
 
           <div>
-            <Suspense fallback={<p>Зареждане...</p>}>
+            <Suspense fallback={<SkeletonProductsList />}>
               <ProductsList products={products} />
             </Suspense>
             <Pagination currentPage={currentPage} totalPages={totalPages} />
