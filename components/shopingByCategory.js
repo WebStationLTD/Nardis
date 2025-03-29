@@ -10,7 +10,7 @@ export default function Example() {
             Топ категории
           </h2>
           <Link
-            href="#"
+            href="/category"
             className="hidden text-base font-normal text-[#b3438f] hover:text-black sm:block"
           >
             Вижте всички категории
