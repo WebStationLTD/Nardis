@@ -1,11 +1,10 @@
 import dynamic from "next/dynamic";
+import Link from "next/link";
 import {
   getProducts,
   getMaxProductPrice,
   getCategories,
 } from "@/services/productService";
-import { Suspense } from "react";
-import SkeletonProductsList from "@/components/SkeletonProductsList";
 import SkeletonFilters from "@/components/SkeletonFilters";
 import SkeletonPagination from "@/components/SkeletonPagination";
 
@@ -23,9 +22,8 @@ const Filters = dynamic(() => import("./filters"), {
   loading: () => <SkeletonFilters />,
 });
 
-const ProductsList = dynamic(() => import("./productsList"), {
-  ssr: true,
-});
+// Import ProductsList directly without dynamic import for SEO
+import ProductsList from "./productsList";
 
 // Helper functions for parameters
 const getParamValue = async (searchParams, key, defaultValue) => {
@@ -196,8 +194,23 @@ export default async function CategoryPage({ params, searchParams }) {
     console.error("Грешка при зареждане на продуктите:", error);
   }
 
-  // Get the first product image URL for preloading
-  const firstProductImageUrl = products[0]?.images?.[0]?.src || null;
+  // Get related categories for SEO
+  let relatedCategories = [];
+  try {
+    const allCategories = await getAllCategories();
+    // Find categories with the same parent or siblings
+    const currentCategory = findCategoryBySlug(allCategories, slug);
+    if (currentCategory) {
+      relatedCategories = allCategories.filter(cat => 
+        cat.id !== currentCategory.id && (
+          cat.parent === currentCategory.parent || // siblings
+          cat.parent === currentCategory.id // children
+        )
+      ).slice(0, 5); // Limit to 5 categories
+    }
+  } catch (error) {
+    console.error("Error loading related categories:", error);
+  }
 
   return (
     <div className="bg-white">
@@ -208,7 +221,6 @@ export default async function CategoryPage({ params, searchParams }) {
               <h1 className="text-4xl font-semibold tracking-tight text-white sm:text-5xl">
                 {categoryName}
               </h1>
-              {/* <p className="mt-6 text-lg/8 text-white">{categoryDescription}</p> */}
             </div>
             <svg
               viewBox="0 0 1024 1024"
@@ -232,7 +244,45 @@ export default async function CategoryPage({ params, searchParams }) {
           </div>
         </div>
       </div>
-      <div className="w-full max-w-[80%] xl:max-w-[80%] mx-auto px-4 py-12 sm:px-6 lg:px-8">
+      
+      {/* SEO breadcrumb navigation */}
+      <div className="w-full max-w-[80%] xl:max-w-[80%] mx-auto px-4 py-4 sm:px-6">
+        <nav aria-label="Breadcrumb">
+          <ol className="flex items-center space-x-2 text-sm text-gray-600">
+            <li>
+              <Link href="/" className="hover:text-indigo-600">Начало</Link>
+              <span className="mx-2">/</span>
+            </li>
+            <li>
+              <Link href="/category" className="hover:text-indigo-600">Категории</Link>
+              <span className="mx-2">/</span>
+            </li>
+            <li>
+              <Link href={`/category/${slug}`} className="font-semibold hover:text-indigo-600" aria-current="page">{categoryName}</Link>
+            </li>
+          </ol>
+          
+          {/* Related categories for SEO */}
+          {relatedCategories.length > 0 && (
+            <div className="mt-4">
+              <p className="text-sm font-medium text-gray-700 mb-2">Свързани категории:</p>
+              <div className="flex flex-wrap gap-2">
+                {relatedCategories.map(cat => (
+                  <Link 
+                    key={cat.id}
+                    href={`/category/${cat.slug}`}
+                    className="text-sm px-3 py-1 bg-gray-100 rounded-full hover:bg-gray-200"
+                  >
+                    {cat.name}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
+        </nav>
+      </div>
+      
+      <div className="w-full max-w-[80%] xl:max-w-[80%] mx-auto px-4 py-6 sm:px-6 lg:px-8">
         <h2 className="text-2xl font-bold tracking-tight text-gray-900 mb-6">
           Филтри
         </h2>
@@ -243,14 +293,30 @@ export default async function CategoryPage({ params, searchParams }) {
           </div>
 
           <div>
-            <Suspense fallback={<SkeletonProductsList />}>
-              <ProductsList products={products} />
-            </Suspense>
+            {/* No Suspense here - render products directly for SEO */}
+            <ProductsList products={products} />
             <Pagination currentPage={currentPage} totalPages={totalPages} />
           </div>
         </div>
+        
+        {/* Hidden pagination links for SEO */}
+        <div className="mt-8 hidden">
+          {Array.from({ length: Math.min(5, totalPages) }, (_, i) => i + 1).map(page => (
+            <Link 
+              key={page}
+              href={`/category/${slug}?page=${page}`}
+              aria-label={`Page ${page}`}
+            >
+              {page}
+            </Link>
+          ))}
+        </div>
+        
         {currentPage === 1 && categoryDescription && (
-          <p className="mt-6 text-lg/8 text-black">{categoryDescription}</p>
+          <div className="mt-8 prose max-w-none">
+            <h2>Относно {categoryName}</h2>
+            <div dangerouslySetInnerHTML={{ __html: categoryDescription }} />
+          </div>
         )}
       </div>
     </div>
