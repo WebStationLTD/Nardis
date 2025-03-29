@@ -1,10 +1,10 @@
 "use client";
 
-import SkeletonProductCard from './skeletonProductCard';
+import SkeletonProductCard from './SkeletonProductCard';
 
-export default function SkeletonProductsList() {
-  // Create an array of 12 items to match the perPage value in the ProductsPage
-  const skeletonCards = Array(12).fill(null);
+export default function SkeletonProductsList({ itemCount = 12 }) {
+  // Create an array of itemCount items (default 12 to match typical perPage value)
+  const skeletonCards = Array(itemCount).fill(null);
   
   return (
     <div className="mt-6">

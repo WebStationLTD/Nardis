@@ -1,6 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
+import { Suspense } from "react";
 import { getCategories } from "@/services/productService";
+import SkeletonCategoryList from "@/components/SkeletonCategoryList";
 
 export const metadata = {
   title: 'Product Categories | Nardis',
@@ -45,7 +47,8 @@ const organizeCategoriesHierarchy = (categories) => {
   return parentCategories;
 };
 
-export default async function CategoryIndexPage() {
+// Create a separate component for the categories content
+async function CategoriesContent() {
   let categories = [];
   
   try {
@@ -71,144 +74,75 @@ export default async function CategoryIndexPage() {
   const parentCategories = organizeCategoriesHierarchy(categories);
 
   return (
-    <div className="bg-white">
-      <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
-        <h1 className="text-3xl font-bold tracking-tight text-gray-900">Product Categories</h1>
-        
-        {/* Display parent categories */}
-        <div className="mt-10 space-y-16">
-          {parentCategories.map((parentCategory) => (
-            <div key={parentCategory.id}>
-              <h2 className="text-2xl font-semibold mb-6">{parentCategory.name}</h2>
-              
-              <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-                {/* Display the parent category itself */}
-                <Link 
-                  href={`/category/${parentCategory.slug}`}
-                  className="group block overflow-hidden rounded-lg border border-gray-200 hover:border-gray-300 hover:shadow-md transition-all duration-200"
-                >
-                  <div className="relative h-64 w-full overflow-hidden">
-                    {parentCategory.image ? (
-                      <Image
-                        src={parentCategory.image.src}
-                        alt={parentCategory.name}
-                        className="h-full w-full object-cover object-center group-hover:scale-105 transition-transform duration-200"
-                        width={600}
-                        height={400}
-                      />
-                    ) : (
-                      <div className="flex h-full w-full items-center justify-center bg-gray-100">
-                        <span className="text-gray-400">All {parentCategory.name}</span>
-                      </div>
-                    )}
-                  </div>
-                  
-                  <div className="p-6">
-                    <h3 className="text-xl font-semibold text-gray-900 group-hover:text-indigo-600">
-                      All {parentCategory.name}
-                    </h3>
-                    
-                    {parentCategory.description && (
-                      <div 
-                        className="mt-2 text-sm text-gray-600 line-clamp-2"
-                        dangerouslySetInnerHTML={{ __html: parentCategory.description }}
-                      />
-                    )}
-                    
-                    <div className="mt-4 flex items-center justify-between">
-                      <p className="text-sm text-gray-600">
-                        {parentCategory.count} {parentCategory.count === 1 ? 'product' : 'products'}
-                      </p>
-                      
-                      <span className="inline-flex items-center text-sm font-medium text-indigo-600 group-hover:text-indigo-700">
-                        Browse products
-                        <svg className="ml-1 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                        </svg>
-                      </span>
-                    </div>
-                  </div>
-                </Link>
-                
-                {/* Display child categories */}
-                {parentCategory.children && parentCategory.children.length > 0 && 
-                  parentCategory.children.map((childCategory) => (
-                    <Link 
-                      key={childCategory.id} 
-                      href={`/category/${childCategory.slug}`}
-                      className="group block overflow-hidden rounded-lg border border-gray-200 hover:border-gray-300 hover:shadow-md transition-all duration-200"
-                    >
-                      <div className="relative h-64 w-full overflow-hidden">
-                        {childCategory.image ? (
-                          <Image
-                            src={childCategory.image.src}
-                            alt={childCategory.name}
-                            className="h-full w-full object-cover object-center group-hover:scale-105 transition-transform duration-200"
-                            width={600}
-                            height={400}
-                          />
-                        ) : (
-                          <div className="flex h-full w-full items-center justify-center bg-gray-100">
-                            <span className="text-gray-400">No Image</span>
-                          </div>
-                        )}
-                      </div>
-                      
-                      <div className="p-6">
-                        <h3 className="text-xl font-semibold text-gray-900 group-hover:text-indigo-600">
-                          {childCategory.name}
-                        </h3>
-                        
-                        {childCategory.description && (
-                          <div 
-                            className="mt-2 text-sm text-gray-600 line-clamp-2"
-                            dangerouslySetInnerHTML={{ __html: childCategory.description }}
-                          />
-                        )}
-                        
-                        <div className="mt-4 flex items-center justify-between">
-                          <p className="text-sm text-gray-600">
-                            {childCategory.count} {childCategory.count === 1 ? 'product' : 'products'}
-                          </p>
-                          
-                          <span className="inline-flex items-center text-sm font-medium text-indigo-600 group-hover:text-indigo-700">
-                            Browse products
-                            <svg className="ml-1 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                            </svg>
-                          </span>
-                        </div>
-                      </div>
-                    </Link>
-                  ))
-                }
-              </div>
-            </div>
-          ))}
-        </div>
-        
-        {/* Display any orphaned categories that don't have parents but aren't top-level */}
-        {categories.filter(cat => cat.parent && !parentCategories.some(p => 
-          p.children && p.children.some(c => c.id === cat.id)
-        )).length > 0 && (
-          <div className="mt-16">
-            <h2 className="text-2xl font-semibold mb-6">Other Categories</h2>
+    <>
+      {/* Display parent categories */}
+      <div className="mt-10 space-y-16">
+        {parentCategories.map((parentCategory) => (
+          <div key={parentCategory.id}>
+            <h2 className="text-2xl font-semibold mb-6">{parentCategory.name}</h2>
+            
             <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-              {categories
-                .filter(cat => cat.parent && !parentCategories.some(p => 
-                  p.children && p.children.some(c => c.id === cat.id)
-                ))
-                .map((category) => (
+              {/* Display the parent category itself */}
+              <Link 
+                href={`/category/${parentCategory.slug}`}
+                className="group block overflow-hidden rounded-lg border border-gray-200 hover:border-gray-300 hover:shadow-md transition-all duration-200"
+              >
+                <div className="relative h-64 w-full overflow-hidden">
+                  {parentCategory.image ? (
+                    <Image
+                      src={parentCategory.image.src}
+                      alt={parentCategory.name}
+                      className="h-full w-full object-cover object-center group-hover:scale-105 transition-transform duration-200"
+                      width={600}
+                      height={400}
+                    />
+                  ) : (
+                    <div className="flex h-full w-full items-center justify-center bg-gray-100">
+                      <span className="text-gray-400">All {parentCategory.name}</span>
+                    </div>
+                  )}
+                </div>
+                
+                <div className="p-6">
+                  <h3 className="text-xl font-semibold text-gray-900 group-hover:text-indigo-600">
+                    All {parentCategory.name}
+                  </h3>
+                  
+                  {parentCategory.description && (
+                    <div 
+                      className="mt-2 text-sm text-gray-600 line-clamp-2"
+                      dangerouslySetInnerHTML={{ __html: parentCategory.description }}
+                    />
+                  )}
+                  
+                  <div className="mt-4 flex items-center justify-between">
+                    <p className="text-sm text-gray-600">
+                      {parentCategory.count} {parentCategory.count === 1 ? 'product' : 'products'}
+                    </p>
+                    
+                    <span className="inline-flex items-center text-sm font-medium text-indigo-600 group-hover:text-indigo-700">
+                      Browse products
+                      <svg className="ml-1 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </span>
+                  </div>
+                </div>
+              </Link>
+              
+              {/* Display child categories */}
+              {parentCategory.children && parentCategory.children.length > 0 && 
+                parentCategory.children.map((childCategory) => (
                   <Link 
-                    key={category.id} 
-                    href={`/category/${category.slug}`}
+                    key={childCategory.id} 
+                    href={`/category/${childCategory.slug}`}
                     className="group block overflow-hidden rounded-lg border border-gray-200 hover:border-gray-300 hover:shadow-md transition-all duration-200"
                   >
                     <div className="relative h-64 w-full overflow-hidden">
-                      {category.image ? (
+                      {childCategory.image ? (
                         <Image
-                          src={category.image.src}
-                          alt={category.name}
+                          src={childCategory.image.src}
+                          alt={childCategory.name}
                           className="h-full w-full object-cover object-center group-hover:scale-105 transition-transform duration-200"
                           width={600}
                           height={400}
@@ -222,19 +156,19 @@ export default async function CategoryIndexPage() {
                     
                     <div className="p-6">
                       <h3 className="text-xl font-semibold text-gray-900 group-hover:text-indigo-600">
-                        {category.name}
+                        {childCategory.name}
                       </h3>
                       
-                      {category.description && (
+                      {childCategory.description && (
                         <div 
                           className="mt-2 text-sm text-gray-600 line-clamp-2"
-                          dangerouslySetInnerHTML={{ __html: category.description }}
+                          dangerouslySetInnerHTML={{ __html: childCategory.description }}
                         />
                       )}
                       
                       <div className="mt-4 flex items-center justify-between">
                         <p className="text-sm text-gray-600">
-                          {category.count} {category.count === 1 ? 'product' : 'products'}
+                          {childCategory.count} {childCategory.count === 1 ? 'product' : 'products'}
                         </p>
                         
                         <span className="inline-flex items-center text-sm font-medium text-indigo-600 group-hover:text-indigo-700">
@@ -250,7 +184,86 @@ export default async function CategoryIndexPage() {
               }
             </div>
           </div>
-        )}
+        ))}
+      </div>
+      
+      {/* Display any orphaned categories that don't have parents but aren't top-level */}
+      {categories.filter(cat => cat.parent && !parentCategories.some(p => 
+        p.children && p.children.some(c => c.id === cat.id)
+      )).length > 0 && (
+        <div className="mt-16">
+          <h2 className="text-2xl font-semibold mb-6">Other Categories</h2>
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            {categories
+              .filter(cat => cat.parent && !parentCategories.some(p => 
+                p.children && p.children.some(c => c.id === cat.id)
+              ))
+              .map((category) => (
+                <Link 
+                  key={category.id} 
+                  href={`/category/${category.slug}`}
+                  className="group block overflow-hidden rounded-lg border border-gray-200 hover:border-gray-300 hover:shadow-md transition-all duration-200"
+                >
+                  <div className="relative h-64 w-full overflow-hidden">
+                    {category.image ? (
+                      <Image
+                        src={category.image.src}
+                        alt={category.name}
+                        className="h-full w-full object-cover object-center group-hover:scale-105 transition-transform duration-200"
+                        width={600}
+                        height={400}
+                      />
+                    ) : (
+                      <div className="flex h-full w-full items-center justify-center bg-gray-100">
+                        <span className="text-gray-400">No Image</span>
+                      </div>
+                    )}
+                  </div>
+                  
+                  <div className="p-6">
+                    <h3 className="text-xl font-semibold text-gray-900 group-hover:text-indigo-600">
+                      {category.name}
+                    </h3>
+                    
+                    {category.description && (
+                      <div 
+                        className="mt-2 text-sm text-gray-600 line-clamp-2"
+                        dangerouslySetInnerHTML={{ __html: category.description }}
+                      />
+                    )}
+                    
+                    <div className="mt-4 flex items-center justify-between">
+                      <p className="text-sm text-gray-600">
+                        {category.count} {category.count === 1 ? 'product' : 'products'}
+                      </p>
+                      
+                      <span className="inline-flex items-center text-sm font-medium text-indigo-600 group-hover:text-indigo-700">
+                        Browse products
+                        <svg className="ml-1 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                      </span>
+                    </div>
+                  </div>
+                </Link>
+              ))
+            }
+          </div>
+        </div>
+      )}
+    </>
+  );
+}
+
+export default function CategoryIndexPage() {
+  return (
+    <div className="bg-white">
+      <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
+        <h1 className="text-3xl font-bold tracking-tight text-gray-900">Product Categories</h1>
+        
+        <Suspense fallback={<SkeletonCategoryList />}>
+          <CategoriesContent />
+        </Suspense>
       </div>
     </div>
   );

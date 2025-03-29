@@ -5,6 +5,9 @@ import {
   getCategories,
 } from "@/services/productService";
 import { Suspense } from "react";
+import SkeletonProductsList from "@/components/SkeletonProductsList";
+import SkeletonFilters from "@/components/SkeletonFilters";
+import SkeletonPagination from "@/components/SkeletonPagination";
 
 // Конфигурация за ISR
 export const revalidate = 3600; // Ревалидиране на всеки час
@@ -12,17 +15,16 @@ export const revalidate = 3600; // Ревалидиране на всеки ча
 // Dynamically import components with SSR support
 const Pagination = dynamic(() => import("./pagination"), {
   ssr: true,
-  loading: () => <p>Зареждане...</p>,
+  loading: () => <SkeletonPagination />,
 });
 
 const Filters = dynamic(() => import("./filters"), {
   ssr: true,
-  loading: () => <p>Зареждане...</p>,
+  loading: () => <SkeletonFilters />,
 });
 
 const ProductsList = dynamic(() => import("./productsList"), {
   ssr: true,
-  loading: () => <p>Зареждане...</p>,
 });
 
 // Helper functions for parameters
@@ -241,7 +243,7 @@ export default async function CategoryPage({ params, searchParams }) {
           </div>
 
           <div>
-            <Suspense fallback={<p>Зареждане...</p>}>
+            <Suspense fallback={<SkeletonProductsList />}>
               <ProductsList products={products} />
             </Suspense>
             <Pagination currentPage={currentPage} totalPages={totalPages} />

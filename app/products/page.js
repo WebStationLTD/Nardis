@@ -3,9 +3,9 @@ import dynamic from "next/dynamic";
 import { getProducts, getMaxProductPrice } from "@/services/productService";
 import { Suspense } from "react";
 import ProductsList from "./productsList";
-import SkeletonProductsList from "./skeletonProductsList";
-import SkeletonFilters from "./skeletonFilters";
-import SkeletonPagination from "./skeletonPagination";
+import SkeletonProductsList from "@/components/SkeletonProductsList";
+import SkeletonFilters from "@/components/SkeletonFilters";
+import SkeletonPagination from "@/components/SkeletonPagination";
 // import Filters from "./filters";
 // import Pagination from "./pagination";
 
