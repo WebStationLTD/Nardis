@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Fragment, useState } from "react";
+import { Fragment, useState, useEffect } from "react";
+import { useWishlist } from "@/app/context/WishlistContext";
 import {
   Dialog,
   DialogBackdrop,
@@ -19,7 +20,7 @@ import {
 } from "@headlessui/react";
 import {
   Bars3Icon,
-  MagnifyingGlassIcon,
+  HeartIcon,
   ShoppingBagIcon,
   UserIcon,
   UserPlusIcon,
@@ -32,6 +33,7 @@ function classNames(...classes) {
 
 export default function StoreNavigation({ navigationData }) {
   const [open, setOpen] = useState(false);
+  const { wishlistCount } = useWishlist();
 
   // Extract data from props
   const { categories, featuredItems, pages } = navigationData;
@@ -245,11 +247,16 @@ export default function StoreNavigation({ navigationData }) {
                 </button>
 
                 <Link
-                  href="#"
-                  className="ml-2 p-2 text-gray-400 hover:text-gray-500"
+                  href="/wishlist"
+                  className="ml-2 p-2 text-gray-400 hover:text-gray-500 relative"
                 >
-                  <span className="sr-only">Search</span>
-                  <MagnifyingGlassIcon aria-hidden="true" className="size-6" />
+                  <span className="sr-only">Wishlist</span>
+                  <HeartIcon aria-hidden="true" className="size-6" />
+                  {wishlistCount > 0 && (
+                    <span className="absolute -top-1 -right-1 bg-[#b3438f] text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                      {wishlistCount}
+                    </span>
+                  )}
                 </Link>
               </div>
 
@@ -405,13 +412,18 @@ export default function StoreNavigation({ navigationData }) {
               </PopoverGroup>
 
               <div className="flex flex-1 items-center justify-end">
-                {/* Search */}
+                {/* Wishlist */}
                 <Link
-                  href="#"
-                  className="ml-6 hidden p-2 text-white hover:text-gray-500 lg:block"
+                  href="/wishlist"
+                  className="ml-6 hidden p-2 text-white hover:text-gray-500 lg:block relative"
                 >
-                  <span className="sr-only">Search</span>
-                  <MagnifyingGlassIcon aria-hidden="true" className="size-6" />
+                  <span className="sr-only">Wishlist</span>
+                  <HeartIcon aria-hidden="true" className="size-6" />
+                  {wishlistCount > 0 && (
+                    <span className="absolute -top-1 -right-1 bg-[#b3438f] text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                      {wishlistCount}
+                    </span>
+                  )}
                 </Link>
 
                 {/* Log in */}

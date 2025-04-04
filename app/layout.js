@@ -2,6 +2,7 @@ import "@/styles/globals.css";
 import StoreNavigation from "@/components/storeNavigation";
 import FooterSection from "@/components/footer";
 import CookieConsentBanner from "@/components/cookieConsentBanner";
+import { WishlistProvider } from "@/app/context/WishlistContext";
 import { Inter } from "next/font/google";
 import { getNavigationData } from "@/services/navigationService";
 
@@ -26,10 +27,12 @@ export default async function RootLayout({ children }) {
   return (
     <html lang="bg" className={inter.variable}>
       <body>
-        <StoreNavigation navigationData={navigationData} />
-        {children}
-        <CookieConsentBanner />
-        <FooterSection />
+        <WishlistProvider>
+          <StoreNavigation navigationData={navigationData} />
+          {children}
+          <CookieConsentBanner />
+          <FooterSection />
+        </WishlistProvider>
       </body>
     </html>
   );
