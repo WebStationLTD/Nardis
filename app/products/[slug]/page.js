@@ -15,6 +15,10 @@ const WishlistButton = dynamic(() => import("@/components/wishlistButton"), {
   ssr: true,
   loading: () => <p>Зареждане...</p>,
 });
+const ProductRating = dynamic(() => import("@/components/ProductRating"), {
+  ssr: true,
+  loading: () => <p>Зареждане...</p>,
+});
 
 import {
   Disclosure,
@@ -29,7 +33,6 @@ import {
   TabPanels,
 } from "@headlessui/react";
 import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
-import { StarIcon } from "@heroicons/react/20/solid";
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
@@ -168,27 +171,16 @@ export default async function ProductDetails({ params }) {
               </p>
             </div>
 
-            {/* Reviews */}
-            {/* <div className="mt-3">
-              <h3 className="sr-only">Reviews</h3>
-              <div className="flex items-center">
-                <div className="flex items-center">
-                  {[0, 1, 2, 3, 4].map((rating) => (
-                    <StarIcon
-                      key={rating}
-                      aria-hidden="true"
-                      className={
-                        (product.rating > rating
-                          ? "text-indigo-500"
-                          : "text-gray-300",
-                        "size-5 shrink-0")
-                      }
-                    />
-                  ))}
-                </div>
-                <p className="sr-only">{product.rating} out of 5 stars</p>
-              </div>
-            </div> */}
+            {/* Product Ratings Display */}
+            <div className="mt-4">
+              <ProductRating 
+                productId={product.id} 
+                hideForm={true} 
+                showStats={true} 
+                showReviews={false}
+                minimalistic={true}
+              />
+            </div>
 
             <div className="mt-6">
               <h3 className="sr-only">Description</h3>
@@ -269,16 +261,24 @@ export default async function ProductDetails({ params }) {
           </div>
         </div>
 
-        <section
-          aria-labelledby="related-heading"
-          className="mt-10 border-t border-gray-200 px-4 py-16 sm:px-0"
-        >
-          <h2 id="related-heading" className="text-xl font-bold text-gray-900">
-            Подобни продукти
-          </h2>
+        {/* Add full rating component with review form and reviews section */}
+        <div className="mt-16 border-t border-gray-200 pt-10">
+          <h2 className="text-2xl font-bold tracking-tight text-gray-900 mb-6">Ratings & Reviews</h2>
+          <ProductRating 
+            productId={product.id} 
+            hideForm={false} 
+            showStats={true} 
+            showReviews={true} 
+          />
+        </div>
 
+        {/* Related Products Section */}
+        <div className="mt-16 border-t border-gray-200 pt-10">
+          <h2 className="text-2xl font-bold tracking-tight text-gray-900 mb-6">
+            Related Products
+          </h2>
           <RelatedProducts relatedIds={product.related_ids} />
-        </section>
+        </div>
       </div>
     </div>
   );
