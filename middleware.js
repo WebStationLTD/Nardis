@@ -22,11 +22,14 @@ export default async function middleware(req) {
     session = await decrypt(sessionCookie);
   }
 
-  if (isProtectedRoute && !session?.id) {
+  // Check if user is authenticated by looking for data.user.id in the decoded token
+  const userId = session?.data?.user?.id;
+
+  if (isProtectedRoute && !userId) {
     return NextResponse.redirect(new URL("/login", req.nextUrl));
   }
 
-  if (isPublicRoute && session?.id) {
+  if (isPublicRoute && userId) {
     return NextResponse.redirect(new URL("/my-account", req.nextUrl));
   }
 

@@ -24,6 +24,7 @@ export async function login(prevState, formData) {
   const { email, password } = result.data;
 
   let loginSuccessful = false;
+  let jwtToken = null;
 
   try {
     // Use absolute URL for server-side fetch
@@ -47,8 +48,8 @@ export async function login(prevState, formData) {
 
     const data = await response.json();
     
-    // Access JWT from the correct path in the response
-    const jwt = data.user.data.jwt;
+    // The JWT is now in the user.extras.jwt_token field based on the response example
+    const jwt = data.user.extras?.jwt_token;
 
     if (!jwt) {
       console.error("Missing JWT in response:", data);
@@ -58,6 +59,8 @@ export async function login(prevState, formData) {
         },
       };
     }
+
+    jwtToken = jwt;
 
     // Create session with the JWT
     const sessionCreated = await createSession(jwt);
