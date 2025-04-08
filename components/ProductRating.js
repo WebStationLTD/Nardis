@@ -342,7 +342,7 @@ export default function ProductRating({
                 id="review"
                 rows={3}
                 className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-indigo-500 focus:border-indigo-500"
-                placeholder="Share your experience with this product..."
+                placeholder="Споделете опита си с този продукт..."
                 value={review}
                 onChange={(e) => setReview(e.target.value)}
               />
@@ -414,7 +414,7 @@ export default function ProductRating({
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full bg-indigo-600 border border-transparent rounded-md py-2 px-4 flex justify-center items-center text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:bg-indigo-300"
+              className="w-full border cursor-pointer border-transparent rounded-md py-2 px-4 flex justify-center items-center bg-[#b3438f] hover:bg-[#ebedeb] text-white hover:text-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:bg-indigo-300"
             >
               {isSubmitting ? (
                 <LoadingSpinner size="small" color="white" />
