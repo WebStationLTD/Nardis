@@ -5,10 +5,10 @@ import { createSession, deleteSession } from "@/lib/session";
 import { redirect } from "next/navigation";
 
 const loginSchema = z.object({
-  email: z.string().email({ message: "Invalid email address" }).trim(),
+  email: z.string().email({ message: "Невалиден имейл адрес" }).trim(),
   password: z
     .string()
-    .min(8, { message: "Password must be at least 8 characters" })
+    .min(8, { message: "Паролата трябва да бъде поне 8 символа" })
     .trim(),
 });
 
@@ -41,13 +41,13 @@ export async function login(prevState, formData) {
     if (!response.ok) {
       return {
         errors: {
-          email: ["Invalid email or password"],
+          email: ["Невалиден имейл или парола"],
         },
       };
     }
 
     const data = await response.json();
-    
+
     // The JWT is now in the user.extras.jwt_token field based on the response example
     const jwt = data.user.extras?.jwt_token;
 
@@ -55,7 +55,7 @@ export async function login(prevState, formData) {
       console.error("Missing JWT in response:", data);
       return {
         errors: {
-          email: ["Authentication failed - missing token"],
+          email: ["Неуспешно удостоверяване - липсва токен"],
         },
       };
     }
@@ -64,21 +64,21 @@ export async function login(prevState, formData) {
 
     // Create session with the JWT
     const sessionCreated = await createSession(jwt);
-    
+
     if (!sessionCreated) {
       return {
         errors: {
-          email: ["Failed to create session"],
+          email: ["Неуспешно създаване на сесия"],
         },
       };
     }
-    
+
     loginSuccessful = true;
   } catch (error) {
-    console.error("Login error:", error);
+    console.error("Грешка при вход:", error);
     return {
       errors: {
-        email: ["An unexpected error occurred"],
+        email: ["Възникна неочаквана грешка"],
       },
     };
   }
@@ -87,9 +87,9 @@ export async function login(prevState, formData) {
   if (loginSuccessful) {
     redirect("/my-account");
   }
-  
+
   // Fallback error (should never reach here)
-  return { errors: { email: ["Something went wrong"] } };
+  return { errors: { email: ["Възникна грешка"] } };
 }
 
 export async function logout() {
