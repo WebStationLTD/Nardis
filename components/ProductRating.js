@@ -194,7 +194,7 @@ export default function ProductRating({
               key={star}
               className={`h-4 w-4 ${
                 star <= Math.round(averageRating)
-                  ? "text-indigo-500"
+                  ? "text-[#b3438f]"
                   : "text-gray-300"
               }`}
               aria-hidden="true"
@@ -239,7 +239,7 @@ export default function ProductRating({
             <p className="ml-2 text-sm text-gray-700">
               {averageRating ? averageRating.toFixed(1) : "0"} out of 5 stars
               <span className="ml-1 text-gray-500">
-                ({totalRatings} ratings)
+                ({totalRatings} ревюта)
               </span>
             </p>
           </div>
@@ -252,7 +252,7 @@ export default function ProductRating({
                   <span className="w-8 text-gray-600">{star} star</span>
                   <div className="flex-1 h-2 mx-2 bg-gray-200 rounded">
                     <div
-                      className="h-2 bg-indigo-500 rounded"
+                      className="h-2 bg-[#b3438f] rounded"
                       style={{
                         width: `${Math.round(
                           (ratingCounts[star] / totalRatings) * 100
