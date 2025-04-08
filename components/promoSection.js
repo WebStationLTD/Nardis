@@ -16,7 +16,7 @@ export default function Example() {
       <div className="pt-16 pb-80 sm:pt-24 sm:pb-40 lg:pt-40 lg:pb-48">
         <div className="relative mx-auto max-w-7xl px-4 sm:static sm:px-6 lg:px-8">
           <div className="sm:max-w-lg">
-            <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-white sm:text-6xl text-balance">
+            <h1 className="text-3xl md:text-6xl font-bold tracking-tight text-white sm:text-6xl text-balance">
               Nardis
             </h1>
             <p className="text-2xl md:text-3xl lg:text-4xl text-white text-balance font-medium">
