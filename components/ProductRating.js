@@ -194,7 +194,7 @@ export default function ProductRating({
               key={star}
               className={`h-4 w-4 ${
                 star <= Math.round(averageRating)
-                  ? "text-[#b3438f]"
+                  ? "text-indigo-500"
                   : "text-gray-300"
               }`}
               aria-hidden="true"
@@ -229,7 +229,7 @@ export default function ProductRating({
                   key={star}
                   className={`h-5 w-5 ${
                     star <= Math.round(averageRating)
-                      ? "text-indigo-500"
+                      ? "text-[#b3438f]"
                       : "text-gray-300"
                   }`}
                   aria-hidden="true"
