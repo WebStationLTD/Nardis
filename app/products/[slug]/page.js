@@ -173,10 +173,10 @@ export default async function ProductDetails({ params }) {
 
             {/* Product Ratings Display */}
             <div className="mt-4">
-              <ProductRating 
-                productId={product.id} 
-                hideForm={true} 
-                showStats={true} 
+              <ProductRating
+                productId={product.id}
+                hideForm={true}
+                showStats={true}
                 showReviews={false}
                 minimalistic={true}
               />
@@ -263,19 +263,21 @@ export default async function ProductDetails({ params }) {
 
         {/* Add full rating component with review form and reviews section */}
         <div className="mt-16 border-t border-gray-200 pt-10">
-          <h2 className="text-2xl font-bold tracking-tight text-gray-900 mb-6">Ratings & Reviews</h2>
-          <ProductRating 
-            productId={product.id} 
-            hideForm={false} 
-            showStats={true} 
-            showReviews={true} 
+          <h2 className="text-2xl font-bold tracking-tight text-gray-900 mb-6">
+            Ревюта
+          </h2>
+          <ProductRating
+            productId={product.id}
+            hideForm={false}
+            showStats={true}
+            showReviews={true}
           />
         </div>
 
         {/* Related Products Section */}
         <div className="mt-16 border-t border-gray-200 pt-10">
           <h2 className="text-2xl font-bold tracking-tight text-gray-900 mb-6">
-            Related Products
+            Подобни продукти
           </h2>
           <RelatedProducts relatedIds={product.related_ids} />
         </div>
