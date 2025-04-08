@@ -237,7 +237,7 @@ export default function ProductRating({
               ))}
             </div>
             <p className="ml-2 text-sm text-gray-700">
-              {averageRating ? averageRating.toFixed(1) : "0"} out of 5 stars
+              {averageRating ? averageRating.toFixed(1) : "0"} от 5 звезди
               <span className="ml-1 text-gray-500">
                 ({totalRatings} ревюта)
               </span>
