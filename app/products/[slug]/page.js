@@ -275,7 +275,7 @@ export default async function ProductDetails({ params }) {
         </div>
 
         {/* Related Products Section */}
-        <div className="mt-16 border-t border-gray-200 pt-10">
+        <div className="mt-16 mb-16 border-t border-gray-200 pt-10">
           <h2 className="text-2xl font-bold tracking-tight text-gray-900 mb-6">
             Подобни продукти
           </h2>
