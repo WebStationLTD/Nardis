@@ -14,7 +14,7 @@ function ResetPasswordForm() {
   // Get initial values from URL parameters
   const initialEmail = searchParams.get("email") || "";
   const initialCode = searchParams.get("code") || "";
-  
+
   const [state, resetAction] = useActionState(resetPassword, undefined);
 
   // Redirect to login page after successful password reset
@@ -23,7 +23,7 @@ function ResetPasswordForm() {
       const redirectTimeout = setTimeout(() => {
         router.push("/login");
       }, 3000);
-      
+
       return () => clearTimeout(redirectTimeout);
     }
   }, [state?.success, router]);
@@ -75,7 +75,9 @@ function ResetPasswordForm() {
                   readOnly={!!initialEmail}
                 />
                 {state?.errors?.email && (
-                  <p className="text-red-500 text-xs mt-1">{state.errors.email[0]}</p>
+                  <p className="text-red-500 text-xs mt-1">
+                    {state.errors.email[0]}
+                  </p>
                 )}
               </div>
 
@@ -95,9 +97,12 @@ function ResetPasswordForm() {
                   className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm mt-1"
                   readOnly={!!initialCode}
                 />
-                {state?.errors?.code && state.errors.code[0] !== "Невалиден код или изтекъл срок" && (
-                  <p className="text-red-500 text-xs mt-1">{state.errors.code[0]}</p>
-                )}
+                {state?.errors?.code &&
+                  state.errors.code[0] !== "Невалиден код или изтекъл срок" && (
+                    <p className="text-red-500 text-xs mt-1">
+                      {state.errors.code[0]}
+                    </p>
+                  )}
               </div>
 
               <div>
@@ -115,7 +120,9 @@ function ResetPasswordForm() {
                   className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm mt-1"
                 />
                 {state?.errors?.newPassword && (
-                  <p className="text-red-500 text-xs mt-1">{state.errors.newPassword[0]}</p>
+                  <p className="text-red-500 text-xs mt-1">
+                    {state.errors.newPassword[0]}
+                  </p>
                 )}
               </div>
 
@@ -134,7 +141,9 @@ function ResetPasswordForm() {
                   className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm mt-1"
                 />
                 {state?.errors?.confirmPassword && (
-                  <p className="text-red-500 text-xs mt-1">{state.errors.confirmPassword[0]}</p>
+                  <p className="text-red-500 text-xs mt-1">
+                    {state.errors.confirmPassword[0]}
+                  </p>
                 )}
               </div>
             </div>
@@ -147,10 +156,7 @@ function ResetPasswordForm() {
 
         <div className="text-center">
           <p className="text-sm text-gray-600">
-            <Link
-              href="/login"
-              className="font-medium text-indigo-600 hover:text-indigo-500"
-            >
+            <Link href="/login" className="font-medium text-[#b3438f]">
               Обратно към входа
             </Link>
           </p>
@@ -167,7 +173,7 @@ function SubmitButton() {
     <button
       type="submit"
       disabled={pending}
-      className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 cursor-pointer"
+      className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md bg-[#b3438f] hover:bg-[#ebedeb] text-white hover:text-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 cursor-pointer"
     >
       {pending ? "Изпращане..." : "Променете паролата"}
     </button>
