@@ -315,7 +315,7 @@ export default function ProductRating({
                     {hoveredRating >= star ||
                     (!hoveredRating && rating >= star) ? (
                       <StarIcon
-                        className="h-7 w-7 text-indigo-500"
+                        className="h-7 w-7 text-[#b3438f]"
                         aria-hidden="true"
                       />
                     ) : (
