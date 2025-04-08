@@ -19,7 +19,10 @@ export default function RegisterPage() {
         <form className="mt-8 space-y-6" action={registerAction}>
           <div className="rounded-md shadow-sm space-y-4">
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
                 Имейл адрес
               </label>
               <input
@@ -30,12 +33,17 @@ export default function RegisterPage() {
                 placeholder="Вашият имейл адрес"
               />
               {state?.errors?.email && (
-                <p className="text-red-500 text-xs mt-1">{state.errors.email}</p>
+                <p className="text-red-500 text-xs mt-1">
+                  {state.errors.email}
+                </p>
               )}
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
                 Парола
               </label>
               <input
@@ -46,12 +54,17 @@ export default function RegisterPage() {
                 placeholder="Парола"
               />
               {state?.errors?.password && (
-                <p className="text-red-500 text-xs mt-1">{state.errors.password}</p>
+                <p className="text-red-500 text-xs mt-1">
+                  {state.errors.password}
+                </p>
               )}
             </div>
 
             <div>
-              <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-1">
+              <label
+                htmlFor="confirmPassword"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
                 Потвърдете паролата
               </label>
               <input
@@ -62,7 +75,9 @@ export default function RegisterPage() {
                 placeholder="Потвърдете паролата"
               />
               {state?.errors?.confirmPassword && (
-                <p className="text-red-500 text-xs mt-1">{state.errors.confirmPassword}</p>
+                <p className="text-red-500 text-xs mt-1">
+                  {state.errors.confirmPassword}
+                </p>
               )}
             </div>
           </div>
@@ -75,10 +90,7 @@ export default function RegisterPage() {
         <div className="text-center">
           <p className="text-sm text-gray-600">
             Вече имате акаунт?{" "}
-            <Link
-              href="/login"
-              className="font-medium text-indigo-600 hover:text-indigo-500"
-            >
+            <Link href="/login" className="font-medium text-[#b3438f]">
               Вход
             </Link>
           </p>
@@ -95,7 +107,7 @@ function SubmitButton() {
     <button
       type="submit"
       disabled={pending}
-      className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 cursor-pointer"
+      className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md bg-[#b3438f] hover:bg-[#ebedeb] text-white hover:text-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 cursor-pointer"
     >
       {pending ? "Регистриране..." : "Регистрирайте се"}
     </button>
