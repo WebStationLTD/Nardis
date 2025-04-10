@@ -14,6 +14,7 @@ export async function getOrders(userId) {
     }
 
     const params = {};
+    params.status = "processing,on-hold,completed,cancelled,refunded,refunded,failed";
 
     // Convert to number if it's a numeric string
     const customerId = parseInt(userId, 10);
