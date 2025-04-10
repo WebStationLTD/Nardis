@@ -13,29 +13,21 @@ export async function POST(request) {
       );
     }
 
-    console.log(email);
-    
-    // Create Basic Auth header - CoCart uses basic auth for login endpoint
-    const basicAuth = Buffer.from(`${email}:${password}`).toString('base64');
-    
     // Make request to WordPress authentication endpoint
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_WORDPRESS_SITE_URL}/wp-json/cocart/v2/login`,
+      `${process.env.NEXT_PUBLIC_WORDPRESS_SITE_URL}/?rest_route=/simple-jwt-login/v1/auth&email=${email}&password=${password}`,
       {
         method: "POST",
-        headers: { 
-          "Content-Type": "application/json",
-          "Authorization": `Basic ${basicAuth}`
-        },
-        // Empty body or minimal body since credentials are in the header
-        body: JSON.stringify({}),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          username: email,
+          password: password,
+        }),
       }
     );
 
-    console.log(res);
     const data = await res.json();
 
-    console.log(data);
     if (!res.ok || data.code) {
       return NextResponse.json(
         { error: data.message || "Invalid credentials" },

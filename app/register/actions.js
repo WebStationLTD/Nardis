@@ -85,13 +85,12 @@ export async function register(prevState, formData) {
     const loginData = await loginResponse.json();
     
     // Get JWT token and create session
-    // Check for both jwt_token in extras and data.jwt in the response
-    const jwt = loginData.user?.extras?.jwt_token || loginData.user?.data?.jwt || loginData.jwt;
+    const jwt = loginData.user.data.jwt;
     
     if (!jwt) {
       return {
         errors: {
-          email: ["Регистрацията успешна, но автоматичното влизане е неуспешно. JWT токенът липсва в отговора."],
+          email: ["Регистрацията успешна, но автоматичното влизане е неуспешно. Моля, влезте ръчно."],
         },
       };
     }
