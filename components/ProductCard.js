@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import WishlistButton from "@/components/wishlistButton";
+import SimpleAddToCartButton from "@/components/SimpleAddToCartButton";
 
 export default function ProductCard({
   product,
@@ -93,6 +94,14 @@ export default function ProductCard({
             )}
           </div>
         </Link>
+
+        {!isOutOfStock && (
+          <SimpleAddToCartButton
+            productId={product.id}
+            productName={product.name}
+            productImage={imageUrl}
+          />
+        )}
       </div>
     </div>
   );

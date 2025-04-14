@@ -201,12 +201,14 @@ export default async function CategoryPage({ params, searchParams }) {
     // Find categories with the same parent or siblings
     const currentCategory = findCategoryBySlug(allCategories, slug);
     if (currentCategory) {
-      relatedCategories = allCategories.filter(cat => 
-        cat.id !== currentCategory.id && (
-          cat.parent === currentCategory.parent || // siblings
-          cat.parent === currentCategory.id // children
+      relatedCategories = allCategories
+        .filter(
+          (cat) =>
+            cat.id !== currentCategory.id &&
+            (cat.parent === currentCategory.parent || // siblings
+              cat.parent === currentCategory.id) // children
         )
-      ).slice(0, 5); // Limit to 5 categories
+        .slice(0, 5); // Limit to 5 categories
     }
   } catch (error) {
     console.error("Error loading related categories:", error);
@@ -215,7 +217,7 @@ export default async function CategoryPage({ params, searchParams }) {
   return (
     <div className="bg-white">
       <div className="bg-white">
-        <div className="mx-auto max-w-10/10 py-0 sm:px-6 sm:py-0 lg:px-0">
+        <div className="mx-auto max-w-10/10 py-0 sm:py-0 lg:px-0">
           <div className="relative isolate overflow-hidden bg-gray-900 px-6 py-12 text-center shadow-2xl sm:px-12">
             <div className="mx-auto max-w-2xl text-center">
               <h1 className="text-4xl font-semibold tracking-tight text-white sm:text-5xl">
@@ -244,31 +246,43 @@ export default async function CategoryPage({ params, searchParams }) {
           </div>
         </div>
       </div>
-      
+
       {/* SEO breadcrumb navigation */}
-      <div className="w-full max-w-[80%] xl:max-w-[80%] mx-auto px-4 py-4 sm:px-6">
+      <div className="w-full max-w-[100%] md:max-w-[80%] mx-auto px-4 py-4 sm:px-6">
         <nav aria-label="Breadcrumb">
           <ol className="flex items-center space-x-2 text-sm text-gray-600">
             <li>
-              <Link href="/" className="hover:text-indigo-600">Начало</Link>
+              <Link href="/" className="hover:text-indigo-600">
+                Начало
+              </Link>
               <span className="mx-2">/</span>
             </li>
             <li>
-              <Link href="/category" className="hover:text-indigo-600">Категории</Link>
+              <Link href="/category" className="hover:text-indigo-600">
+                Категории
+              </Link>
               <span className="mx-2">/</span>
             </li>
             <li>
-              <Link href={`/category/${slug}`} className="font-semibold hover:text-indigo-600" aria-current="page">{categoryName}</Link>
+              <Link
+                href={`/category/${slug}`}
+                className="font-semibold hover:text-indigo-600"
+                aria-current="page"
+              >
+                {categoryName}
+              </Link>
             </li>
           </ol>
-          
+
           {/* Related categories for SEO */}
           {relatedCategories.length > 0 && (
             <div className="mt-4">
-              <p className="text-sm font-medium text-gray-700 mb-2">Свързани категории:</p>
+              <p className="text-sm font-medium text-gray-700 mb-2">
+                Свързани категории:
+              </p>
               <div className="flex flex-wrap gap-2">
-                {relatedCategories.map(cat => (
-                  <Link 
+                {relatedCategories.map((cat) => (
+                  <Link
                     key={cat.id}
                     href={`/category/${cat.slug}`}
                     className="text-sm px-3 py-1 bg-gray-100 rounded-full hover:bg-gray-200"
@@ -281,8 +295,8 @@ export default async function CategoryPage({ params, searchParams }) {
           )}
         </nav>
       </div>
-      
-      <div className="w-full max-w-[80%] xl:max-w-[80%] mx-auto px-4 py-6 sm:px-6 lg:px-8">
+
+      <div className="w-full max-w-[100%] md:max-w-[80%] mx-auto px-4 py-6 sm:px-6 lg:px-8">
         <h2 className="text-2xl font-bold tracking-tight text-gray-900 mb-6">
           Филтри
         </h2>
@@ -298,20 +312,22 @@ export default async function CategoryPage({ params, searchParams }) {
             <Pagination currentPage={currentPage} totalPages={totalPages} />
           </div>
         </div>
-        
+
         {/* Hidden pagination links for SEO */}
         <div className="mt-8 hidden">
-          {Array.from({ length: Math.min(5, totalPages) }, (_, i) => i + 1).map(page => (
-            <Link 
-              key={page}
-              href={`/category/${slug}?page=${page}`}
-              aria-label={`Page ${page}`}
-            >
-              {page}
-            </Link>
-          ))}
+          {Array.from({ length: Math.min(5, totalPages) }, (_, i) => i + 1).map(
+            (page) => (
+              <Link
+                key={page}
+                href={`/category/${slug}?page=${page}`}
+                aria-label={`Page ${page}`}
+              >
+                {page}
+              </Link>
+            )
+          )}
         </div>
-        
+
         {currentPage === 1 && categoryDescription && (
           <div className="mt-8 prose max-w-none">
             <h2>Относно {categoryName}</h2>
