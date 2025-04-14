@@ -101,7 +101,7 @@ export default async function ProductDetails({ params }) {
           {/* Image gallery */}
           <TabGroup className="flex flex-col-reverse">
             {/* Image selector */}
-            <div className="mx-auto mt-6 w-full max-w-2xl block lg:max-w-none">
+            <div className="mx-auto mt-6 px-4 sm:px-0 w-full max-w-2xl block lg:max-w-none">
               <TabList className="grid grid-cols-3 gap-6">
                 {product.images.map((image) => (
                   <Tab
@@ -213,8 +213,8 @@ export default async function ProductDetails({ params }) {
             </div>
 
             <div className="mt-10 flex">
-              <AddToCartButton 
-                productId={product.id} 
+              <AddToCartButton
+                productId={product.id}
                 productName={product.name}
                 productImage={product.images[0]?.src}
               />
@@ -226,7 +226,7 @@ export default async function ProductDetails({ params }) {
         </div>
 
         {/* Add full rating component with review form and reviews section */}
-        <div className="mt-16 border-t border-gray-200 pt-10">
+        <div className="mt-16 border-t px-4 sm:px-0 border-gray-200 pt-10">
           <h2 className="text-2xl font-bold tracking-tight text-gray-900 mb-6">
             Ревюта
           </h2>
@@ -239,7 +239,7 @@ export default async function ProductDetails({ params }) {
         </div>
 
         {/* Related Products Section */}
-        <div className="mt-16 mb-16 border-t border-gray-200 pt-10">
+        <div className="mt-16 mb-16 px-4 sm:px-0 border-t border-gray-200 pt-10">
           <h2 className="text-2xl font-bold tracking-tight text-gray-900 mb-6">
             Подобни продукти
           </h2>
