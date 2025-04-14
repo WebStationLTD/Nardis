@@ -10,11 +10,7 @@ import { getCart, addToCart, updateCartItem, removeFromCart, clearCart, applyDis
 export async function fetchUserAction() {
   try {
     const userInfo = await getUserInfo();
-    if (!userInfo) {
-      return { error: "Not authenticated", status: 401 };
-    }
-    
-    return { user: userInfo };
+    return { user: userInfo }; // Will be null for guest users
   } catch (error) {
     console.error("Error fetching user data:", error);
     return { error: "Failed to fetch user data", status: 500 };
@@ -28,12 +24,10 @@ export async function fetchUserAction() {
 export async function fetchCartAction() {
   try {
     const userInfo = await getUserInfo();
+    const userId = userInfo?.id || null;
     
-    if (!userInfo || !userInfo.id) {
-      return { error: "User not authenticated", status: 401 };
-    }
-    
-    const cartData = await getCart(userInfo.id);
+    // Get cart using either user ID or guest cookie
+    const cartData = await getCart(userId);
     return { cart: cartData };
   } catch (error) {
     console.error("Error fetching cart:", error);
@@ -51,12 +45,9 @@ export async function fetchCartAction() {
 export async function addToCartAction(productId, quantity = 1, variations = {}) {
   try {
     const userInfo = await getUserInfo();
+    const userId = userInfo?.id || null;
     
-    if (!userInfo || !userInfo.id) {
-      return { error: "User not authenticated", status: 401 };
-    }
-    
-    const result = await addToCart(userInfo.id, productId, quantity, variations);
+    const result = await addToCart(userId, productId, quantity, variations);
     return { cart: result };
   } catch (error) {
     console.error("Error adding to cart:", error);
@@ -73,12 +64,9 @@ export async function addToCartAction(productId, quantity = 1, variations = {}) 
 export async function updateCartItemAction(itemId, quantity) {
   try {
     const userInfo = await getUserInfo();
+    const userId = userInfo?.id || null;
     
-    if (!userInfo || !userInfo.id) {
-      return { error: "User not authenticated", status: 401 };
-    }
-    
-    const result = await updateCartItem(userInfo.id, itemId, quantity);
+    const result = await updateCartItem(userId, itemId, quantity);
     return { cart: result };
   } catch (error) {
     console.error("Error updating cart item:", error);
@@ -94,12 +82,9 @@ export async function updateCartItemAction(itemId, quantity) {
 export async function removeFromCartAction(itemId) {
   try {
     const userInfo = await getUserInfo();
+    const userId = userInfo?.id || null;
     
-    if (!userInfo || !userInfo.id) {
-      return { error: "User not authenticated", status: 401 };
-    }
-    
-    const result = await removeFromCart(userInfo.id, itemId);
+    const result = await removeFromCart(userId, itemId);
     return { cart: result };
   } catch (error) {
     console.error("Error removing item from cart:", error);
@@ -114,12 +99,9 @@ export async function removeFromCartAction(itemId) {
 export async function clearCartAction() {
   try {
     const userInfo = await getUserInfo();
+    const userId = userInfo?.id || null;
     
-    if (!userInfo || !userInfo.id) {
-      return { error: "User not authenticated", status: 401 };
-    }
-    
-    const result = await clearCart(userInfo.id);
+    const result = await clearCart(userId);
     return { success: result };
   } catch (error) {
     console.error("Error clearing cart:", error);
@@ -135,12 +117,9 @@ export async function clearCartAction() {
 export async function applyDiscountAction(couponCode) {
   try {
     const userInfo = await getUserInfo();
+    const userId = userInfo?.id || null;
     
-    if (!userInfo || !userInfo.id) {
-      return { error: "User not authenticated", status: 401 };
-    }
-    
-    const result = await applyDiscount(userInfo.id, couponCode);
+    const result = await applyDiscount(userId, couponCode);
     return { cart: result };
   } catch (error) {
     console.error("Error applying discount:", error);
@@ -155,12 +134,9 @@ export async function applyDiscountAction(couponCode) {
 export async function convertCartToOrderAction() {
   try {
     const userInfo = await getUserInfo();
+    const userId = userInfo?.id || null;
     
-    if (!userInfo || !userInfo.id) {
-      return { error: "User not authenticated", status: 401 };
-    }
-    
-    const result = await convertCartToOrder(userInfo.id);
+    const result = await convertCartToOrder(userId);
     return { order: result };
   } catch (error) {
     console.error("Error converting cart to order:", error);
@@ -175,12 +151,9 @@ export async function convertCartToOrderAction() {
 export async function getCartTotalsAction() {
   try {
     const userInfo = await getUserInfo();
+    const userId = userInfo?.id || null;
     
-    if (!userInfo || !userInfo.id) {
-      return { error: "User not authenticated", status: 401 };
-    }
-    
-    const totals = await getCartTotals(userInfo.id);
+    const totals = await getCartTotals(userId);
     return { totals };
   } catch (error) {
     console.error("Error fetching cart totals:", error);
@@ -195,12 +168,9 @@ export async function getCartTotalsAction() {
 export async function getCartItemCountAction() {
   try {
     const userInfo = await getUserInfo();
+    const userId = userInfo?.id || null;
     
-    if (!userInfo || !userInfo.id) {
-      return { error: "User not authenticated", status: 401 };
-    }
-    
-    const count = await getCartItemCount(userInfo.id);
+    const count = await getCartItemCount(userId);
     return { count };
   } catch (error) {
     console.error("Error fetching cart count:", error);

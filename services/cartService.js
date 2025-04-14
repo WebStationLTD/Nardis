@@ -1,29 +1,53 @@
 import WooCommerce from "@/lib/woocomerce";
+import { getGuestCartId, setGuestCartId } from "@/lib/guestCart";
 
 /**
- * Get the shopping cart for a user
- * @param {string|number} userId - The user ID
+ * Get the shopping cart for a user or guest
+ * @param {string|number} userId - The user ID or null for guest
  * @returns {Promise<Array>} Cart data
  */
 export async function getCart(userId) {
   try {
+    // For guest users, try to get cart ID from cookie
+    let cartParams = {};
+    let isGuest = false;
+
     if (!userId) {
-      return [];
+      const guestCartId = await getGuestCartId();
+      if (guestCartId) {
+        // If we have a guest cart ID, use it directly
+        cartParams = {
+          id: guestCartId,
+          _fields: "id,total,line_items,currency_symbol,subtotal,total_tax,shipping_total,discount_total,currency",
+        };
+        isGuest = true;
+      } else {
+        return []; // No guest cart found yet
+      }
+    } else {
+      // For logged-in users, use the existing approach
+      cartParams = {
+        status: "shopping_cart",
+        _fields: "id,total,customer_id,line_items,currency_symbol,subtotal,total_tax,shipping_total,discount_total,currency",
+      };
+
+      // Convert userId to number if possible
+      const customerId = parseInt(userId, 10);
+      cartParams.customer = !isNaN(customerId) ? customerId : userId;
     }
 
-    // Prepare parameters for API call
-    const params = {
-      status: "shopping_cart",
-      _fields: "id,total,customer_id,line_items,currency_symbol,subtotal,total_tax,shipping_total,discount_total,currency",
-    };
-
-    // Convert userId to number if possible
-    const customerId = parseInt(userId, 10);
-    params.customer = !isNaN(customerId) ? customerId : userId;
-
     // Fetch cart from WooCommerce
-    const response = await WooCommerce.get("orders", params);
-    return response.data;
+    if (isGuest) {
+      // For guest carts, we fetch by ID directly
+      const response = await WooCommerce.get(`orders/${cartParams.id}`, {
+        _fields: cartParams._fields
+      });
+      return [response.data]; // Return as array to match existing format
+    } else {
+      // For logged-in users, we fetch by customer filter
+      const response = await WooCommerce.get("orders", cartParams);
+      return response.data;
+    }
   } catch (error) {
     // Handle specific error cases
     if (error.response?.status === 400 && userId) {
@@ -44,16 +68,12 @@ export async function getCart(userId) {
 }
 
 /**
- * Find or create a shopping cart for the user
- * @param {string|number} userId - The user ID
+ * Find or create a shopping cart for the user or guest
+ * @param {string|number} userId - The user ID or null for guest
  * @returns {Promise<Object>} - The cart order object
  */
 async function findOrCreateCart(userId) {
   try {
-    if (!userId) {
-      throw new Error("User ID is required");
-    }
-    
     // First try to find existing cart
     const existingCart = await getCart(userId);
 
@@ -63,22 +83,47 @@ async function findOrCreateCart(userId) {
     }
 
     // Create a new cart if none exists
-    const cartData = {
-      customer_id: userId,
-      status: "shopping_cart",
-      meta_data: [
-        {
-          key: "is_cart",
-          value: "true",
-        },
-      ],
-    };
+    let cartData = {};
+    
+    if (userId) {
+      // For logged-in users
+      cartData = {
+        customer_id: userId,
+        status: "shopping_cart",
+        meta_data: [
+          {
+            key: "is_cart",
+            value: "true",
+          },
+        ],
+      };
+    } else {
+      // For guest users
+      cartData = {
+        status: "shopping_cart",
+        meta_data: [
+          {
+            key: "is_cart",
+            value: "true",
+          },
+          {
+            key: "is_guest_cart",
+            value: "true",
+          },
+        ],
+      };
+    }
 
     // Create cart - only sending minimal required data
     const response = await WooCommerce.post("orders", cartData);
     
     if (!response.data || !response.data.id) {
       throw new Error("Failed to create cart: Invalid response from API");
+    }
+    
+    // For guest users, store the cart ID in cookie
+    if (!userId) {
+      await setGuestCartId(response.data.id.toString());
     }
     
     return response.data;
@@ -92,8 +137,8 @@ async function findOrCreateCart(userId) {
 }
 
 /**
- * Add a product to the user's cart
- * @param {string|number} userId - The user ID
+ * Add a product to the user's or guest's cart
+ * @param {string|number} userId - The user ID or null for guest
  * @param {number} productId - The product ID to add
  * @param {number} quantity - Quantity to add
  * @param {Object} variations - Optional variation attributes
@@ -106,7 +151,7 @@ export async function addToCart(
   variations = {}
 ) {
   try {
-    // Get or create cart for user
+    // Get or create cart for user or guest
     const cart = await findOrCreateCart(userId);
     
     if (!cart || !cart.id) {
@@ -188,7 +233,7 @@ export async function addToCart(
 
 /**
  * Update cart item quantity
- * @param {string|number} userId - The user ID
+ * @param {string|number} userId - The user ID or null for guest
  * @param {number} itemId - The line item ID
  * @param {number} quantity - New quantity
  * @returns {Promise<Object>} Updated cart
@@ -253,7 +298,7 @@ export async function updateCartItem(userId, itemId, quantity) {
 
 /**
  * Remove an item from the cart
- * @param {string|number} userId - The user ID
+ * @param {string|number} userId - The user ID or null for guest
  * @param {number} itemId - The line item ID to remove
  * @returns {Promise<Object>} Updated cart
  */
@@ -306,7 +351,7 @@ export async function removeFromCart(userId, itemId) {
 
 /**
  * Clear all items from the cart
- * @param {string|number} userId - The user ID
+ * @param {string|number} userId - The user ID or null for guest
  * @returns {Promise<boolean>} Success status
  */
 export async function clearCart(userId) {
@@ -345,7 +390,7 @@ export async function clearCart(userId) {
 
 /**
  * Apply a discount coupon to the cart
- * @param {string|number} userId - The user ID
+ * @param {string|number} userId - The user ID or null for guest
  * @param {string} couponCode - Coupon code to apply
  * @returns {Promise<Object>} Updated cart with applied coupon
  */
@@ -391,7 +436,7 @@ export async function applyDiscount(userId, couponCode) {
 
 /**
  * Convert a shopping cart to a pending order to start checkout
- * @param {string|number} userId - The user ID
+ * @param {string|number} userId - The user ID or null for guest
  * @returns {Promise<Object>} The pending order
  */
 export async function convertCartToOrder(userId) {
@@ -424,30 +469,56 @@ export async function convertCartToOrder(userId) {
 
 /**
  * Get the number of items in the cart
- * @param {string|number} userId - The user ID
+ * @param {string|number} userId - The user ID or null for guest
  * @returns {Promise<number>} Number of items in cart
  */
 export async function getCartItemCount(userId) {
   try {
+    let cart = null;
+    
     if (!userId) {
-      return 0;
+      // For guest users, get cart from cookie ID
+      const guestCartId = await getGuestCartId();
+      if (!guestCartId) {
+        return 0;
+      }
+      
+      try {
+        // Fetch cart by ID
+        const response = await WooCommerce.get(`orders/${guestCartId}`, {
+          _fields: "line_items"
+        });
+        cart = response.data;
+      } catch (error) {
+        // Handle cart not found or invalid ID
+        if (error.response?.status === 404) {
+          return 0;
+        }
+        throw error;
+      }
+    } else {
+      // For registered users
+      const params = {
+        status: "shopping_cart",
+        _fields: "line_items",
+        customer: parseInt(userId, 10) || userId
+      };
+      
+      const response = await WooCommerce.get("orders", params);
+      
+      if (!response.data || response.data.length === 0) {
+        return 0;
+      }
+      
+      cart = response.data[0];
     }
     
-    // Only request minimal fields needed for count
-    const params = {
-      status: "shopping_cart",
-      _fields: "line_items",
-      customer: parseInt(userId, 10) || userId
-    };
-    
-    const response = await WooCommerce.get("orders", params);
-    
-    if (!response.data || response.data.length === 0 || !response.data[0].line_items) {
-      return 0;
-    }
-
     // Sum up quantities of all items
-    return response.data[0].line_items.reduce(
+    if (!cart || !cart.line_items) {
+      return 0;
+    }
+    
+    return cart.line_items.reduce(
       (total, item) => total + (parseInt(item.quantity, 10) || 0), 
       0
     );
@@ -459,64 +530,95 @@ export async function getCartItemCount(userId) {
 
 /**
  * Calculate cart subtotal or total
- * @param {string|number} userId - The user ID
+ * @param {string|number} userId - The user ID or null for guest
  * @returns {Promise<Object>} Cart totals object with subtotal, tax, shipping, and total
  */
 export async function getCartTotals(userId) {
   try {
+    let cart = null;
+    
     if (!userId) {
-      return {
-        subtotal: 0,
-        tax: 0,
-        shipping: 0,
-        discount: 0,
-        total: 0,
-        currency: "BGN",
-        currencySymbol: "лв.",
-        itemCount: 0
+      // For guest users, get cart from cookie ID
+      const guestCartId = await getGuestCartId();
+      if (!guestCartId) {
+        return {
+          subtotal: 0,
+          tax: 0,
+          shipping: 0,
+          discount: 0,
+          total: 0,
+          currency: "BGN",
+          currencySymbol: "лв.",
+          itemCount: 0
+        };
+      }
+      
+      try {
+        // Fetch cart by ID
+        const response = await WooCommerce.get(`orders/${guestCartId}`, {
+          _fields: "id,total,total_tax,shipping_total,discount_total,currency,currency_symbol,line_items"
+        });
+        cart = response.data;
+      } catch (error) {
+        // Handle cart not found or invalid ID
+        if (error.response?.status === 404) {
+          return {
+            subtotal: 0,
+            tax: 0,
+            shipping: 0,
+            discount: 0,
+            total: 0,
+            currency: "BGN",
+            currencySymbol: "лв.",
+            itemCount: 0
+          };
+        }
+        throw error;
+      }
+    } else {
+      // For registered users
+      const params = {
+        status: "shopping_cart",
+        _fields: "id,total,total_tax,shipping_total,discount_total,currency,currency_symbol,line_items",
+        customer: parseInt(userId, 10) || userId
       };
+      
+      const response = await WooCommerce.get("orders", params);
+      
+      if (!response.data || response.data.length === 0) {
+        return {
+          subtotal: 0,
+          tax: 0,
+          shipping: 0,
+          discount: 0,
+          total: 0,
+          currency: "BGN",
+          currencySymbol: "лв.",
+          itemCount: 0
+        };
+      }
+      
+      cart = response.data[0];
     }
     
-    // Only request fields needed for totals
-    const params = {
-      status: "shopping_cart",
-      _fields: "id,total,total_tax,shipping_total,discount_total,currency,currency_symbol,line_items",
-      customer: parseInt(userId, 10) || userId
-    };
-    
-    const response = await WooCommerce.get("orders", params);
-
-    if (!response.data || response.data.length === 0 || !response.data[0]) {
-      return {
-        subtotal: 0,
-        tax: 0,
-        shipping: 0,
-        discount: 0,
-        total: 0,
-        currency: "BGN",
-        currencySymbol: "лв.",
-        itemCount: 0
-      };
-    }
-
-    const currentCart = response.data[0];
-    const itemCount = currentCart.line_items 
-      ? currentCart.line_items.reduce((count, item) => count + (parseInt(item.quantity, 10) || 0), 0) 
+    // Process cart totals
+    const itemCount = cart.line_items 
+      ? cart.line_items.reduce((count, item) => count + (parseInt(item.quantity, 10) || 0), 0) 
       : 0;
     
     // Calculate subtotal from line items
-    const subtotal = currentCart.line_items 
-      ? currentCart.line_items.reduce((sum, item) => sum + (parseFloat(item.subtotal) || 0), 0)
+    const subtotal = cart.line_items 
+      ? cart.line_items.reduce((sum, item) => sum + (parseFloat(item.subtotal) || 0), 0)
       : 0;
 
     return {
       subtotal: subtotal,
-      tax: parseFloat(currentCart.total_tax || 0),
-      shipping: parseFloat(currentCart.shipping_total || 0),
-      discount: parseFloat(currentCart.discount_total || 0),
-      total: parseFloat(currentCart.total || 0),
-      currency: currentCart.currency || "BGN",
-      currencySymbol: currentCart.currency_symbol || "лв.",
+      tax: parseFloat(cart.total_tax || 0),
+      shipping: parseFloat(cart.shipping_total || 0),
+      discount: parseFloat(cart.discount_total || 0),
+      total: parseFloat(cart.total || 0),
+      currency: cart.currency || "BGN",
+      currencySymbol: cart.currency_symbol || "лв.",
       itemCount
     };
   } catch (error) {

@@ -21,15 +21,10 @@ export default function Cart() {
         const result = await fetchUserAction();
         
         if (result.error) {
-          if (result.status === 401) {
-            setError("Моля, влезте в акаунта си, за да видите кошницата");
-            setLoading(false);
-            return;
-          }
           throw new Error(result.error);
         }
         
-        setUser(result.user);
+        setUser(result.user); // Will be null for guest users
       } catch (err) {
         console.error("Failed to fetch user:", err);
         setError("Неуспешна автентикация");
@@ -40,11 +35,10 @@ export default function Cart() {
     fetchUser();
   }, []);
 
-  // Fetch cart data when user is available
+  // Fetch cart data when user info is resolved (either logged in or guest)
   useEffect(() => {
     const fetchCart = async () => {
-      if (!user) return;
-      
+      // We can proceed for both logged-in users and guests
       try {
         setLoading(true);
         const result = await fetchCartAction();
@@ -63,6 +57,7 @@ export default function Cart() {
       }
     };
 
+    // user is either an object (logged in) or null (guest) - both are valid states now
     fetchCart();
   }, [user]);
 
@@ -177,9 +172,13 @@ export default function Cart() {
       <div className="mx-auto max-w-2xl px-4 pb-24 pt-16 sm:px-6 lg:max-w-7xl lg:px-8">
         <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Кошница</h1>
         
-        {user && (
+        {user ? (
           <div className="mt-3 text-sm">
             <p>Здравейте, <span className="font-medium">{user.username || user.email}</span></p>
+          </div>
+        ) : (
+          <div className="mt-3 text-sm">
+            <p>Пазарувате като гост. <Link href="/login" className="text-[#b3438f] hover:text-[#9c3b7e]">Влезте в акаунта си</Link> за по-лесно пазаруване.</p>
           </div>
         )}
 
@@ -248,44 +247,36 @@ export default function Cart() {
                               </Link>
                             </h3>
                           </div>
+                          
+                          {/* Price display */}
                           <div className="mt-1 flex text-sm">
-                            {item.sku && (
-                              <p className="text-gray-500">SKU: {item.sku}</p>
-                            )}
+                            <p className="text-gray-500">{item.price} {currencySymbol}</p>
                           </div>
-                          <p className="mt-1 text-sm font-medium text-gray-900">
-                            {(parseFloat(item.price) || 0).toFixed(2)} {currencySymbol}
-                          </p>
-                          {item.quantity > 1 && (
-                            <p className="mt-1 text-xs text-gray-500">
-                              Общо: {(parseFloat(item.subtotal) || 0).toFixed(2)} {currencySymbol}
-                            </p>
-                          )}
                         </div>
 
-                        <div className="mt-4 sm:mt-0 sm:pr-9">
-                          <div className="flex items-center">
+                        <div className="mt-4 sm:mt-0 sm:pr-9 text-right">
+                          <div className="inline-flex rounded-md shadow-sm">
                             <button
                               type="button"
-                              disabled={updateLoading[item.id]}
-                              onClick={() => handleUpdateQuantity(item.id, item.quantity - 1)}
-                              className="rounded-md p-1 text-gray-400 hover:text-gray-500 disabled:opacity-50"
+                              onClick={() => handleUpdateQuantity(item.id, parseInt(item.quantity) - 1)}
+                              className="relative inline-flex items-center rounded-l-md bg-white p-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-10"
                             >
+                              <span className="sr-only">Decrease</span>
                               <MinusIcon className="h-4 w-4" aria-hidden="true" />
                             </button>
-                            <input
-                              type="number"
-                              value={item.quantity}
-                              onChange={(e) => handleUpdateQuantity(item.id, parseInt(e.target.value, 10) || 1)}
-                              min="1"
-                              className="mx-2 block w-12 rounded-md border-0 py-1.5 text-center text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-[#b3438f] sm:text-sm sm:leading-6"
-                            />
+                            <div className="relative inline-flex items-center bg-white px-4 py-2 text-sm font-medium text-gray-900 ring-1 ring-inset ring-gray-300 focus:z-10">
+                              {updateLoading[item.id] ? (
+                                <div className="animate-spin h-4 w-4 border-t-2 border-b-2 border-[#b3438f] rounded-full"></div>
+                              ) : (
+                                item.quantity
+                              )}
+                            </div>
                             <button
                               type="button"
-                              disabled={updateLoading[item.id]}
-                              onClick={() => handleUpdateQuantity(item.id, item.quantity + 1)}
-                              className="rounded-md p-1 text-gray-400 hover:text-gray-500 disabled:opacity-50"
+                              onClick={() => handleUpdateQuantity(item.id, parseInt(item.quantity) + 1)}
+                              className="relative inline-flex items-center rounded-r-md bg-white p-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-10"
                             >
+                              <span className="sr-only">Increase</span>
                               <PlusIcon className="h-4 w-4" aria-hidden="true" />
                             </button>
                           </div>
@@ -293,19 +284,19 @@ export default function Cart() {
                           <div className="absolute right-0 top-0">
                             <button
                               type="button"
-                              disabled={updateLoading[item.id]}
                               onClick={() => handleRemoveItem(item.id)}
-                              className="-m-2 inline-flex p-2 text-gray-400 hover:text-gray-500 disabled:opacity-50"
+                              className="-m-2 p-2 text-gray-400 hover:text-gray-500"
                             >
-                              {updateLoading[item.id] ? (
-                                <div className="animate-spin h-5 w-5 border-t-2 border-b-2 border-gray-500 rounded-full" />
-                              ) : (
-                                <TrashIcon className="h-5 w-5" aria-hidden="true" />
-                              )}
+                              <span className="sr-only">Remove</span>
+                              <TrashIcon className="h-5 w-5" aria-hidden="true" />
                             </button>
                           </div>
                         </div>
                       </div>
+
+                      <p className="mt-4 flex text-sm text-gray-700">
+                        <span>Общо: {parseFloat(item.subtotal).toFixed(2)} {currencySymbol}</span>
+                      </p>
                     </div>
                   </li>
                 ))}
@@ -318,14 +309,36 @@ export default function Cart() {
               className="mt-16 rounded-lg bg-gray-50 px-4 py-6 sm:p-6 lg:col-span-5 lg:mt-0 lg:p-8"
             >
               <h2 id="summary-heading" className="text-lg font-medium text-gray-900">
-                Обобщение на поръчката
+                Резюме на поръчката
               </h2>
 
               <dl className="mt-6 space-y-4">
                 <div className="flex items-center justify-between">
-                  <dt className="text-sm text-gray-600">Междинна сума</dt>
+                  <dt className="text-sm text-gray-600">Сума</dt>
                   <dd className="text-sm font-medium text-gray-900">{subtotal.toFixed(2)} {currencySymbol}</dd>
                 </div>
+                
+                {cart[0].shipping_total && parseFloat(cart[0].shipping_total) > 0 && (
+                  <div className="flex items-center justify-between border-t border-gray-200 pt-4">
+                    <dt className="text-sm text-gray-600">Доставка</dt>
+                    <dd className="text-sm font-medium text-gray-900">{parseFloat(cart[0].shipping_total).toFixed(2)} {currencySymbol}</dd>
+                  </div>
+                )}
+                
+                {cart[0].total_tax && parseFloat(cart[0].total_tax) > 0 && (
+                  <div className="flex items-center justify-between">
+                    <dt className="text-sm text-gray-600">ДДС</dt>
+                    <dd className="text-sm font-medium text-gray-900">{parseFloat(cart[0].total_tax).toFixed(2)} {currencySymbol}</dd>
+                  </div>
+                )}
+                
+                {cart[0].discount_total && parseFloat(cart[0].discount_total) > 0 && (
+                  <div className="flex items-center justify-between">
+                    <dt className="text-sm text-gray-600">Отстъпка</dt>
+                    <dd className="text-sm font-medium text-text-red-600">{parseFloat(cart[0].discount_total).toFixed(2)} {currencySymbol}</dd>
+                  </div>
+                )}
+
                 <div className="flex items-center justify-between border-t border-gray-200 pt-4">
                   <dt className="text-base font-medium text-gray-900">Общо</dt>
                   <dd className="text-base font-medium text-gray-900">{total.toFixed(2)} {currencySymbol}</dd>
@@ -337,19 +350,9 @@ export default function Cart() {
                   href="/checkout"
                   className="w-full rounded-md border border-transparent bg-[#b3438f] px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-[#9c3b7e] focus:outline-none focus:ring-2 focus:ring-[#b3438f] focus:ring-offset-2 focus:ring-offset-gray-50 flex items-center justify-center"
                 >
-                  <CheckIcon className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
+                  <CheckIcon className="-ml-0.5 mr-1.5 h-5 w-5" aria-hidden="true" />
                   Завърши поръчката
                 </Link>
-              </div>
-
-              <div className="mt-6 text-center text-sm text-gray-500">
-                <p>
-                  или{' '}
-                  <Link href="/products" className="font-medium text-[#b3438f] hover:text-[#9c3b7e]">
-                    Продължи пазаруването
-                    <span aria-hidden="true"> &rarr;</span>
-                  </Link>
-                </p>
               </div>
             </section>
           </div>

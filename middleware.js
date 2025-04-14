@@ -1,34 +1,50 @@
-import { cookies } from "next/headers";
-import { NextResponse } from "next/server";
-import { decrypt } from "./lib/session";
+import { NextResponse } from 'next/server';
 
-// Using patterns instead of exact strings
-const protectedRoutePatterns = [/^\/my-account(\/.*)?$/];
+// Define any protected routes that require authentication
+const protectedRoutePatterns = [
+  /^\/my-account/, 
+  /^\/checkout/
+];
+
+// Define public routes that should redirect to my-account if user is logged in
 const publicRoutes = ["/login", "/register"];
 
-export default async function middleware(req) {
-  const path = req.nextUrl.pathname;
+export function middleware(request) {
+  const path = request.nextUrl.pathname;
+  
+  // Check if request is for a protected route
   const isProtectedRoute = protectedRoutePatterns.some((pattern) =>
     pattern.test(path)
   );
-  const isPublicRoute = publicRoutes.includes(path);
-
-  const cookie = await cookies();
-  const sessionCookie = cookie.get("session")?.value;
   
-  // Check if session cookie exists before trying to decrypt
-  let session = null;
-  if (sessionCookie) {
-    session = await decrypt(sessionCookie);
+  // Check if request is for a public route
+  const isPublicRoute = publicRoutes.includes(path);
+  
+  // Get session cookie - just check if it exists, without decoding
+  const sessionCookie = request.cookies.get("session");
+  const hasSession = !!sessionCookie?.value;
+  
+  // Redirect to login if trying to access protected route without session
+  if (isProtectedRoute && !hasSession) {
+    return NextResponse.redirect(new URL("/login", request.nextUrl));
   }
 
-  if (isProtectedRoute && !session?.id) {
-    return NextResponse.redirect(new URL("/login", req.nextUrl));
-  }
-
-  if (isPublicRoute && session?.id) {
-    return NextResponse.redirect(new URL("/my-account", req.nextUrl));
+  // Redirect to my-account if trying to access public route with session
+  if (isPublicRoute && hasSession) {
+    return NextResponse.redirect(new URL("/my-account", request.nextUrl));
   }
 
   return NextResponse.next();
 }
+
+// Define which paths this middleware should run on
+export const config = {
+  matcher: [
+    // Apply to login and register routes
+    '/login',
+    '/register',
+    // Apply to all protected routes
+    '/my-account/:path*',
+    '/checkout/:path*',
+  ],
+};
