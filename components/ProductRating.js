@@ -246,7 +246,7 @@ export default function ProductRating({
 
           {/* Rating Distribution */}
           {showStats && totalRatings > 0 && (
-            <div className="flex-1">
+            <div className="flex-1 w-full">
               {[5, 4, 3, 2, 1].map((star) => (
                 <div key={star} className="flex items-center text-sm mb-1">
                   <span className="w-8 text-gray-600">{star} star</span>
