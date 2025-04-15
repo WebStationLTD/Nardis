@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Fragment, useState, useEffect } from "react";
 import { useWishlist } from "@/app/context/WishlistContext";
+import { useCart } from "@/app/context/CartContext";
 import {
   Dialog,
   DialogBackdrop,
@@ -34,6 +35,7 @@ function classNames(...classes) {
 export default function StoreNavigation({ navigationData }) {
   const [open, setOpen] = useState(false);
   const { wishlistCount } = useWishlist();
+  const { cartCount } = useCart();
 
   // Extract data from props
   const { categories, featuredItems, pages } = navigationData;
@@ -440,16 +442,18 @@ export default function StoreNavigation({ navigationData }) {
                 <div className="ml-4 flow-root lg:ml-6">
                   <Link
                     href="/cart"
-                    className="group -m-2 flex items-center p-2"
+                    className="group -m-2 flex items-center p-2 relative"
                   >
                     <ShoppingBagIcon
                       aria-hidden="true"
                       className="size-6 shrink-0 text-white group-hover:text-gray-500"
                     />
-                    <span className="ml-2 text-sm font-medium text-white group-hover:text-gray-500">
-                      0
-                    </span>
-                    <span className="sr-only">items in cart, view bag</span>
+                    <span className="sr-only">View cart</span>
+                    {cartCount > 0 && (
+                      <span className="absolute -top-1 -right-1 bg-[#b3438f] text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                        {cartCount}
+                      </span>
+                    )}
                   </Link>
                 </div>
               </div>

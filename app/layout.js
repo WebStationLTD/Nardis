@@ -3,6 +3,7 @@ import StoreNavigation from "@/components/storeNavigation";
 import FooterSection from "@/components/footer";
 import CookieConsentBanner from "@/components/cookieConsentBanner";
 import { WishlistProvider } from "@/app/context/WishlistContext";
+import { CartProvider } from "@/app/context/CartContext";
 import { Inter } from "next/font/google";
 import { getNavigationData } from "@/services/navigationService";
 import { Analytics } from '@vercel/analytics/next';
@@ -29,11 +30,13 @@ export default async function RootLayout({ children }) {
     <html lang="bg" className={inter.variable}>
       <body>
         <WishlistProvider>
-          <StoreNavigation navigationData={navigationData} />
-          {children}
-          <Analytics />
-          <CookieConsentBanner />
-          <FooterSection />
+          <CartProvider>
+            <StoreNavigation navigationData={navigationData} />
+            {children}
+            <Analytics />
+            <CookieConsentBanner />
+            <FooterSection />
+          </CartProvider>
         </WishlistProvider>
       </body>
     </html>

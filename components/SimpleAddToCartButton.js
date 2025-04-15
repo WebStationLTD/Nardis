@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { addToCartAction } from "@/app/cart/action";
+import { useCart } from "@/app/context/CartContext";
 import { ShoppingCartIcon } from "@heroicons/react/24/outline";
 import Swal from "sweetalert2";
 
@@ -16,6 +17,7 @@ export default function SimpleAddToCartButton({
   className = "",
 }) {
   const [isLoading, setIsLoading] = useState(false);
+  const { refreshCartCount } = useCart();
 
   const handleAddToCart = async () => {
     if (isLoading) return;
@@ -74,12 +76,8 @@ export default function SimpleAddToCartButton({
         }
       });
 
-      // Обновяване на брояч на количката (ако има такъв)
-      window.dispatchEvent(
-        new CustomEvent("cart-updated", {
-          detail: { count: 1 },
-        })
-      );
+      // Refresh cart count using the context
+      refreshCartCount();
     } catch (error) {
       console.error("Error adding to cart:", error);
       Swal.fire({

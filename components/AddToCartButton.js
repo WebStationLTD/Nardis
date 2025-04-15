@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { addToCartAction, getCartItemCountAction } from "@/app/cart/action";
+import { addToCartAction } from "@/app/cart/action";
+import { useCart } from "@/app/context/CartContext";
 import { ShoppingCartIcon } from "@heroicons/react/24/outline";
 import Swal from "sweetalert2";
 
@@ -23,6 +24,7 @@ export default function AddToCartButton({
 }) {
   const [quantity, setQuantity] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
+  const { refreshCartCount } = useCart();
 
   // Handle quantity changes
   const decreaseQuantity = () => {
@@ -93,15 +95,8 @@ export default function AddToCartButton({
         }
       });
 
-      // Refresh cart count in header (if you have a cart indicator)
-      const countResult = await getCartItemCountAction();
-      // You can dispatch an event here that your header can listen to
-      // to update the cart count immediately
-      window.dispatchEvent(
-        new CustomEvent("cart-updated", {
-          detail: { count: countResult.count },
-        })
-      );
+      // Refresh cart count using the context
+      refreshCartCount();
     } catch (error) {
       console.error("Error adding to cart:", error);
       Swal.fire({

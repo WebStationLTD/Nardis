@@ -20,6 +20,7 @@ import {
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { CheckIcon } from "@heroicons/react/24/solid";
+import { useCart } from "@/app/context/CartContext";
 
 export default function Cart() {
   const [cart, setCart] = useState(null);
@@ -28,6 +29,7 @@ export default function Cart() {
   const [user, setUser] = useState(null);
   const [updateLoading, setUpdateLoading] = useState({});
   const [productSlugs, setProductSlugs] = useState({});
+  const { refreshCartCount } = useCart();
 
   // Fetch user data using server action
   useEffect(() => {
@@ -112,6 +114,9 @@ export default function Cart() {
           setProductSlugs(slugsResult.slugs);
         }
       }
+      
+      // Refresh cart count
+      refreshCartCount();
     } catch (err) {
       console.error("Failed to update item:", err);
     } finally {
@@ -142,6 +147,9 @@ export default function Cart() {
           setProductSlugs(slugsResult.slugs);
         }
       }
+      
+      // Refresh cart count
+      refreshCartCount();
     } catch (err) {
       console.error("Failed to remove item:", err);
     } finally {
@@ -165,6 +173,9 @@ export default function Cart() {
 
       // After clearing cart, reset product slugs as well
       setProductSlugs({});
+      
+      // Refresh cart count
+      refreshCartCount();
 
       // Ensure empty cart is properly formatted
       if (!cartResult.cart || cartResult.cart.length === 0) {
@@ -231,7 +242,6 @@ export default function Cart() {
     );
   }
 
-  console.log(cart);
   return (
     <div className="bg-white">
       <div className="mx-auto max-w-2xl px-4 pb-24 pt-16 sm:px-6 lg:max-w-7xl lg:px-8">
