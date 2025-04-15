@@ -7,7 +7,6 @@ import {
   updateCartItemAction,
   removeFromCartAction,
   clearCartAction,
-  fetchProductSlugsAction,
 } from "./action";
 import Image from "next/image";
 import Link from "next/link";
@@ -28,7 +27,6 @@ export default function Cart() {
   const [error, setError] = useState(null);
   const [user, setUser] = useState(null);
   const [updateLoading, setUpdateLoading] = useState({});
-  const [productSlugs, setProductSlugs] = useState({});
   const { refreshCartCount } = useCart();
 
   // Fetch user data using server action
@@ -65,17 +63,6 @@ export default function Cart() {
         }
 
         setCart(result.cart);
-        
-        // Extract product IDs from cart items to fetch slugs
-        if (result.cart && result.cart[0] && result.cart[0].line_items) {
-          const productIds = result.cart[0].line_items.map(item => item.product_id);
-          const slugsResult = await fetchProductSlugsAction(productIds);
-          
-          if (!slugsResult.error) {
-            setProductSlugs(slugsResult.slugs);
-          }
-        }
-        
         setError(null);
       } catch (err) {
         console.error("Failed to fetch cart:", err);
@@ -104,17 +91,7 @@ export default function Cart() {
 
       // Wrap the cart data in array format to match the expected structure
       setCart(result.cart ? [result.cart] : []);
-      
-      // Refresh product slugs if cart changed
-      if (result.cart && result.cart.line_items) {
-        const productIds = result.cart.line_items.map(item => item.product_id);
-        const slugsResult = await fetchProductSlugsAction(productIds);
-        
-        if (!slugsResult.error) {
-          setProductSlugs(slugsResult.slugs);
-        }
-      }
-      
+
       // Refresh cart count
       refreshCartCount();
     } catch (err) {
@@ -137,17 +114,7 @@ export default function Cart() {
 
       // Wrap the cart data in array format to match the expected structure
       setCart(result.cart ? [result.cart] : []);
-      
-      // Refresh product slugs if cart changed
-      if (result.cart && result.cart.line_items) {
-        const productIds = result.cart.line_items.map(item => item.product_id);
-        const slugsResult = await fetchProductSlugsAction(productIds);
-        
-        if (!slugsResult.error) {
-          setProductSlugs(slugsResult.slugs);
-        }
-      }
-      
+
       // Refresh cart count
       refreshCartCount();
     } catch (err) {
@@ -171,9 +138,6 @@ export default function Cart() {
       const cartResult = await fetchCartAction();
       setCart(cartResult.cart);
 
-      // After clearing cart, reset product slugs as well
-      setProductSlugs({});
-      
       // Refresh cart count
       refreshCartCount();
 
@@ -340,15 +304,7 @@ export default function Cart() {
                       <div className="relative pr-9 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:pr-0">
                         <div>
                           <div className="flex justify-between">
-                            <h3 className="text-sm">
-                              <Link
-                                href={`/products/${productSlugs[item.product_id] || '#'}`}
-                                className="font-medium text-gray-700 hover:text-gray-800"
-                                prefetch={true}
-                              >
-                                {item.name}
-                              </Link>
-                            </h3>
+                            <h3 className="text-sm font-semibold">{item.name}</h3>
                           </div>
 
                           {/* Price display */}
