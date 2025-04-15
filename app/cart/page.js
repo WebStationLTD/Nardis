@@ -7,6 +7,7 @@ import {
   updateCartItemAction,
   removeFromCartAction,
   clearCartAction,
+  fetchProductSlugsAction,
 } from "./action";
 import Image from "next/image";
 import Link from "next/link";
@@ -26,6 +27,7 @@ export default function Cart() {
   const [error, setError] = useState(null);
   const [user, setUser] = useState(null);
   const [updateLoading, setUpdateLoading] = useState({});
+  const [productSlugs, setProductSlugs] = useState({});
 
   // Fetch user data using server action
   useEffect(() => {
@@ -61,6 +63,17 @@ export default function Cart() {
         }
 
         setCart(result.cart);
+        
+        // Extract product IDs from cart items to fetch slugs
+        if (result.cart && result.cart[0] && result.cart[0].line_items) {
+          const productIds = result.cart[0].line_items.map(item => item.product_id);
+          const slugsResult = await fetchProductSlugsAction(productIds);
+          
+          if (!slugsResult.error) {
+            setProductSlugs(slugsResult.slugs);
+          }
+        }
+        
         setError(null);
       } catch (err) {
         console.error("Failed to fetch cart:", err);
@@ -89,6 +102,16 @@ export default function Cart() {
 
       // Wrap the cart data in array format to match the expected structure
       setCart(result.cart ? [result.cart] : []);
+      
+      // Refresh product slugs if cart changed
+      if (result.cart && result.cart.line_items) {
+        const productIds = result.cart.line_items.map(item => item.product_id);
+        const slugsResult = await fetchProductSlugsAction(productIds);
+        
+        if (!slugsResult.error) {
+          setProductSlugs(slugsResult.slugs);
+        }
+      }
     } catch (err) {
       console.error("Failed to update item:", err);
     } finally {
@@ -109,6 +132,16 @@ export default function Cart() {
 
       // Wrap the cart data in array format to match the expected structure
       setCart(result.cart ? [result.cart] : []);
+      
+      // Refresh product slugs if cart changed
+      if (result.cart && result.cart.line_items) {
+        const productIds = result.cart.line_items.map(item => item.product_id);
+        const slugsResult = await fetchProductSlugsAction(productIds);
+        
+        if (!slugsResult.error) {
+          setProductSlugs(slugsResult.slugs);
+        }
+      }
     } catch (err) {
       console.error("Failed to remove item:", err);
     } finally {
@@ -129,6 +162,9 @@ export default function Cart() {
       // Refresh cart data
       const cartResult = await fetchCartAction();
       setCart(cartResult.cart);
+
+      // After clearing cart, reset product slugs as well
+      setProductSlugs({});
 
       // Ensure empty cart is properly formatted
       if (!cartResult.cart || cartResult.cart.length === 0) {
@@ -181,7 +217,7 @@ export default function Cart() {
           <div className="mt-6">
             <Link
               href="/products"
-              className="inline-flex items-center rounded-md bg-[#b3438f] px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#9c3b7e] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#b3438f]"
+              className="inline-flex items-center rounded-md bg-[#b3438f] px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#9c3b7e] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#b3438f]"
             >
               <ArrowLeftIcon
                 className="-ml-0.5 mr-1.5 h-5 w-5"
@@ -195,6 +231,7 @@ export default function Cart() {
     );
   }
 
+  console.log(cart);
   return (
     <div className="bg-white">
       <div className="mx-auto max-w-2xl px-4 pb-24 pt-16 sm:px-6 lg:max-w-7xl lg:px-8">
@@ -295,8 +332,9 @@ export default function Cart() {
                           <div className="flex justify-between">
                             <h3 className="text-sm">
                               <Link
-                                href={`/products/${item.product_id}`}
+                                href={`/products/${productSlugs[item.product_id] || '#'}`}
                                 className="font-medium text-gray-700 hover:text-gray-800"
+                                prefetch={true}
                               >
                                 {item.name}
                               </Link>
@@ -306,7 +344,7 @@ export default function Cart() {
                           {/* Price display */}
                           <div className="mt-1 flex text-sm">
                             <p className="text-gray-500">
-                              {item.price} {currencySymbol}
+                              {item.price.toFixed(2)} {currencySymbol}
                             </p>
                           </div>
                         </div>

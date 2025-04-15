@@ -197,3 +197,32 @@ export const getCategories = cache(async (options = {}) => {
     throw error;
   }
 });
+
+/**
+ * Get product slugs for a list of product IDs
+ * @param {number[]} productIds - Array of product IDs
+ * @returns {Promise<Object>} - Object mapping product IDs to slugs
+ */
+export async function getProductSlugsByIds(productIds) {
+  if (!productIds || !productIds.length) {
+    return {};
+  }
+
+  try {
+    const response = await WooCommerce.get("products", {
+      include: Array.isArray(productIds) ? productIds.join(",") : productIds,
+      _fields: "id,slug"
+    });
+
+    // Create a map of product ID to slug
+    const slugMap = {};
+    response.data.forEach(product => {
+      slugMap[product.id] = product.slug;
+    });
+
+    return slugMap;
+  } catch (error) {
+    console.error("Error fetching product slugs by IDs:", error);
+    return {};
+  }
+}

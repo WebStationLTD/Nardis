@@ -2,6 +2,7 @@
 
 import { getUserInfo } from "@/lib/session";
 import { getCart, addToCart, updateCartItem, removeFromCart, clearCart, applyDiscount, convertCartToOrder, getCartTotals, getCartItemCount } from "@/services/cartService";
+import { getProductSlugsByIds } from "@/services/productService";
 
 /**
  * Server action to fetch the current user information
@@ -175,5 +176,24 @@ export async function getCartItemCountAction() {
   } catch (error) {
     console.error("Error fetching cart count:", error);
     return { error: "Failed to get cart count", status: 500 };
+  }
+}
+
+/**
+ * Server action to fetch product slugs for cart items
+ * @param {Array<number>} productIds - Array of product IDs
+ * @returns {Promise<Object>} Mapping of product IDs to slugs
+ */
+export async function fetchProductSlugsAction(productIds) {
+  try {
+    if (!productIds || productIds.length === 0) {
+      return { slugs: {} };
+    }
+    
+    const slugMap = await getProductSlugsByIds(productIds);
+    return { slugs: slugMap };
+  } catch (error) {
+    console.error("Error fetching product slugs:", error);
+    return { error: "Failed to fetch product slugs", status: 500 };
   }
 } 
