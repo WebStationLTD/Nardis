@@ -5,6 +5,7 @@ import CookieConsentBanner from "@/components/cookieConsentBanner";
 import { WishlistProvider } from "@/app/context/WishlistContext";
 import { Inter } from "next/font/google";
 import { getNavigationData } from "@/services/navigationService";
+import { Analytics } from '@vercel/analytics/next';
 
 const inter = Inter({
   subsets: ["latin", "cyrillic"],
@@ -30,6 +31,7 @@ export default async function RootLayout({ children }) {
         <WishlistProvider>
           <StoreNavigation navigationData={navigationData} />
           {children}
+          <Analytics />
           <CookieConsentBanner />
           <FooterSection />
         </WishlistProvider>
