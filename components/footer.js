@@ -2,34 +2,74 @@
 
 import Link from "next/link";
 import Image from "next/image";
-
 import { useState, useEffect } from "react";
 
-const navigation = {
-  solutions: [
-    { name: "Marketing", href: "#" },
-    { name: "Analytics", href: "#" },
-    { name: "Automation", href: "#" },
-    { name: "Commerce", href: "#" },
-    { name: "Insights", href: "#" },
-  ],
-  support: [
-    { name: "Submit ticket", href: "#" },
-    { name: "Documentation", href: "#" },
-    { name: "Guides", href: "#" },
-  ],
-  company: [
-    { name: "About", href: "#" },
-    { name: "Blog", href: "#" },
-    { name: "Jobs", href: "#" },
-    { name: "Press", href: "#" },
-  ],
-  legal: [
-    { name: "Terms of service", href: "#" },
-    { name: "Privacy policy", href: "#" },
-    { name: "License", href: "#" },
-  ],
-  social: [
+export default function Footer({ navigationData }) {
+  const [year, setYear] = useState(new Date().getFullYear());
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const currentYear = new Date().getFullYear();
+      if (currentYear !== year) {
+        setYear(currentYear);
+      }
+    }, 1000 * 60 * 60);
+
+    return () => clearInterval(interval);
+  }, [year]);
+
+  // Трансформираме категориите идентично както в мега менюто
+  const transformCategories = () => {
+    if (!navigationData?.categories) return [];
+
+    // Group categories into columns of 3 items each for better organization
+    const sectionsData = [];
+    const mainCategories = navigationData.categories.slice(0, 9); // Limit to 9 main categories
+
+    // Create sections from categories
+    for (let i = 0; i < mainCategories.length; i += 3) {
+      const column = [];
+
+      // Take up to 3 categories for this column
+      const columnCategories = mainCategories.slice(i, i + 3);
+
+      // Transform each category into a section
+      columnCategories.forEach((category) => {
+        column.push({
+          id: category.slug,
+          name: category.name,
+          items: [
+            {
+              name: `Всички в ${category.name}`,
+              href: `/category/${category.slug}`,
+            },
+            // Add up to 5 subcategories for each
+            ...category.subcategories.slice(0, 5).map((subcat) => ({
+              name: subcat.name,
+              href: `/category/${subcat.slug}`,
+            })),
+          ],
+        });
+      });
+
+      sectionsData.push(column);
+    }
+
+    return sectionsData;
+  };
+
+  // Статични страници
+  const staticPages = [
+    { name: "За нас", href: "/about-us" },
+    { name: "Блог", href: "/blog" },
+    { name: "Контакти", href: "/contact" },
+    { name: "Общи условия", href: "/terms" },
+    { name: "Политика за поверителност", href: "/privacy-policy" },
+    { name: "Доставка и плащане", href: "/shipping" },
+  ];
+
+  // Социални мрежи
+  const socialLinks = [
     {
       name: "Facebook",
       href: "https://www.facebook.com/nardis.beauty",
@@ -56,105 +96,76 @@ const navigation = {
         </svg>
       ),
     },
-  ],
-};
+  ];
 
-export default function Footer() {
-  const [year, setYear] = useState(new Date().getFullYear());
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const currentYear = new Date().getFullYear();
-      if (currentYear !== year) {
-        setYear(currentYear);
-      }
-    }, 1000 * 60 * 60);
+  const footerCategories = transformCategories();
 
-    return () => clearInterval(interval);
-  }, [year]);
   return (
     <footer className="bg-gray-800">
       <div className="mx-auto max-w-7xl px-6 pt-12 pb-8 sm:pt-24 lg:px-8 lg:pt-12">
         <div className="xl:grid xl:grid-cols-3 xl:gap-8">
-          {/* Logo */}
-          <Link href="/" className="flex max-w-[150px]">
-            <span className="sr-only">Nardis.bg</span>
-            <Image
-              width={147}
-              height={32}
-              alt="Nardis.bg"
-              src="/nardis-logo.svg"
-              className="h-8 w-auto"
-            />
-          </Link>
-          <div className="mt-16 grid grid-cols-2 gap-8 xl:col-span-2 xl:mt-0">
-            <div className="md:grid md:grid-cols-2 md:gap-8">
-              <div>
-                <h3 className="text-sm/6 font-semibold text-white">
-                  Solutions
-                </h3>
-                <ul role="list" className="mt-6 space-y-4">
-                  {navigation.solutions.map((item) => (
-                    <li key={item.name}>
-                      <Link
-                        href={item.href}
-                        className="text-sm/6 text-gray-400 hover:text-white"
-                      >
-                        {item.name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="mt-10 md:mt-0">
-                <h3 className="text-sm/6 font-semibold text-white">Support</h3>
-                <ul role="list" className="mt-6 space-y-4">
-                  {navigation.support.map((item) => (
-                    <li key={item.name}>
-                      <Link
-                        href={item.href}
-                        className="text-sm/6 text-gray-400 hover:text-white"
-                      >
-                        {item.name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+          {/* Лого и статични страници */}
+          <div>
+            <Link href="/" className="flex max-w-[150px]">
+              <span className="sr-only">Nardis.bg</span>
+              <Image
+                width={147}
+                height={32}
+                alt="Nardis.bg"
+                src="/nardis-logo.svg"
+                className="h-8 w-auto"
+              />
+            </Link>
+
+            {/* Статични страници */}
+            <div className="mt-10">
+              <h3 className="text-sm/6 font-semibold text-white">Информация</h3>
+              <ul role="list" className="mt-6 space-y-4">
+                {staticPages.map((page) => (
+                  <li key={page.name}>
+                    <Link
+                      href={page.href}
+                      className="text-sm/6 text-gray-400 hover:text-white"
+                    >
+                      {page.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </div>
-            <div className="md:grid md:grid-cols-2 md:gap-8">
-              <div>
-                <h3 className="text-sm/6 font-semibold text-white">Company</h3>
-                <ul role="list" className="mt-6 space-y-4">
-                  {navigation.company.map((item) => (
-                    <li key={item.name}>
-                      <Link
-                        href={item.href}
-                        className="text-sm/6 text-gray-400 hover:text-white"
-                      >
-                        {item.name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="mt-10 md:mt-0">
-                <h3 className="text-sm/6 font-semibold text-white">Legal</h3>
-                <ul role="list" className="mt-6 space-y-4">
-                  {navigation.legal.map((item) => (
-                    <li key={item.name}>
-                      <Link
-                        href={item.href}
-                        className="text-sm/6 text-gray-400 hover:text-white"
-                      >
-                        {item.name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
+          </div>
+
+          {/* Основно съдържание на футър менюто - идентично на мега менюто */}
+          <div className="mt-16 xl:col-span-2 xl:mt-0">
+            <div className="grid grid-cols-1 gap-y-10">
+              {/* Категориите организирани в колони, с 2 колони на мобилни устройства и 3 на десктоп */}
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-10 text-sm text-gray-400">
+                {footerCategories.map((column, columnIdx) => (
+                  <div key={columnIdx} className="space-y-10">
+                    {column.map((section) => (
+                      <div key={section.name}>
+                        <p className="font-medium text-white">{section.name}</p>
+                        <ul role="list" className="mt-4 space-y-4">
+                          {section.items.map((item) => (
+                            <li key={item.name} className="flex">
+                              <Link
+                                href={item.href}
+                                className="hover:text-white"
+                              >
+                                {item.name}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                  </div>
+                ))}
               </div>
             </div>
           </div>
         </div>
+
         <div className="mt-16 border-t border-white/10 pt-8 sm:mt-20 lg:mt-24 lg:flex lg:items-center lg:justify-between">
           <div>
             <h3 className="text-sm/6 font-semibold text-white">
@@ -189,7 +200,7 @@ export default function Footer() {
         </div>
         <div className="mt-8 border-t border-white/10 pt-8 md:flex md:items-center md:justify-between">
           <div className="flex gap-x-6 md:order-2">
-            {navigation.social.map((item) => (
+            {socialLinks.map((item) => (
               <a
                 key={item.name}
                 href={item.href}
@@ -201,7 +212,7 @@ export default function Footer() {
             ))}
           </div>
           <p className="mt-8 text-sm/6 text-gray-400 md:order-1 md:mt-0">
-            &copy; {year} “НАРДИЗ“ ЕООД. Всички права запазени.
+            &copy; {year} "НАРДИЗ" ЕООД. Всички права запазени.
           </p>
         </div>
       </div>

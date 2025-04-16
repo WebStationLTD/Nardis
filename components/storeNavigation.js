@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Fragment, useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { useWishlist } from "@/app/context/WishlistContext";
 import { useCart } from "@/app/context/CartContext";
 import {
@@ -34,11 +35,29 @@ function classNames(...classes) {
 
 export default function StoreNavigation({ navigationData }) {
   const [open, setOpen] = useState(false);
+  const router = useRouter();
   const { wishlistCount } = useWishlist();
   const { cartCount } = useCart();
 
   // Extract data from props
   const { categories, featuredItems, pages } = navigationData;
+
+  // Prefetch all category links on component mount for fast navigation
+  useEffect(() => {
+    if (categories && categories.length > 0) {
+      // Prefetch main categories
+      categories.forEach((category) => {
+        router.prefetch(`/category/${category.slug}`);
+
+        // Prefetch subcategories
+        if (category.subcategories && category.subcategories.length > 0) {
+          category.subcategories.slice(0, 5).forEach((subcategory) => {
+            router.prefetch(`/category/${subcategory.slug}`);
+          });
+        }
+      });
+    }
+  }, [categories, router]);
 
   // Transform categories into sections format similar to exampleNav
   const transformCategories = () => {
@@ -76,6 +95,20 @@ export default function StoreNavigation({ navigationData }) {
     }
 
     return sectionsData;
+  };
+
+  // Оптимизирана навигация към категория
+  const handleCategoryClick = (e, href, close) => {
+    // Затваряме менюто
+    close();
+
+    // Предотвратяваме стандартното поведение
+    e.preventDefault();
+
+    // Кратко закъснение, за да се затвори менюто плавно
+    setTimeout(() => {
+      router.push(href);
+    }, 50);
   };
 
   // Structure for navigation
@@ -378,7 +411,13 @@ export default function StoreNavigation({ navigationData }) {
                                                       prefetch={true}
                                                       href={item.href}
                                                       className="hover:text-gray-800"
-                                                      onClick={close}
+                                                      onClick={(e) =>
+                                                        handleCategoryClick(
+                                                          e,
+                                                          item.href,
+                                                          close
+                                                        )
+                                                      }
                                                     >
                                                       {item.name}
                                                     </Link>

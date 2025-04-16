@@ -52,7 +52,8 @@ export const getProducts = cache(async (options = {}) => {
         queryParams._fields = fields;
       }
     } else {
-      queryParams._fields = "id,name,images,slug,price,sale_price,regular_price,stock_status";
+      queryParams._fields =
+        "id,name,images,slug,price,sale_price,regular_price,stock_status";
     }
     if (include)
       queryParams.include = Array.isArray(include)
@@ -118,7 +119,8 @@ export async function getRelatedProducts(productIds, limit = 4) {
     const response = await WooCommerce.get("products", {
       include: Array.isArray(productIds) ? productIds.join(",") : productIds,
       per_page: limit,
-      _fields: "id,name,images,slug,price,sale_price,regular_price,stock_status"
+      _fields:
+        "id,name,images,slug,price,sale_price,regular_price,stock_status",
     });
 
     return response.data;
@@ -161,7 +163,8 @@ export async function getProductsByIds(productIds) {
   try {
     const response = await WooCommerce.get("products", {
       include: Array.isArray(productIds) ? productIds.join(",") : productIds,
-      _fields: "id,name,images,slug,price,sale_price,regular_price,stock_status"
+      _fields:
+        "id,name,images,slug,price,sale_price,regular_price,stock_status",
     });
 
     return response.data;
@@ -195,5 +198,31 @@ export const getCategories = cache(async (options = {}) => {
   } catch (error) {
     console.error("Error fetching product categories:", error);
     throw error;
+  }
+});
+
+/**
+ * Get all categories without pagination limit
+ * This is cached to avoid multiple API calls for the same data
+ * @returns {Promise<Array>} - Complete array of all categories
+ */
+export const getAllCategories = cache(async () => {
+  try {
+    // Fetch all categories in a single request with max allowed limit
+    const categories = await getCategories({ perPage: 100, page: 1 });
+
+    // If we got 100 categories, there might be more, fetch page 2
+    if (categories.length === 100) {
+      const secondPageCategories = await getCategories({
+        perPage: 100,
+        page: 2,
+      });
+      return [...categories, ...secondPageCategories];
+    }
+
+    return categories;
+  } catch (error) {
+    console.error("Error fetching all categories:", error);
+    return [];
   }
 });

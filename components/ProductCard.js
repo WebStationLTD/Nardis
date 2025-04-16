@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import WishlistButton from "@/components/wishlistButton";
 import SimpleAddToCartButton from "@/components/SimpleAddToCartButton";
 
@@ -12,6 +12,18 @@ export default function ProductCard({
   isFirst = false,
 }) {
   const [imageError, setImageError] = useState(false);
+  const [imageSrc, setImageSrc] = useState("/placeholder.webp");
+
+  // При първоначално зареждане на компонента, валидираме URL-то на изображението
+  useEffect(() => {
+    if (product?.images?.[0]?.src) {
+      // Използваме HTMLImageElement вместо Image, за да избегнем конфликт с импортирания Image от next/image
+      const imgElement = new window.Image();
+      imgElement.onload = () => setImageSrc(product.images[0].src);
+      imgElement.onerror = () => setImageError(true);
+      imgElement.src = product.images[0].src;
+    }
+  }, [product]);
 
   // Handle missing product or incomplete data
   if (!product || !product.id) {
@@ -20,7 +32,6 @@ export default function ProductCard({
 
   // Format price display based on sale status
   const hasSale = product.sale_price && parseFloat(product.sale_price) > 0;
-  const imageUrl = product.images?.[0]?.src || "/placeholder.webp";
   const isOutOfStock = product.stock_status === "outofstock";
 
   return (
@@ -34,29 +45,31 @@ export default function ProductCard({
         </div>
 
         <Link href={`/products/${product.slug}`} prefetch={true}>
-          <Image
-            width={280}
-            height={320}
-            alt={product.name}
-            src={imageError ? "/placeholder.webp" : imageUrl}
-            onError={() => setImageError(true)}
-            placeholder={isFirst ? "blur" : "empty"}
-            blurDataURL={
-              isFirst
-                ? "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlhZWiAAAAAAAABvogAAOPUAAAOQWFlaIAAAAAAAAGKZAAC3hQAAGNpYWVogAAAAAAAAJKAAAA+EAAC2z2Rlc2MAAAAAAAAAFklFQyBodHRwOi8vd3d3LmllYy5nZQAAAAAAAAAAAAAAAFklFQyBodHRwOi8vd3d3LmllYy5nZQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWFlaIAAAAAAAAPbWAAEAAAAA0y1zZjMyAAAAAAABDEIAAAXe///zJgAAB5IAAP2R///7ov///aMAAAPcAADAbA=="
-                : undefined
-            }
-            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105 group-hover:opacity-75"
-            priority={isFirst}
-            fetchPriority={isFirst ? "high" : "auto"}
-            loading={isFirst ? "eager" : "lazy"}
-            sizes={
-              isFirst
-                ? "100vw"
-                : "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            }
-            quality={isFirst ? 90 : 75}
-          />
+          <div className="relative w-full h-full">
+            <Image
+              width={280}
+              height={320}
+              alt={product.name}
+              src={imageError ? "/placeholder.webp" : imageSrc}
+              onError={() => setImageError(true)}
+              placeholder={isFirst ? "blur" : "empty"}
+              blurDataURL={
+                isFirst
+                  ? "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlhZWiAAAAAAAABvogAAOPUAAAOQWFlaIAAAAAAAAGKZAAC3hQAAGNpYWVogAAAAAAAAJKAAAA+EAAC2z2Rlc2MAAAAAAAAAFklFQyBodHRwOi8vd3d3LmllYy5nZQAAAAAAAAAAAAAAAFklFQyBodHRwOi8vd3d3LmllYy5nZQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWFlaIAAAAAAAAPbWAAEAAAAA0y1zZjMyAAAAAAABDEIAAAXe///zJgAAB5IAAP2R///7ov///aMAAAPcAADAbA=="
+                  : undefined
+              }
+              className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105 group-hover:opacity-75"
+              priority={isFirst}
+              fetchPriority={isFirst ? "high" : "auto"}
+              loading={isFirst ? "eager" : "lazy"}
+              sizes={
+                isFirst
+                  ? "100vw"
+                  : "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              }
+              quality={isFirst ? 90 : 75}
+            />
+          </div>
           {hasSale && (
             <div className="absolute top-2 left-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-md">
               Промоция
@@ -99,7 +112,7 @@ export default function ProductCard({
           <SimpleAddToCartButton
             productId={product.id}
             productName={product.name}
-            productImage={imageUrl}
+            productImage={imageSrc}
           />
         )}
       </div>

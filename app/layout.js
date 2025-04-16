@@ -6,7 +6,6 @@ import { WishlistProvider } from "@/app/context/WishlistContext";
 import { CartProvider } from "@/app/context/CartContext";
 import { Inter } from "next/font/google";
 import { getNavigationData } from "@/services/navigationService";
-import { Analytics } from '@vercel/analytics/next';
 
 const inter = Inter({
   subsets: ["latin", "cyrillic"],
@@ -28,14 +27,13 @@ export default async function RootLayout({ children }) {
 
   return (
     <html lang="bg" className={inter.variable}>
-      <body>
+      <body suppressHydrationWarning={true}>
         <WishlistProvider>
           <CartProvider>
             <StoreNavigation navigationData={navigationData} />
             {children}
-            <Analytics />
             <CookieConsentBanner />
-            <FooterSection />
+            <FooterSection navigationData={navigationData} />
           </CartProvider>
         </WishlistProvider>
       </body>

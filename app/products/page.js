@@ -1,6 +1,10 @@
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import { getProducts, getMaxProductPrice, getCategories } from "@/services/productService";
+import {
+  getProducts,
+  getMaxProductPrice,
+  getCategories,
+} from "@/services/productService";
 import ProductsList from "./productsList";
 import SkeletonFilters from "@/components/SkeletonFilters";
 import SkeletonPagination from "@/components/SkeletonPagination";
@@ -9,12 +13,13 @@ import SkeletonPagination from "@/components/SkeletonPagination";
 
 // Metadata for SEO
 export const metadata = {
-  title: 'Всички продукти | Nardis',
-  description: 'Разгледайте нашата селекция от продукти с високо качество. Филтрирайте по категория, цена и други критерии.',
+  title: "Всички продукти | Nardis",
+  description:
+    "Разгледайте нашата селекция от продукти с високо качество. Филтрирайте по категория, цена и други критерии.",
   openGraph: {
-    title: 'Всички продукти | Nardis',
-    description: 'Разгледайте нашата селекция от продукти с високо качество.',
-    type: 'website',
+    title: "Всички продукти | Nardis",
+    description: "Разгледайте нашата селекция от продукти с високо качество.",
+    type: "website",
   },
 };
 
@@ -69,7 +74,7 @@ export default async function ProductsPage({ searchParams }) {
   // Fetch data outside of Suspense
   const [maxPossiblePrice, topCategories] = await Promise.all([
     getMaxProductPrice(),
-    getTopCategories()
+    getTopCategories(),
   ]);
 
   // Fetch products - make this run server-side for SEO
@@ -97,7 +102,7 @@ export default async function ProductsPage({ searchParams }) {
     <div className="bg-white">
       {/* Hero section */}
       <div className="bg-white">
-        <div className="mx-auto max-w-10/10 py-0 sm:px-6 sm:py-0 lg:px-0">
+        <div className="mx-auto max-w-10/10 py-0 sm:py-0 lg:px-0">
           <div className="relative isolate overflow-hidden bg-gray-900 px-6 py-12 text-center shadow-2xl sm:px-12">
             <div className="mx-auto max-w-2xl text-center">
               <h1 className="text-4xl font-semibold tracking-tight text-white sm:text-5xl">
@@ -126,26 +131,36 @@ export default async function ProductsPage({ searchParams }) {
           </div>
         </div>
       </div>
-      
+
       {/* Breadcrumb and categories navigation for SEO */}
-      <div className="w-full max-w-[80%] xl:max-w-[80%] mx-auto px-4 py-4 sm:px-6">
+      <div className="w-full max-w-[100%] xl:max-w-[80%] mx-auto px-4 py-4 sm:px-6">
         <nav aria-label="Breadcrumb and key categories">
           <ol className="flex items-center space-x-2 text-sm text-gray-600">
             <li>
-              <Link href="/" className="hover:text-indigo-600">Начало</Link>
+              <Link href="/" className="hover:text-indigo-600">
+                Начало
+              </Link>
               <span className="mx-2">/</span>
             </li>
             <li>
-              <Link href="/products" className="font-semibold hover:text-indigo-600" aria-current="page">Всички продукти</Link>
+              <Link
+                href="/products"
+                className="font-semibold hover:text-indigo-600"
+                aria-current="page"
+              >
+                Всички продукти
+              </Link>
             </li>
           </ol>
-          
+
           {topCategories.length > 0 && (
             <div className="mt-4">
-              <p className="text-sm font-medium text-gray-700 mb-2">Популярни категории:</p>
+              <p className="text-sm font-medium text-gray-700 mb-2">
+                Популярни категории:
+              </p>
               <div className="flex flex-wrap gap-2">
-                {topCategories.map(cat => (
-                  <Link 
+                {topCategories.map((cat) => (
+                  <Link
                     key={cat.id}
                     href={`/category/${cat.slug}`}
                     className="text-sm px-3 py-1 bg-gray-100 rounded-full hover:bg-gray-200"
@@ -153,7 +168,7 @@ export default async function ProductsPage({ searchParams }) {
                     {cat.name}
                   </Link>
                 ))}
-                <Link 
+                <Link
                   href="/category"
                   className="text-sm px-3 py-1 bg-indigo-100 rounded-full hover:bg-indigo-200 text-indigo-700"
                 >
@@ -164,9 +179,9 @@ export default async function ProductsPage({ searchParams }) {
           )}
         </nav>
       </div>
-      
+
       {/* Main content */}
-      <div className="w-full max-w-[80%] xl:max-w-[80%] mx-auto px-4 py-6 sm:px-6 lg:px-8">
+      <div className="w-full max-w-[100%] xl:max-w-[80%] mx-auto px-4 py-6 sm:px-6 lg:px-8">
         <h2 className="text-2xl font-bold tracking-tight text-gray-900 mb-6">
           Филтри
         </h2>
@@ -182,18 +197,20 @@ export default async function ProductsPage({ searchParams }) {
             <Pagination currentPage={currentPage} totalPages={totalPages} />
           </div>
         </div>
-        
+
         {/* Hidden SEO links for pagination */}
         <div className="mt-8 hidden">
-          {Array.from({ length: Math.min(5, totalPages) }, (_, i) => i + 1).map(page => (
-            <Link 
-              key={page}
-              href={`/products?page=${page}`}
-              aria-label={`Page ${page}`}
-            >
-              {page}
-            </Link>
-          ))}
+          {Array.from({ length: Math.min(5, totalPages) }, (_, i) => i + 1).map(
+            (page) => (
+              <Link
+                key={page}
+                href={`/products?page=${page}`}
+                aria-label={`Page ${page}`}
+              >
+                {page}
+              </Link>
+            )
+          )}
         </div>
       </div>
     </div>

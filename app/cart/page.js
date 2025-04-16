@@ -271,7 +271,7 @@ export default function Cart() {
 
               <div className="flex justify-between items-center mb-6">
                 <h3 className="text-lg font-medium text-gray-900">
-                  Съдържание на количката
+                  Съдържание
                 </h3>
                 <button
                   type="button"
@@ -304,7 +304,9 @@ export default function Cart() {
                       <div className="relative pr-9 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:pr-0">
                         <div>
                           <div className="flex justify-between">
-                            <h3 className="text-sm font-semibold">{item.name}</h3>
+                            <h3 className="text-sm font-semibold">
+                              {item.name}
+                            </h3>
                           </div>
 
                           {/* Price display */}

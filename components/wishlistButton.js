@@ -8,7 +8,7 @@ import { HeartIcon as HeartIconSolid } from "@heroicons/react/24/solid";
 export default function WishlistButton({ productId, className = "" }) {
   const { isInWishlist, addToWishlist, removeFromWishlist } = useWishlist();
   const [isAdding, setIsAdding] = useState(false);
-  
+
   const inWishlist = isInWishlist(productId);
 
   const handleToggleWishlist = () => {
@@ -28,7 +28,9 @@ export default function WishlistButton({ productId, className = "" }) {
       type="button"
       onClick={handleToggleWishlist}
       disabled={isAdding}
-      className={`transition-transform ${isAdding ? 'scale-125' : ''} ${className}`}
+      className={`cursor-pointer transition-transform ${
+        isAdding ? "scale-125" : ""
+      } ${className}`}
       aria-label={inWishlist ? "Remove from wishlist" : "Add to wishlist"}
     >
       {inWishlist ? (

@@ -4,12 +4,14 @@ import {
   getProducts,
   getMaxProductPrice,
   getCategories,
+  getAllCategories,
 } from "@/services/productService";
 import SkeletonFilters from "@/components/SkeletonFilters";
 import SkeletonPagination from "@/components/SkeletonPagination";
 
-// Конфигурация за ISR
+// Подобрена конфигурация за ISR
 export const revalidate = 3600; // Ревалидиране на всеки час
+export const fetchCache = "force-cache"; // Подобрено кеширане
 
 // Dynamically import components with SSR support
 const Pagination = dynamic(() => import("./pagination"), {
@@ -51,34 +53,13 @@ const findCategoryBySlug = (categories, slug) => {
 };
 
 // Function to fetch all categories including all parent and child categories
-const getAllCategories = async () => {
-  try {
-    // Fetch all categories without parent filter
-    // First page with high per_page to get as many as possible
-    const firstPageCategories = await getCategories({ perPage: 100, page: 1 });
-
-    // Check if there are more pages
-    if (firstPageCategories.length === 100) {
-      // Likely more categories, fetch page 2
-      const secondPageCategories = await getCategories({
-        perPage: 100,
-        page: 2,
-      });
-      return [...firstPageCategories, ...secondPageCategories];
-    }
-
-    return firstPageCategories;
-  } catch (error) {
-    console.error("Error fetching all categories:", error);
-    return [];
-  }
-};
+// We'll use the cached version from productService.js now
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
 
   try {
-    // Get all categories to find the right one
+    // Get all categories to find the right one - using cached function
     const allCategories = await getAllCategories();
     const category = findCategoryBySlug(allCategories, slug);
 
@@ -103,13 +84,14 @@ export async function generateMetadata({ params }) {
       title: `${category.name} | Nardis`,
       description:
         category.description ||
-        `Browse our selection of ${category.name} products.`,
+        `Разгледайте нашата селекция от ${category.name} продукти.`,
       openGraph: {
         title: `${category.name} | Nardis`,
         description:
           category.description ||
-          `Browse our selection of ${category.name} products.`,
+          `Разгледайте нашата селекция от ${category.name} продукти.`,
         type: "website",
+        locale: "bg_BG",
       },
       other: firstProductImageUrl
         ? {
@@ -124,8 +106,8 @@ export async function generateMetadata({ params }) {
   } catch (error) {
     console.error("Error generating metadata:", error);
     return {
-      title: "Category | Nardis",
-      description: "Browse our product categories",
+      title: "Категории | Nardis",
+      description: "Разгледайте нашите продуктови категории",
     };
   }
 }
@@ -133,12 +115,12 @@ export async function generateMetadata({ params }) {
 export default async function CategoryPage({ params, searchParams }) {
   const { slug } = await params;
 
-  // Get category ID from slug
+  // Get category ID from slug - Важно: използваме кешираната функция
   let categoryId = "";
   let categoryName = "";
   let categoryDescription = "";
   try {
-    // Get all categories including children
+    // Get all categories including children - using the cached function
     const allCategories = await getAllCategories();
     const category = findCategoryBySlug(allCategories, slug);
 
@@ -175,6 +157,7 @@ export default async function CategoryPage({ params, searchParams }) {
 
   let products = [];
   let totalPages = 1;
+  let totalProducts = 0;
 
   try {
     // Fetch products with filters
@@ -185,19 +168,21 @@ export default async function CategoryPage({ params, searchParams }) {
       search: searchQuery,
       minPrice: minPrice || undefined,
       maxPrice: maxPriceParam || undefined,
-      fields: "id,name,images,slug,sale_price,regular_price,short_description",
+      fields:
+        "id,name,images,slug,sale_price,regular_price,short_description,stock_status",
     });
 
     products = result.products;
     totalPages = result.totalPages;
+    totalProducts = result.totalProducts;
   } catch (error) {
     console.error("Грешка при зареждане на продуктите:", error);
   }
 
-  // Get related categories for SEO
+  // Get related categories for SEO - reusing the already fetched categories
   let relatedCategories = [];
   try {
-    const allCategories = await getAllCategories();
+    const allCategories = await getAllCategories(); // This is now cached
     // Find categories with the same parent or siblings
     const currentCategory = findCategoryBySlug(allCategories, slug);
     if (currentCategory) {
@@ -307,9 +292,19 @@ export default async function CategoryPage({ params, searchParams }) {
           </div>
 
           <div>
-            {/* No Suspense here - render products directly for SEO */}
-            <ProductsList products={products} />
-            <Pagination currentPage={currentPage} totalPages={totalPages} />
+            {totalProducts > 0 ? (
+              <>
+                {/* No Suspense here - render products directly for SEO */}
+                <ProductsList products={products} />
+                <Pagination currentPage={currentPage} totalPages={totalPages} />
+              </>
+            ) : (
+              <div className="text-center py-12">
+                <p className="text-gray-500">
+                  Няма намерени продукти в тази категория.
+                </p>
+              </div>
+            )}
           </div>
         </div>
 

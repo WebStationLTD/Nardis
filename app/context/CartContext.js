@@ -9,13 +9,13 @@ export function CartProvider({ children }) {
   // Initialize with null (instead of 0) to indicate loading state
   const [cartCount, setCartCount] = useState(null);
   const [loading, setLoading] = useState(true);
-  
+
   // Fetch cart count from server
   const fetchCartCount = async () => {
     try {
       setLoading(true);
       const result = await getCartItemCountAction();
-      
+
       if (result.count !== undefined) {
         setCartCount(result.count);
       }
@@ -26,17 +26,17 @@ export function CartProvider({ children }) {
       setLoading(false);
     }
   };
-  
+
   // Initialize cart count on client-side only
   useEffect(() => {
     fetchCartCount();
-    
+
     // Set up polling to refresh cart count every 30 seconds
     const intervalId = setInterval(fetchCartCount, 30000);
-    
+
     return () => clearInterval(intervalId);
   }, []);
-  
+
   // Function to manually refresh cart count
   const refreshCartCount = () => {
     fetchCartCount();
@@ -46,11 +46,11 @@ export function CartProvider({ children }) {
   const displayCount = cartCount === null ? 0 : cartCount;
 
   return (
-    <CartContext.Provider 
-      value={{ 
+    <CartContext.Provider
+      value={{
         cartCount: displayCount,
         loading,
-        refreshCartCount
+        refreshCartCount,
       }}
     >
       {children}
@@ -59,9 +59,27 @@ export function CartProvider({ children }) {
 }
 
 export function useCart() {
-  const context = useContext(CartContext);
-  if (context === undefined) {
-    throw new Error("useCart must be used within a CartProvider");
+  // Проверка дали сме в браузър - нужно за избягване на грешки при SSR
+  if (typeof window === "undefined") {
+    // По време на SSR връщаме обект със същия интерфейс, но с празни функции
+    return {
+      cartCount: 0,
+      loading: false,
+      refreshCartCount: () => {},
+    };
   }
+
+  const context = useContext(CartContext);
+
+  if (context === undefined) {
+    // Връщаме фиктивен контекст вместо да хвърляме грешка
+    console.warn("useCart must be used within a CartProvider");
+    return {
+      cartCount: 0,
+      loading: false,
+      refreshCartCount: () => {},
+    };
+  }
+
   return context;
-} 
+}

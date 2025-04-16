@@ -56,7 +56,7 @@ export default function ProductsList({ products }) {
   // No products case
   if (!displayProducts || displayProducts.length === 0) {
     return (
-      <div className="col-span-full py-10 text-center">
+      <div className="text-center py-12">
         <p className="text-gray-500">Няма налични продукти в тази категория.</p>
       </div>
     );
