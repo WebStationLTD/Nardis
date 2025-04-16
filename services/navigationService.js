@@ -10,7 +10,7 @@ export const getAllCategories = cache(async () => {
     const response = await WooCommerce.get("products/categories", {
       per_page: 100,
     });
-    
+
     // Build hierarchical category tree
     const categoryTree = buildCategoryTree(response.data);
     return categoryTree;
@@ -27,7 +27,7 @@ export const getAllCategories = cache(async () => {
 export const getTopLevelCategories = cache(async () => {
   try {
     const allCategories = await getAllCategories();
-    return allCategories.filter(cat => cat.parent === 0);
+    return allCategories.filter((cat) => cat.parent === 0);
   } catch (error) {
     console.error("Error fetching top level categories:", error);
     return [];
@@ -42,7 +42,7 @@ export const getFeaturedNavItems = cache(async () => {
   try {
     // Get top level categories to use as featured items
     const topCategories = await getTopLevelCategories();
-    
+
     // Start with the "All Products" item which is always included
     const featuredItems = [
       {
@@ -50,27 +50,30 @@ export const getFeaturedNavItems = cache(async () => {
         href: "/products",
         imageSrc: "/nardis-online-shop-for-luxury-cosmetics.jpg",
         imageAlt: "Каталог продукти на Nardis.bg",
-      }
+      },
     ];
-    
+
     // Add featured categories from the top categories
     if (topCategories.length > 0) {
       // First featured category (index 0)
       const firstCategoryToFeature = topCategories[0];
-      const firstImagePath = firstCategoryToFeature.image?.src || "/artdeco-asian-spa-mega-menu-bg.jpg";
-      
+      const firstImagePath =
+        firstCategoryToFeature.image?.src ||
+        "/artdeco-asian-spa-mega-menu-bg.jpg";
+
       featuredItems.push({
         name: firstCategoryToFeature.name,
         href: `/category/${firstCategoryToFeature.slug}`,
         imageSrc: firstImagePath,
         imageAlt: `${firstCategoryToFeature.name} продукти`,
       });
-      
+
       // Second featured category (index 1, if available)
       if (topCategories.length > 1) {
         const secondCategoryToFeature = topCategories[1];
-        const secondImagePath = secondCategoryToFeature.image?.src || "/makeup-mega-menu-bg.jpg";
-        
+        const secondImagePath =
+          secondCategoryToFeature.image?.src || "/makeup-mega-menu-bg.jpg";
+
         featuredItems.push({
           name: secondCategoryToFeature.name,
           href: `/category/${secondCategoryToFeature.slug}`,
@@ -79,7 +82,7 @@ export const getFeaturedNavItems = cache(async () => {
         });
       }
     }
-    
+
     return featuredItems;
   } catch (error) {
     console.error("Error generating featured items:", error);
@@ -90,7 +93,7 @@ export const getFeaturedNavItems = cache(async () => {
         href: "/products",
         imageSrc: "/nardis-online-shop-for-luxury-cosmetics.jpg",
         imageAlt: "Каталог продукти на Nardis.bg",
-      }
+      },
     ];
   }
 });
@@ -101,7 +104,7 @@ export const getFeaturedNavItems = cache(async () => {
  */
 export const getNavigationPages = cache(async () => {
   return [
-    { name: "За нас", href: "/about-us" },
+    { name: "За нас", href: "#" },
     { name: "Блог", href: "/blog" },
     { name: "Контакти", href: "/contact" },
   ];
@@ -115,13 +118,13 @@ export const getNavigationData = cache(async () => {
   const [categories, featuredItems, pages] = await Promise.all([
     getTopLevelCategories(),
     getFeaturedNavItems(),
-    getNavigationPages()
+    getNavigationPages(),
   ]);
 
   return {
     categories: categories,
     featuredItems: featuredItems,
-    pages: pages
+    pages: pages,
   };
 });
 
@@ -138,4 +141,4 @@ function buildCategoryTree(categories, parentId = 0) {
       ...cat,
       subcategories: buildCategoryTree(categories, cat.id),
     }));
-} 
+}
