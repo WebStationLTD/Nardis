@@ -60,12 +60,12 @@ export default function Footer({ navigationData }) {
 
   // Статични страници
   const staticPages = [
-    { name: "За нас", href: "/about-us" },
-    { name: "Блог", href: "/blog" },
-    { name: "Контакти", href: "/contact" },
-    { name: "Общи условия", href: "/terms" },
-    { name: "Политика за поверителност", href: "/privacy-policy" },
-    { name: "Доставка и плащане", href: "/shipping" },
+    { name: "За нас", href: "#" },
+    { name: "Блог", href: "#" },
+    { name: "Контакти", href: "#" },
+    { name: "Общи условия", href: "#" },
+    { name: "Политика за поверителност", href: "#" },
+    { name: "Доставка и плащане", href: "#" },
   ];
 
   // Социални мрежи

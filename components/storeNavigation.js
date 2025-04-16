@@ -27,6 +27,7 @@ import {
   UserIcon,
   UserPlusIcon,
   XMarkIcon,
+  ChevronDownIcon,
 } from "@heroicons/react/24/outline";
 
 function classNames(...classes) {
@@ -315,8 +316,14 @@ export default function StoreNavigation({ navigationData }) {
                       {({ open, close }) => (
                         <>
                           <div className="relative flex">
-                            <PopoverButton className="group relative z-10 flex items-center cursor-pointer justify-center text-lg font-medium text-white transition-colors duration-200 ease-out hover:text-white data-open:text-white">
+                            <PopoverButton className="group relative z-10 flex items-center cursor-pointer justify-center text-xl font-medium text-white transition-colors duration-200 ease-out hover:text-white data-open:text-white focus:outline-none">
                               {category.name}
+                              <ChevronDownIcon
+                                className={`ml-1 mt-1 size-6 stroke-2 transition-transform duration-300 ease-in-out ${
+                                  open ? "rotate-180" : ""
+                                }`}
+                                aria-hidden="true"
+                              />
                               <span
                                 aria-hidden="true"
                                 className="absolute inset-x-0 bottom-0 h-1 transition-colors duration-200 ease-out group-data-open:bg-[#b3438f] sm:mt-5 sm:translate-y-px sm:transform"
@@ -444,7 +451,7 @@ export default function StoreNavigation({ navigationData }) {
                       prefetch={true}
                       key={page.name}
                       href={page.href}
-                      className="flex items-center text-lg font-medium text-white hover:text-white"
+                      className="flex items-center text-xl font-medium text-white hover:text-white"
                     >
                       {page.name}
                     </Link>
