@@ -5,6 +5,13 @@ import { getCartItemCountAction } from "@/app/cart/action";
 
 const CartContext = createContext();
 
+// Константен обект за SSR, който ще използваме за фиктивна стойност
+const SSR_FALLBACK = {
+  cartCount: 0,
+  loading: false,
+  refreshCartCount: () => {},
+};
+
 export function CartProvider({ children }) {
   // Initialize with null (instead of 0) to indicate loading state
   const [cartCount, setCartCount] = useState(null);
@@ -59,26 +66,16 @@ export function CartProvider({ children }) {
 }
 
 export function useCart() {
-  // Проверка дали сме в браузър - нужно за избягване на грешки при SSR
-  if (typeof window === "undefined") {
-    // По време на SSR връщаме обект със същия интерфейс, но с празни функции
-    return {
-      cartCount: 0,
-      loading: false,
-      refreshCartCount: () => {},
-    };
-  }
-
+  // Първо извикваме useContext безусловно, за да спазваме правилата на React Hooks
   const context = useContext(CartContext);
 
-  if (context === undefined) {
-    // Връщаме фиктивен контекст вместо да хвърляме грешка
-    console.warn("useCart must be used within a CartProvider");
-    return {
-      cartCount: 0,
-      loading: false,
-      refreshCartCount: () => {},
-    };
+  // Проверяваме дали сме в браузър и дали контекстът съществува
+  if (typeof window === "undefined" || context === undefined) {
+    // Връщаме фиктивна стойност ако сме в SSR или ако контекстът е undefined
+    if (context === undefined) {
+      console.warn("useCart must be used within a CartProvider");
+    }
+    return SSR_FALLBACK;
   }
 
   return context;

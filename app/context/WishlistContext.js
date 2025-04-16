@@ -4,6 +4,15 @@ import { createContext, useState, useContext, useEffect } from "react";
 
 const WishlistContext = createContext();
 
+// Константен обект за SSR, който ще използваме за фиктивна стойност
+const SSR_FALLBACK = {
+  wishlistItems: [],
+  addToWishlist: () => {},
+  removeFromWishlist: () => {},
+  isInWishlist: () => false,
+  wishlistCount: 0,
+};
+
 export function WishlistProvider({ children }) {
   const [wishlistItems, setWishlistItems] = useState([]);
 
@@ -51,30 +60,16 @@ export function WishlistProvider({ children }) {
 }
 
 export function useWishlist() {
-  // Проверка дали сме в браузър и дали контекстът съществува
-  if (typeof window === "undefined") {
-    // По време на SSR връщаме обект със същия интерфейс, но с празни функции
-    return {
-      wishlistItems: [],
-      addToWishlist: () => {},
-      removeFromWishlist: () => {},
-      isInWishlist: () => false,
-      wishlistCount: 0,
-    };
-  }
-
+  // Първо извикваме useContext безусловно, за да спазваме правилата на React Hooks
   const context = useContext(WishlistContext);
 
-  if (context === undefined) {
-    // Връщаме фиктивен контекст вместо да хвърляме грешка, за да не счупи приложението в dev режим
-    console.warn("useWishlist must be used within a WishlistProvider");
-    return {
-      wishlistItems: [],
-      addToWishlist: () => {},
-      removeFromWishlist: () => {},
-      isInWishlist: () => false,
-      wishlistCount: 0,
-    };
+  // Проверяваме дали сме в браузър и дали контекстът съществува
+  if (typeof window === "undefined" || context === undefined) {
+    // Връщаме фиктивна стойност ако сме в SSR или ако контекстът е undefined
+    if (context === undefined) {
+      console.warn("useWishlist must be used within a WishlistProvider");
+    }
+    return SSR_FALLBACK;
   }
 
   return context;

@@ -212,7 +212,7 @@ export default function Footer({ navigationData }) {
             ))}
           </div>
           <p className="mt-8 text-sm/6 text-gray-400 md:order-1 md:mt-0">
-            &copy; {year} "НАРДИЗ" ЕООД. Всички права запазени.
+            &copy; {year} &ldquo;НАРДИЗ&rdquo; ЕООД. Всички права запазени.
           </p>
         </div>
       </div>
