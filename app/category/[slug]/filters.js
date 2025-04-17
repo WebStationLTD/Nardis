@@ -9,6 +9,10 @@ export default function Filters({ maxPrice }) {
   const { getParam, getNumberParam, updateParams } = useCategoryParams();
 
   const [search, setSearch] = useState(getParam("search", ""));
+  const [category, setCategory] = useState(getParam("category", ""));
+  const [categories, setCategories] = useState([]);
+  const [subcategory, setSubcategory] = useState(getParam("subcategory", ""));
+  const [subcategories, setSubcategories] = useState([]);
   const [priceRange, setPriceRange] = useState([
     getNumberParam("minPrice", 0),
     getNumberParam("maxPrice", maxPrice),
@@ -19,25 +23,72 @@ export default function Filters({ maxPrice }) {
   const minDistance = 10;
 
   useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const res = await fetch("/api/categories");
+        const allCategories = await res.json();
+
+        // Получаем категорию из URL (slug параметр на странице категории)
+        const currentPath = window.location.pathname;
+        const currentSlug = currentPath.split("/").pop();
+
+        // Находим текущую категорию по slug
+        const currentCategory = allCategories.find(
+          (cat) => cat.slug === currentSlug
+        );
+
+        // Филтрираме всички основни категории (parent = 0)
+        const mainCategories = allCategories.filter((cat) => cat.parent === 0);
+        setCategories(mainCategories);
+
+        // Если нашли категорию, показываем только её подкатегории
+        // Иначе показываем все категории
+        if (currentCategory) {
+          const childCategories = allCategories.filter(
+            (cat) => cat.parent === currentCategory.id
+          );
+          setSubcategories(childCategories);
+
+          // Ако сме в категория, задаваме я като текуща
+          if (!category) {
+            setCategory(currentCategory.id);
+          }
+        } else {
+          setSubcategories(allCategories.filter((cat) => cat.parent > 0));
+        }
+      } catch (error) {
+        console.error("Грешка при зареждане на категориите:", error);
+      }
+    };
+    fetchCategories();
+  }, [category]);
+
+  useEffect(() => {
     const initialSearch = getParam("search", "");
+    const initialCategory = getParam("category", "");
+    const initialSubcategory = getParam("subcategory", "");
     const initialMinPrice = getNumberParam("minPrice", 0);
     const initialMaxPrice = getNumberParam("maxPrice", maxPrice);
 
-    const hasChanges = 
-      debouncedSearch !== initialSearch || 
-      debouncedPriceRange[0] !== initialMinPrice || 
+    const hasChanges =
+      debouncedSearch !== initialSearch ||
+      category !== initialCategory ||
+      subcategory !== initialSubcategory ||
+      debouncedPriceRange[0] !== initialMinPrice ||
       debouncedPriceRange[1] !== initialMaxPrice;
 
     updateParams(
       {
         search: debouncedSearch,
+        category,
+        subcategory,
         minPrice: debouncedPriceRange[0] > 0 ? debouncedPriceRange[0] : "",
         maxPrice:
           debouncedPriceRange[1] < maxPrice ? debouncedPriceRange[1] : "",
       },
       true // Reset to page 1 when filters change
     );
-  }, [debouncedSearch, debouncedPriceRange, maxPrice]);
+  }, [debouncedSearch, category, subcategory, debouncedPriceRange, maxPrice]);
 
   return (
     <div className="mb-6 flex flex-col gap-4">
@@ -48,6 +99,46 @@ export default function Filters({ maxPrice }) {
         placeholder="Търси продукт..."
         className="border p-2 rounded-md w-full"
       />
+
+      {/* Филтър по основна категория */}
+      <div className="flex flex-col">
+        <label className="font-semibold mb-1">Категория</label>
+        <select
+          value={category}
+          onChange={(e) => {
+            setCategory(e.target.value);
+            setSubcategory(""); // Нулираме подкатегорията при смяна на категория
+          }}
+          className="border p-2 rounded-md"
+        >
+          <option value="">Всички категории</option>
+          {categories.map((cat) => (
+            <option key={cat.id} value={cat.id}>
+              {cat.name}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      {/* Филтър по подкатегория */}
+      {subcategories.length > 0 && (
+        <div className="flex flex-col">
+          <label className="font-semibold mb-1">Подкатегория</label>
+          <select
+            value={subcategory}
+            onChange={(e) => setSubcategory(e.target.value)}
+            className="border p-2 rounded-md"
+          >
+            <option value="">Всички подкатегории</option>
+            {subcategories.map((cat) => (
+              <option key={cat.id} value={cat.id}>
+                {cat.name}
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
+
       <div className="flex flex-col">
         <label className="font-semibold">
           Цена: {priceRange[0]} лв - {priceRange[1]} лв
@@ -81,4 +172,4 @@ export default function Filters({ maxPrice }) {
       </div>
     </div>
   );
-} 
+}

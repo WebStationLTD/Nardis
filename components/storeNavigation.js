@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Fragment, useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useWishlist } from "@/app/context/WishlistContext";
 import { useCart } from "@/app/context/CartContext";
 import {
@@ -28,6 +28,7 @@ import {
   UserPlusIcon,
   XMarkIcon,
   ChevronDownIcon,
+  MagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
 
 function classNames(...classes) {
@@ -37,11 +38,28 @@ function classNames(...classes) {
 export default function StoreNavigation({ navigationData }) {
   const [open, setOpen] = useState(false);
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { wishlistCount } = useWishlist();
   const { cartCount } = useCart();
 
+  // Състояние за търсачката
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isSearchFocused, setIsSearchFocused] = useState(false);
+
   // Extract data from props
   const { categories, featuredItems, pages } = navigationData;
+
+  // Подаване на търсачка при натискане на Enter
+  const handleSearch = (e) => {
+    if (e.key === "Enter" || e.type === "click") {
+      e.preventDefault();
+      if (searchQuery.trim()) {
+        router.push(
+          `/products?search=${encodeURIComponent(searchQuery.trim())}`
+        );
+      }
+    }
+  };
 
   // Prefetch all category links on component mount for fast navigation
   useEffect(() => {
@@ -58,7 +76,13 @@ export default function StoreNavigation({ navigationData }) {
         }
       });
     }
-  }, [categories, router]);
+
+    // Вземаме търсачката от URL при зареждане на страницата
+    const searchFromUrl = searchParams.get("search");
+    if (searchFromUrl) {
+      setSearchQuery(searchFromUrl);
+    }
+  }, [categories, router, searchParams]);
 
   // Transform categories into sections format similar to exampleNav
   const transformCategories = () => {
@@ -148,6 +172,26 @@ export default function StoreNavigation({ navigationData }) {
                 <span className="sr-only">Close menu</span>
                 <XMarkIcon aria-hidden="true" className="size-6" />
               </button>
+            </div>
+
+            {/* Добавяме търсачка в мобилното меню */}
+            <div className="px-4 mt-3 py-3 border-b border-gray-200">
+              <div className="relative flex items-center">
+                <input
+                  type="text"
+                  placeholder="Търси продукт..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onKeyDown={handleSearch}
+                  className="w-full py-1.5 px-3 pr-10 rounded-md border border-gray-300 text-gray-700 focus:outline-none focus:ring-1 focus:ring-indigo-600 focus:border-indigo-600 text-sm"
+                />
+                <button
+                  onClick={handleSearch}
+                  className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                >
+                  <MagnifyingGlassIcon className="size-5" />
+                </button>
+              </div>
             </div>
 
             {/* Links */}
@@ -460,10 +504,34 @@ export default function StoreNavigation({ navigationData }) {
               </PopoverGroup>
 
               <div className="flex flex-1 items-center justify-end">
+                {/* Търсачка в десктоп версията */}
+                <div
+                  className={`relative hidden lg:flex items-center mr-6 transition-all duration-300 ${
+                    isSearchFocused ? "w-64" : "w-56"
+                  }`}
+                >
+                  <input
+                    type="text"
+                    placeholder="Търси продукт..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    onKeyDown={handleSearch}
+                    onFocus={() => setIsSearchFocused(true)}
+                    onBlur={() => setIsSearchFocused(false)}
+                    className="w-full py-1.5 px-3 pr-10 rounded-md bg-gray-700 text-white placeholder-gray-300 focus:outline-none focus:ring-1 focus:ring-gray-300 text-sm"
+                  />
+                  <button
+                    onClick={handleSearch}
+                    className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-300 hover:text-white"
+                  >
+                    <MagnifyingGlassIcon className="size-5" />
+                  </button>
+                </div>
+
                 {/* Wishlist */}
                 <Link
                   href="/wishlist"
-                  className="ml-6 hidden p-2 text-white hover:text-gray-500 lg:block relative"
+                  className="ml-1 hidden p-2 text-white hover:text-gray-500 lg:block relative"
                 >
                   <span className="sr-only">Wishlist</span>
                   <HeartIcon aria-hidden="true" className="size-6" />

@@ -1,16 +1,77 @@
 import Image from "next/image";
 import Link from "next/link";
 
-// Импортираме всички изображения
-import hero1 from "@/public/hero-1.jpg";
-import hero2 from "@/public/hero-2.jpg";
-import hero3 from "@/public/hero-3.jpg";
-import hero4 from "@/public/hero-4.jpg";
-import hero5 from "@/public/hero-5.jpg";
-import hero6 from "@/public/hero-6.jpg";
-import hero7 from "@/public/hero-7.jpg";
+// Продуктови данни - тук можете лесно да променяте информацията
+const heroProducts = [
+  {
+    id: 1,
+    name: "База за грим",
+    imageSrc:
+      "https://nardis.rosset.website/wp-content/uploads/2025/03/база-за-грим.jpg",
+    productUrl: "/products/база-за-грим",
+    altText: "База за грим",
+  },
+  {
+    id: 2,
+    name: "Гланц за устни Lip Brilliance",
+    imageSrc:
+      "https://nardis.rosset.website/wp-content/uploads/2025/03/гланц-брилианс.png",
+    productUrl: "/products/гланц-за-устни-lip-brilliance",
+    altText: "Гланц за устни Lip Brilliance",
+  },
+  {
+    id: 3,
+    name: "Спирала All In One",
+    imageSrc:
+      "https://nardis.rosset.website/wp-content/uploads/2025/03/спирала-всичко-в-1.jpg",
+    productUrl: "/products/спирала-all-in-one",
+    altText: "Спирала All In One",
+  },
+  {
+    id: 4,
+    name: "Молив за устни с минерали",
+    imageSrc:
+      "https://nardis.rosset.website/wp-content/uploads/2025/03/молив-за-устни-с-минерали.jpg",
+    productUrl: "/products/молив-за-устни-с-минерали",
+    altText: "Молив за устни с минерали",
+  },
+  {
+    id: 5,
+    name: "Хидратиращ крем за ръце",
+    imageSrc:
+      "https://nardis.rosset.website/wp-content/uploads/2025/03/хидратиращ-крем-за-ръце.png",
+    productUrl: "/products/хидратиращ-крем-за-ръце",
+    altText: "Хидратиращ крем за ръце",
+  },
+  {
+    id: 6,
+    name: "Спирала Volume Supreme",
+    imageSrc:
+      "https://nardis.rosset.website/wp-content/uploads/2025/03/спирала-volume-supreme.jpg",
+    productUrl: "/products/спирала-volume-supreme",
+    altText: "Спирала Volume Supreme",
+  },
+  {
+    id: 7,
+    name: "Гланц за устни Hydra Lip Booster",
+    imageSrc:
+      "https://nardis.rosset.website/wp-content/uploads/2025/03/гланц-за-устни-hydra-lip-booster.jpg",
+    productUrl: "/products/гланц-за-устни-hydra-lip-booster",
+    altText: "Гланц за устни Hydra Lip Booster",
+  },
+];
 
-export default function Example() {
+export default function PromoSection() {
+  // Организираме продуктите в колони
+  const productsByColumn = [
+    // Първа колона (2 продукта)
+    heroProducts.slice(0, 2),
+    // Втора колона (3 продукта)
+    heroProducts.slice(2, 5),
+    // Трета колона (2 продукта)
+    heroProducts.slice(5, 7),
+  ];
+
   return (
     <div className="relative overflow-hidden bg-gray-800">
       <div className="pt-16 pb-80 sm:pt-24 sm:pb-40 lg:pt-40 lg:pb-48">
@@ -33,90 +94,48 @@ export default function Example() {
               <div className="lg:relative lg:inset-y-0 z-10 lg:mx-auto lg:w-full lg:max-w-7xl">
                 <div className="absolute block z-4 transform sm:top-0 sm:left-1/2 sm:translate-x-8 lg:top-1/2 lg:left-1/2 lg:translate-x-8 sm:-translate-y-120 lg:-translate-y-125">
                   <div className="flex items-center space-x-6 lg:space-x-8">
-                    <div className="grid shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
-                      <div className="h-64 w-44 overflow-hidden rounded-lg lg:opacity-100">
-                        <Image
-                          alt="Козметични продукти Nardis"
-                          src={hero1}
-                          width={176}
-                          height={256}
-                          placeholder="blur"
-                          loading="eager"
-                          className="object-cover"
-                        />
+                    {/* Рендерираме колоните с продукти */}
+                    {productsByColumn.map((column, columnIndex) => (
+                      <div
+                        key={`column-${columnIndex}`}
+                        className="grid shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8"
+                      >
+                        {column.map((product) => (
+                          <div
+                            key={product.id}
+                            className="h-64 w-44 overflow-hidden rounded-lg group relative"
+                          >
+                            <Link
+                              href={product.productUrl}
+                              className="block h-full w-full transition-opacity"
+                              prefetch={false}
+                            >
+                              <Image
+                                alt={product.altText}
+                                src={product.imageSrc}
+                                width={176}
+                                height={256}
+                                priority={product.id === 1 || product.id === 3}
+                                className="object-cover h-full w-full transition-transform duration-300 group-hover:scale-105"
+                                unoptimized={true}
+                              />
+                              <div className="absolute inset-0 bg-transparent group-hover:bg-black/20 transition-opacity flex items-end justify-center">
+                                <div className="p-2 w-full bg-transparent group-hover:bg-black/70 transition-all duration-300 translate-y-full group-hover:translate-y-0">
+                                  <p className="text-white text-center text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity">
+                                    {product.name}
+                                  </p>
+                                </div>
+                              </div>
+                            </Link>
+                          </div>
+                        ))}
                       </div>
-                      <div className="h-64 w-44 overflow-hidden rounded-lg">
-                        <Image
-                          alt="Козметични продукти Nardis"
-                          src={hero2}
-                          width={176}
-                          height={256}
-                          placeholder="blur"
-                          className="object-cover"
-                        />
-                      </div>
-                    </div>
-                    <div className="grid shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
-                      <div className="h-64 w-44 overflow-hidden rounded-lg">
-                        <Image
-                          alt="Козметични продукти Nardis"
-                          src={hero3}
-                          width={176}
-                          height={256}
-                          fetchPriority="high"
-                          priority
-                          placeholder="blur"
-                          className="object-cover"
-                        />
-                      </div>
-                      <div className="h-64 w-44 overflow-hidden rounded-lg">
-                        <Image
-                          alt="Козметични продукти Nardis"
-                          src={hero4}
-                          width={176}
-                          height={256}
-                          placeholder="blur"
-                          className="object-cover"
-                        />
-                      </div>
-                      <div className="h-64 w-44 overflow-hidden rounded-lg">
-                        <Image
-                          alt="Козметични продукти Nardis"
-                          src={hero5}
-                          width={176}
-                          height={256}
-                          placeholder="blur"
-                          className="object-cover"
-                        />
-                      </div>
-                    </div>
-                    <div className="grid shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
-                      <div className="h-64 w-44 overflow-hidden rounded-lg">
-                        <Image
-                          alt="Козметични продукти Nardis"
-                          src={hero6}
-                          width={176}
-                          height={256}
-                          placeholder="blur"
-                          className="object-cover"
-                        />
-                      </div>
-                      <div className="h-64 w-44 overflow-hidden rounded-lg">
-                        <Image
-                          alt="Козметични продукти Nardis"
-                          src={hero7}
-                          width={176}
-                          height={256}
-                          placeholder="blur"
-                          className="object-cover"
-                        />
-                      </div>
-                    </div>
+                    ))}
                   </div>
                 </div>
               </div>
               <Link
-                href="#"
+                href="/products"
                 className="inline-flex rounded-md bg-[#b3438f] px-3.5 py-2.5 text-sm font-semibold text-white hover:text-black shadow-xs hover:bg-[#ebedeb] focus-visible:outline-2 cursor-pointer focus-visible:outline-offset-2 focus-visible:outline-white"
               >
                 Пазарувайте онлайн

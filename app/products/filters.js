@@ -39,10 +39,10 @@ export default function Filters({ maxPrice }) {
     const initialMinPrice = getNumberParam("minPrice", 0);
     const initialMaxPrice = getNumberParam("maxPrice", maxPrice);
 
-    const hasChanges = 
-      debouncedSearch !== initialSearch || 
-      category !== initialCategory || 
-      debouncedPriceRange[0] !== initialMinPrice || 
+    const hasChanges =
+      debouncedSearch !== initialSearch ||
+      category !== initialCategory ||
+      debouncedPriceRange[0] !== initialMinPrice ||
       debouncedPriceRange[1] !== initialMaxPrice;
 
     updateParams(
@@ -66,18 +66,21 @@ export default function Filters({ maxPrice }) {
         placeholder="Търси продукт..."
         className="border p-2 rounded-md w-full"
       />
-      <select
-        value={category}
-        onChange={(e) => setCategory(e.target.value)}
-        className="border p-2 rounded-md"
-      >
-        <option value="">Всички категории</option>
-        {categories.map((cat) => (
-          <option key={cat.id} value={cat.id}>
-            {cat.name}
-          </option>
-        ))}
-      </select>
+      <div className="flex flex-col">
+        <label className="font-semibold mb-1">Категория</label>
+        <select
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+          className="border p-2 rounded-md"
+        >
+          <option value="">Всички категории</option>
+          {categories.map((cat) => (
+            <option key={cat.id} value={cat.id}>
+              {cat.name}
+            </option>
+          ))}
+        </select>
+      </div>
       <div className="flex flex-col">
         <label className="font-semibold">
           Цена: {priceRange[0]} лв - {priceRange[1]} лв

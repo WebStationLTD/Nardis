@@ -148,6 +148,8 @@ export default async function CategoryPage({ params, searchParams }) {
   const searchQuery = await getParamValue(searchParams, "search", "");
   const currentPage = await getNumericParam(searchParams, "page", 1);
   const minPrice = await getNumericParam(searchParams, "minPrice", 0);
+  const category = await getParamValue(searchParams, "category", "");
+  const subcategory = await getParamValue(searchParams, "subcategory", "");
 
   // Get max price for filter boundaries
   const maxPossiblePrice = await getMaxProductPrice();
@@ -160,11 +162,24 @@ export default async function CategoryPage({ params, searchParams }) {
   let totalProducts = 0;
 
   try {
+    // Определяме коя категория да използваме за филтъра
+    let categoryToUse = categoryId; // По подразбиране - текущата категория от URL
+
+    // Ако е зададена категория от филтрите - взимаме нея
+    if (category && category !== categoryId) {
+      categoryToUse = category;
+    }
+
+    // Ако е зададена подкатегория от филтрите - тя има приоритет
+    if (subcategory) {
+      categoryToUse = subcategory;
+    }
+
     // Fetch products with filters
     const result = await getProducts({
       perPage: 12,
       page: currentPage,
-      category: categoryId,
+      category: categoryToUse,
       search: searchQuery,
       minPrice: minPrice || undefined,
       maxPrice: maxPriceParam || undefined,
