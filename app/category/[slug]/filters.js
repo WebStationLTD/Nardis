@@ -1,11 +1,12 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { Range } from "react-range";
 import useDebounce from "../../../hooks/useDebounce";
 import useCategoryParams from "../../../hooks/useCategoryParams";
 
-export default function Filters({ maxPrice }) {
+// Вътрешен компонент, използващ useCategoryParams
+function FiltersContent({ maxPrice }) {
   const { getParam, getNumberParam, updateParams } = useCategoryParams();
 
   const [search, setSearch] = useState(getParam("search", ""));
@@ -171,5 +172,23 @@ export default function Filters({ maxPrice }) {
         />
       </div>
     </div>
+  );
+}
+
+// Основен компонент с Suspense обхващане
+export default function Filters({ maxPrice }) {
+  return (
+    <Suspense
+      fallback={
+        <div className="mb-6 flex flex-col gap-4">
+          <div className="h-10 bg-gray-200 rounded-md animate-pulse"></div>
+          <div className="h-10 bg-gray-200 rounded-md animate-pulse"></div>
+          <div className="h-10 bg-gray-200 rounded-md animate-pulse"></div>
+          <div className="h-20 bg-gray-200 rounded-md animate-pulse"></div>
+        </div>
+      }
+    >
+      <FiltersContent maxPrice={maxPrice} />
+    </Suspense>
   );
 }
