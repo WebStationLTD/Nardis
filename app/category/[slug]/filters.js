@@ -49,11 +49,6 @@ function FiltersContent({ maxPrice }) {
             (cat) => cat.parent === currentCategory.id
           );
           setSubcategories(childCategories);
-
-          // Ако сме в категория, задаваме я като текуща
-          if (!category) {
-            setCategory(currentCategory.id);
-          }
         } else {
           setSubcategories(allCategories.filter((cat) => cat.parent > 0));
         }
