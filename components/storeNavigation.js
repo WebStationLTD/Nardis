@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Fragment, useState, useEffect } from "react";
+import { Fragment, useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useWishlist } from "@/app/context/WishlistContext";
 import { useCart } from "@/app/context/CartContext";
@@ -35,7 +35,8 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function StoreNavigation({ navigationData }) {
+// Отделям логиката, използваща useSearchParams в отделен компонент
+function NavigationContent({ navigationData }) {
   const [open, setOpen] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -576,5 +577,35 @@ export default function StoreNavigation({ navigationData }) {
         </nav>
       </header>
     </div>
+  );
+}
+
+// Основен компонент с обхващане със Suspense
+export default function StoreNavigation({ navigationData }) {
+  return (
+    <Suspense
+      fallback={
+        <div className="bg-white sticky top-0 z-50">
+          <header className="relative bg-gray-800">
+            <nav
+              aria-label="Top"
+              className="mx-auto w-full px-4 sm:px-6 lg:px-8"
+            >
+              <div>
+                <div className="h-16 items-center justify-between grid grid-cols-3">
+                  <div className="flex-1"></div>
+                  <div className="flex justify-center">
+                    <div className="h-8 w-32 bg-gray-700 animate-pulse rounded"></div>
+                  </div>
+                  <div className="flex-1"></div>
+                </div>
+              </div>
+            </nav>
+          </header>
+        </div>
+      }
+    >
+      <NavigationContent navigationData={navigationData} />
+    </Suspense>
   );
 }
