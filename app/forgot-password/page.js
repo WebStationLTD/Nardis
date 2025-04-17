@@ -4,73 +4,95 @@ import Link from "next/link";
 import { useActionState } from "react";
 import { requestPasswordReset } from "./actions";
 import { useFormStatus } from "react-dom";
+import { Suspense } from "react";
+import { useSearchParams } from "next/navigation";
+
+// Компонент с използване на useSearchParams
+function ResetLink({ email }) {
+  const searchParams = useSearchParams();
+
+  return (
+    <Link
+      href={`/reset-password?email=${encodeURIComponent(email)}`}
+      className="inline-block w-full text-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 cursor-pointer"
+    >
+      Въведете код за възстановяване
+    </Link>
+  );
+}
+
+// Обхващаме компонента, използващ useSearchParams със Suspense
+function SuccessMessage({ email, resetAction }) {
+  return (
+    <div className="flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full space-y-8">
+        <div>
+          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+            Възстановяване на парола
+          </h2>
+          <p className="mt-2 text-center text-sm text-gray-600">
+            Получихте имейл с код за възстановяване на паролата.
+          </p>
+        </div>
+
+        <div className="mt-8 space-y-6">
+          <div
+            className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative"
+            role="alert"
+          >
+            <span className="block sm:inline">
+              Проверете имейла си за инструкции за възстановяване на паролата
+            </span>
+          </div>
+
+          <div className="text-center space-y-4">
+            <p className="text-gray-700">
+              Проверете вашата електронна поща за код за възстановяване и
+              следвайте инструкциите.
+            </p>
+
+            <Suspense
+              fallback={
+                <div className="py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gray-400">
+                  Зареждане...
+                </div>
+              }
+            >
+              <ResetLink email={email} />
+            </Suspense>
+
+            <p className="text-sm text-gray-600 mt-4">
+              Не получихте имейл? Проверете папката със спам или{" "}
+              <button
+                onClick={() => resetAction(undefined)}
+                className="font-medium text-indigo-600 hover:text-indigo-500 cursor-pointer"
+              >
+                опитайте отново
+              </button>
+            </p>
+          </div>
+        </div>
+
+        <div className="text-center">
+          <p className="text-sm text-gray-600">
+            <Link
+              href="/login"
+              className="font-medium text-indigo-600 hover:text-indigo-500"
+            >
+              Обратно към входа
+            </Link>
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function ForgotPasswordPage() {
   const [state, resetAction] = useActionState(requestPasswordReset, undefined);
 
   if (state?.success) {
-    const email = state.email;
-
-    return (
-      <div className="flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-md w-full space-y-8">
-          <div>
-            <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-              Възстановяване на парола
-            </h2>
-            <p className="mt-2 text-center text-sm text-gray-600">
-              Получихте имейл с код за възстановяване на паролата.
-            </p>
-          </div>
-
-          <div className="mt-8 space-y-6">
-            <div
-              className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative"
-              role="alert"
-            >
-              <span className="block sm:inline">
-                Проверете имейла си за инструкции за възстановяване на паролата
-              </span>
-            </div>
-
-            <div className="text-center space-y-4">
-              <p className="text-gray-700">
-                Проверете вашата електронна поща за код за възстановяване и
-                следвайте инструкциите.
-              </p>
-
-              <Link
-                href={`/reset-password?email=${encodeURIComponent(email)}`}
-                className="inline-block w-full text-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 cursor-pointer"
-              >
-                Въведете код за възстановяване
-              </Link>
-
-              <p className="text-sm text-gray-600 mt-4">
-                Не получихте имейл? Проверете папката със спам или{" "}
-                <button
-                  onClick={() => resetAction(undefined)}
-                  className="font-medium text-indigo-600 hover:text-indigo-500 cursor-pointer"
-                >
-                  опитайте отново
-                </button>
-              </p>
-            </div>
-          </div>
-
-          <div className="text-center">
-            <p className="text-sm text-gray-600">
-              <Link
-                href="/login"
-                className="font-medium text-indigo-600 hover:text-indigo-500"
-              >
-                Обратно към входа
-              </Link>
-            </p>
-          </div>
-        </div>
-      </div>
-    );
+    return <SuccessMessage email={state.email} resetAction={resetAction} />;
   }
 
   return (
