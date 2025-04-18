@@ -10,6 +10,7 @@ const heroProducts = [
       "https://nardis.rosset.website/wp-content/uploads/2025/03/база-за-грим.jpg",
     productUrl: "/products/база-за-грим",
     altText: "База за грим",
+    isPriority: true,
   },
   {
     id: 2,
@@ -22,10 +23,10 @@ const heroProducts = [
   {
     id: 3,
     name: "Спирала All In One",
-    imageSrc:
-      "https://nardis.rosset.website/wp-content/uploads/2025/03/спирала-всичко-в-1.jpg",
+    imageSrc: "/images/spirala-all-in-one.jpg", // Локално копие на изображението за по-бързо зареждане
     productUrl: "/products/спирала-all-in-one",
     altText: "Спирала All In One",
+    isPriority: true, // Маркираме специално това изображение като приоритетно
   },
   {
     id: 4,
@@ -115,9 +116,13 @@ export default function PromoSection() {
                                 src={product.imageSrc}
                                 width={176}
                                 height={256}
-                                priority={product.id === 1 || product.id === 3}
+                                priority={product.isPriority}
                                 className="object-cover h-full w-full transition-transform duration-300 group-hover:scale-105"
-                                unoptimized={true}
+                                fetchPriority={
+                                  product.isPriority ? "high" : "auto"
+                                }
+                                sizes="(max-width: 768px) 176px, 176px"
+                                quality={product.isPriority ? 90 : 75}
                               />
                               <div className="absolute inset-0 bg-transparent group-hover:bg-black/20 transition-opacity flex items-end justify-center">
                                 <div className="p-2 w-full bg-transparent group-hover:bg-black/70 transition-all duration-300 translate-y-full group-hover:translate-y-0">

@@ -24,6 +24,7 @@ export default function Example() {
               alt="Two models wearing women's black cotton crewneck tee and off-white cotton crewneck tee."
               src="/nardis-online-shop-for-luxury-cosmetics.jpg"
               fill
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
               className="object-cover group-hover:opacity-75"
             />
             <div
@@ -49,6 +50,7 @@ export default function Example() {
               alt="Wooden shelf with gray and olive drab green baseball caps, next to wooden clothes hanger with sweaters."
               src="/artdeco-asian-spa-mega-menu-bg.jpg"
               fill
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
               className="object-cover group-hover:opacity-75"
             />
             <div
@@ -74,6 +76,7 @@ export default function Example() {
               alt="Walnut desk organizer set with white modular trays, next to porcelain mug on wooden desk."
               src="/makeup-mega-menu-bg.jpg"
               fill
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
               className="object-cover group-hover:opacity-75"
             />
             <div

@@ -9,6 +9,7 @@ export default function Example() {
           alt="Nardis маркова козметика"
           src="https://nardis.bg/wp-content/uploads/webimage-51190EDE-28E3-4A42-BC51691E2236AFC8.jpg"
           fill
+          sizes="(max-width: 768px) 100vw, 50vw"
           className="object-cover"
         />
         <svg
