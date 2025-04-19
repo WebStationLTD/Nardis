@@ -25,7 +25,7 @@ const NewProducts = async () => {
             Нови продукти
           </h2>
           <Link
-            href="#"
+            href="/products"
             className="hidden text-base font-medium text-[#b3438f] hover:text-black md:block"
           >
             Вижте всички <span aria-hidden="true"> &rarr;</span>
@@ -40,7 +40,7 @@ const NewProducts = async () => {
 
         <div className="mt-8 text-sm md:hidden">
           <Link
-            href="#"
+            href="/products"
             className="text-base font-medium text-[#b3438f] hover:text-black"
           >
             Вижте всички <span aria-hidden="true"> &rarr;</span>

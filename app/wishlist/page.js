@@ -47,24 +47,31 @@ export default function WishlistPage() {
   };
 
   return (
-    <div className="mx-auto max-w-7xl py-16">
-      <h1 className="text-3xl font-bold mb-6">Your Wishlist</h1>
+    <div className="mx-auto max-w-7xl py-16 px-4">
+      <h1 className="text-3xl font-bold mb-6">Вашият Wishlist</h1>
       {error && <p className="text-red-500">{error}</p>}
       {loading ? (
-        <p>Loading...</p>
+        <p>Зареждане...</p>
       ) : wishlistProducts.length === 0 ? (
         <div className="text-center py-12">
           <HeartIcon className="mx-auto h-12 w-12 text-gray-400" />
-          <h2 className="mt-2 text-lg font-medium text-gray-900">Your wishlist is empty</h2>
-          <p className="mt-1 text-sm text-gray-500">Start adding products to your wishlist.</p>
+          <h2 className="mt-2 text-lg font-medium text-gray-900">
+            Вашият Wishlist е празен
+          </h2>
+          <p className="mt-1 text-sm text-gray-500">
+            Добавете продукти във Вашия Wishlist.
+          </p>
           <div className="mt-6">
-            <Link href="/" className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-[#b3438f] hover:bg-[#a03680] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-              Continue Shopping
+            <Link
+              href="/"
+              className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-[#b3438f] hover:bg-[#a03680] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
+              Продължете пазаруването
             </Link>
           </div>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {wishlistProducts.map((product) => (
             <div key={product.id} className="border p-4 rounded-lg">
               <Link href={`/products/${product.slug}`} className="block">
@@ -79,11 +86,11 @@ export default function WishlistPage() {
               <h2 className="text-xl font-semibold mt-2">{product.name}</h2>
               <p className="text-gray-700">{product.price} лв.</p>
               <button
-                className="mt-2 text-red-500 flex items-center"
+                className="mt-2 text-red-500 flex items-center cursor-pointer"
                 onClick={() => handleRemoveFromWishlist(product.id)}
               >
                 <HeartIcon className="h-5 w-5 mr-1 text-red-500 fill-current" />
-                Remove from Wishlist
+                Премахнете от Wishlist
               </button>
             </div>
           ))}
