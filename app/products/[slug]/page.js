@@ -218,7 +218,7 @@ export default async function ProductDetails({ params }) {
                 productName={product.name}
                 productImage={product.images[0]?.src}
               />
-              <span>
+              <span className="flex items-center">
                 <WishlistButton productId={product.id} className="ml-4" />
               </span>
             </div>

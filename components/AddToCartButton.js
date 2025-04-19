@@ -114,7 +114,7 @@ export default function AddToCartButton({
   return (
     <div className={`flex flex-col sm:flex-row gap-3 ${className}`}>
       {/* Quantity selector */}
-      <div className="flex items-center border border-gray-300 rounded-md">
+      <div className="flex items-center justify-center border border-gray-300 rounded-md">
         <button
           type="button"
           onClick={decreaseQuantity}
@@ -131,7 +131,7 @@ export default function AddToCartButton({
           type="button"
           onClick={increaseQuantity}
           disabled={isLoading}
-          className="px-3 py-2 text-gray-600 hover:text-gray-700 disabled:opacity-50"
+          className="px-3 py-2 text-gray-600 cursor-pointer hover:text-gray-700 disabled:opacity-50"
           aria-label="Increase quantity"
         >
           +
