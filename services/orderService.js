@@ -72,3 +72,57 @@ export async function getOrderById(orderId) {
     return null;
   }
 }
+
+/**
+ * Places an order based on a cart/pending order
+ * @param {number|string} orderId - The order/cart ID to process
+ * @param {Object} customerData - Customer information
+ * @returns {Promise<Object>} Processed order data
+ */
+export async function placeOrder(orderId, customerData) {
+  try {
+    if (!orderId) {
+      throw new Error("Order ID is required");
+    }
+
+    // Build order data from customer information
+    const orderData = {
+      billing: {
+        first_name: customerData.firstName,
+        last_name: customerData.lastName,
+        address_1: customerData.address,
+        city: customerData.city,
+        state: customerData.state || "",
+        postcode: customerData.postcode || "",
+        country: customerData.country || "BG",
+        email: customerData.email,
+        phone: customerData.phone,
+      },
+      shipping: {
+        first_name: customerData.firstName,
+        last_name: customerData.lastName,
+        address_1: customerData.address,
+        city: customerData.city,
+        state: customerData.state || "",
+        postcode: customerData.postcode || "",
+        country: customerData.country || "BG",
+      },
+      // Set to cash on delivery
+      payment_method: "cod",
+      payment_method_title: "Cash on Delivery",
+      // Set to processing as the payment will be on delivery
+      status: "processing",
+      customer_note: customerData.notes || "",
+    };
+
+    // Update the order with customer data and change status
+    const response = await WooCommerce.put(`orders/${orderId}`, orderData);
+    return response.data;
+  } catch (error) {
+    console.error(
+      "Error placing order:",
+      error.response?.data || error.message
+    );
+    throw new Error(`Failed to place order: ${error.message || "Unknown error"}`);
+  }
+}

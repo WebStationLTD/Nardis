@@ -7,8 +7,7 @@ const encodedKey = new TextEncoder().encode(JWT_SECRET);
 
 // Define any protected routes that require authentication
 const protectedRoutePatterns = [
-  /^\/my-account/, 
-  /^\/checkout/
+  /^\/my-account/,
 ];
 
 // Define public routes that should redirect to my-account if user is logged in
