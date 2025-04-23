@@ -83,7 +83,9 @@ export default function WishlistPage() {
                   className="rounded-lg object-cover h-64 w-full"
                 />
               </Link>
-              <h2 className="text-xl font-semibold mt-2">{product.name}</h2>
+              <Link href={`/products/${product.slug}`}>
+                <h2 className="text-xl font-semibold mt-2">{product.name}</h2>
+              </Link>
               <p className="text-gray-700">{product.price} лв.</p>
               <button
                 className="mt-2 text-red-500 flex items-center cursor-pointer"
