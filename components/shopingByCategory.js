@@ -11,7 +11,7 @@ export default function Example() {
           </h2>
           <Link
             href="/category"
-            className="hidden text-base font-normal text-[#b3438f] hover:text-black sm:block"
+            className="hidden text-base font-normal text-[#129160] hover:text-black sm:block"
           >
             Вижте всички категории
             <span aria-hidden="true"> &rarr;</span>
@@ -102,7 +102,7 @@ export default function Example() {
         <div className="mt-6 sm:hidden">
           <Link
             href="#"
-            className="block text-base font-normal text-[#b3438f] hover:text-black"
+            className="block text-base font-normal text-[#129160] hover:text-black"
           >
             Вижте всички категории
             <span aria-hidden="true"> &rarr;</span>

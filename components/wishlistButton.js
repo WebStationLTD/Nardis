@@ -34,9 +34,9 @@ export default function WishlistButton({ productId, className = "" }) {
       aria-label={inWishlist ? "Remove from wishlist" : "Add to wishlist"}
     >
       {inWishlist ? (
-        <HeartIconSolid className="h-6 w-6 text-[#b3438f]" />
+        <HeartIconSolid className="h-6 w-6 text-[#129160]" />
       ) : (
-        <HeartIcon className="h-6 w-6 text-gray-500 hover:text-[#b3438f]" />
+        <HeartIcon className="h-6 w-6 text-gray-500 hover:text-[#129160]" />
       )}
     </button>
   );

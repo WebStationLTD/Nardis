@@ -8,7 +8,7 @@ export default function Example() {
           <div className="flex flex-col pb-10 sm:pb-16 lg:pr-8 lg:pb-0 xl:pr-20">
             <Image
               alt="Tuple Logo"
-              src="/nardis-logo.svg"
+              src="/next-level-logo.png"
               width={48}
               height={48}
               className="h-12 self-start"
@@ -41,7 +41,7 @@ export default function Example() {
           <div className="flex flex-col border-t border-gray-900/10 pt-10 sm:pt-16 lg:border-t-0 lg:border-l lg:pt-0 lg:pl-8 xl:pl-20">
             <Image
               alt="Reform Logo"
-              src="/nardis-logo.svg"
+              src="/next-level-logo.png"
               width={48}
               height={48}
               className="h-12 self-start"

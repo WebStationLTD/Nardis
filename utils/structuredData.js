@@ -2,10 +2,10 @@ export const generateOrganizationSchema = (data) => {
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: "НАРДИЗ",
-    url: "https://nardis.bg",
-    logo: "https://nardis.bg/nardis-logo.svg",
-    description: "Когато красотата срещне съвършенството",
+    name: "Example",
+    url: "https://example.bg",
+    logo: "https://example.bg/next-level-logo.png",
+    description: "Lorem ipsum dolor sit amet",
     address: {
       "@type": "PostalAddress",
       streetAddress: "ул. София 1",
@@ -31,7 +31,7 @@ export const generateProductSchema = (product) => {
     image: product.images[0]?.src || "",
     brand: {
       "@type": "Brand",
-      name: "НАРДИЗ",
+      name: "Example",
     },
     offers: {
       "@type": "Offer",
@@ -53,14 +53,14 @@ export const generateArticleSchema = (post) => {
     image: post.yoast_head_json?.og_image?.[0]?.url || "",
     author: {
       "@type": "Organization",
-      name: "НАРДИЗ",
+      name: "Example",
     },
     publisher: {
       "@type": "Organization",
-      name: "НАРДИЗ",
+      name: "Example",
       logo: {
         "@type": "ImageObject",
-        url: "https://nardis.bg/nardis-logo.svg",
+        url: "https://example.bg/next-level-logo.png",
       },
     },
     datePublished: post.date,

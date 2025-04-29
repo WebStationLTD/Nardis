@@ -334,7 +334,7 @@ function NavigationContent({ navigationData }) {
                   <span className="sr-only">Wishlist</span>
                   <HeartIcon aria-hidden="true" className="size-6" />
                   {wishlistCount > 0 && (
-                    <span className="absolute -top-1 -right-1 bg-[#b3438f] text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                    <span className="absolute -top-1 -right-1 bg-[#129160] text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
                       {wishlistCount}
                     </span>
                   )}
@@ -347,8 +347,8 @@ function NavigationContent({ navigationData }) {
                 <Image
                   width={147}
                   height={32}
-                  alt="Nardis.bg"
-                  src="/nardis-logo.svg"
+                  alt="Example.bg"
+                  src="/next-level-logo.png"
                   className="h-8 w-auto"
                 />
               </Link>
@@ -371,7 +371,7 @@ function NavigationContent({ navigationData }) {
                               />
                               <span
                                 aria-hidden="true"
-                                className="absolute inset-x-0 bottom-0 h-1 transition-colors duration-200 ease-out group-data-open:bg-[#b3438f] sm:mt-5 sm:translate-y-px sm:transform"
+                                className="absolute inset-x-0 bottom-0 h-1 transition-colors duration-200 ease-out group-data-open:bg-[#129160] sm:mt-5 sm:translate-y-px sm:transform"
                               />
                             </PopoverButton>
                           </div>
@@ -537,7 +537,7 @@ function NavigationContent({ navigationData }) {
                   <span className="sr-only">Wishlist</span>
                   <HeartIcon aria-hidden="true" className="size-6" />
                   {wishlistCount > 0 && (
-                    <span className="absolute -top-1 -right-1 bg-[#b3438f] text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                    <span className="absolute -top-1 -right-1 bg-[#129160] text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
                       {wishlistCount}
                     </span>
                   )}
@@ -565,7 +565,7 @@ function NavigationContent({ navigationData }) {
                     />
                     <span className="sr-only">View cart</span>
                     {cartCount > 0 && (
-                      <span className="absolute -top-1 -right-1 bg-[#b3438f] text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                      <span className="absolute -top-1 -right-1 bg-[#129160] text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
                         {cartCount}
                       </span>
                     )}

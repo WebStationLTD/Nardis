@@ -194,7 +194,7 @@ export default function ProductRating({
               key={star}
               className={`h-4 w-4 ${
                 star <= Math.round(averageRating)
-                  ? "text-[#b3438f]"
+                  ? "text-[#129160]"
                   : "text-gray-300"
               }`}
               aria-hidden="true"
@@ -229,7 +229,7 @@ export default function ProductRating({
                   key={star}
                   className={`h-5 w-5 ${
                     star <= Math.round(averageRating)
-                      ? "text-[#b3438f]"
+                      ? "text-[#129160]"
                       : "text-gray-300"
                   }`}
                   aria-hidden="true"
@@ -252,7 +252,7 @@ export default function ProductRating({
                   <span className="w-8 text-gray-600">{star} star</span>
                   <div className="flex-1 h-2 mx-2 bg-gray-200 rounded">
                     <div
-                      className="h-2 bg-[#b3438f] rounded"
+                      className="h-2 bg-[#129160] rounded"
                       style={{
                         width: `${Math.round(
                           (ratingCounts[star] / totalRatings) * 100
@@ -315,7 +315,7 @@ export default function ProductRating({
                     {hoveredRating >= star ||
                     (!hoveredRating && rating >= star) ? (
                       <StarIcon
-                        className="h-7 w-7 text-[#b3438f]"
+                        className="h-7 w-7 text-[#129160]"
                         aria-hidden="true"
                       />
                     ) : (
@@ -414,7 +414,7 @@ export default function ProductRating({
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full border cursor-pointer border-transparent rounded-md py-2 px-4 flex justify-center items-center bg-[#b3438f] hover:bg-[#ebedeb] text-white hover:text-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:bg-indigo-300"
+              className="w-full border cursor-pointer border-transparent rounded-md py-2 px-4 flex justify-center items-center bg-[#129160] hover:bg-[#ebedeb] text-white hover:text-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:bg-indigo-300"
             >
               {isSubmitting ? (
                 <LoadingSpinner size="small" color="white" />

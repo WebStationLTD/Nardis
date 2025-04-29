@@ -48,8 +48,8 @@ export const getFeaturedNavItems = cache(async () => {
       {
         name: "Всички продукти",
         href: "/products",
-        imageSrc: "/nardis-online-shop-for-luxury-cosmetics.jpg",
-        imageAlt: "Каталог продукти на Nardis.bg",
+        imageSrc: "/hero-image-medium.jpg",
+        imageAlt: "Каталог продукти на Example.bg",
       },
     ];
 
@@ -91,8 +91,8 @@ export const getFeaturedNavItems = cache(async () => {
       {
         name: "Всички продукти",
         href: "/products",
-        imageSrc: "/nardis-online-shop-for-luxury-cosmetics.jpg",
-        imageAlt: "Каталог продукти на Nardis.bg",
+        imageSrc: "/hero-image-medium.jpg",
+        imageAlt: "Каталог продукти на Example.bg",
       },
     ];
   }

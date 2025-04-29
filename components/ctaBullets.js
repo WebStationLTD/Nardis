@@ -27,7 +27,7 @@ export default function Example() {
             </div>
             <div className="w-full flex-auto">
               <h2 className="text-4xl font-semibold tracking-tight text-pretty text-white sm:text-5xl">
-                Asian SPA
+                Lorem ipsum
               </h2>
               <p className="mt-6 text-lg/8 text-pretty text-gray-300">
                 Lorem ipsum dolor sit amet consect adipisicing elit. Possimus
@@ -52,7 +52,7 @@ export default function Example() {
                   href="#"
                   className="text-sm/6 font-normal text-[#ffffff] hover:text-black"
                 >
-                  Вижте всички продукти от Asian SPA{" "}
+                  Вижте всички продукти от Lorem ipsum{" "}
                   <span aria-hidden="true">&rarr;</span>
                 </Link>
               </div>
@@ -68,7 +68,7 @@ export default function Example() {
               clipPath:
                 "polygon(73.6% 51.7%, 91.7% 11.8%, 100% 46.4%, 97.4% 82.2%, 92.5% 84.9%, 75.7% 64%, 55.3% 47.5%, 46.5% 49.4%, 45% 62.9%, 50.3% 87.2%, 21.3% 64.1%, 0.1% 100%, 5.4% 51.1%, 21.4% 63.9%, 58.9% 0.2%, 73.6% 51.7%)",
             }}
-            className="aspect-1318/752 w-[82.375rem] flex-none bg-linear-to-r from-[#bc4b93] to-[#bc4b93] opacity-60"
+            className="aspect-1318/752 w-[82.375rem] flex-none bg-linear-to-r from-[#129160] to-[#129160] opacity-60"
           />
         </div>
       </div>

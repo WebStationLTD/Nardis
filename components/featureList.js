@@ -16,15 +16,15 @@ export default function FeatureList() {
         </div>
       </div>
       <div className="flex flex-row gap-4 px-4 sm:px-0 items-center text-center md:flex-1">
-        <div className="Специални намаления на избрани продукти">
+        <div className="">
           <StarIcon aria-hidden="true" className="size-10 text-black" />
         </div>
         <div className="flex flex-col items-start text-left">
-          <p>Качествена козметика от реномирани немски марки</p>
+          <p>Качествени продукти от реномирани доставчици</p>
         </div>
       </div>
       <div className="flex flex-row gap-4 px-4 sm:px-0 items-center text-center md:flex-1">
-        <div className="Специални намаления на избрани продукти">
+        <div className="">
           <PercentBadgeIcon aria-hidden="true" className="size-10 text-black" />
         </div>
         <div className="flex flex-col items-start text-left">

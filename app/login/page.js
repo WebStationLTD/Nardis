@@ -49,7 +49,7 @@ export default function LoginForm() {
             <div className="text-sm">
               <Link
                 href="/forgot-password"
-                className="font-medium text-[#b3438f]"
+                className="font-medium text-[#129160]"
               >
                 Забравена парола?
               </Link>
@@ -63,7 +63,7 @@ export default function LoginForm() {
         <div className="text-center">
           <p className="text-sm text-gray-600">
             Нямате акаунт?{" "}
-            <Link href="/register" className="font-medium text-[#b3438f]">
+            <Link href="/register" className="font-medium text-[#129160]">
               Регистрация
             </Link>
           </p>
@@ -80,7 +80,7 @@ function SubmitButton() {
     <button
       type="submit"
       disabled={pending}
-      className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md bg-[#b3438f] hover:bg-[#ebedeb] text-white hover:text-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 cursor-pointer"
+      className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md bg-[#129160] hover:bg-[#ebedeb] text-white hover:text-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 cursor-pointer"
     >
       {pending ? "Влизане..." : "Вход"}
     </button>

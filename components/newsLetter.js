@@ -22,7 +22,7 @@ export default function Newsletter() {
               />
               <button
                 type="submit"
-                className="flex-none rounded-md bg-[#b3438f] hover:bg-[#ebedeb] px-3.5 cursor-pointer py-2.5 text-sm font-semibold text-white hover:text-black shadow-xs focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                className="flex-none rounded-md bg-[#129160] hover:bg-[#ebedeb] px-3.5 cursor-pointer py-2.5 text-sm font-semibold text-white hover:text-black shadow-xs focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
               >
                 Абонирайте се
               </button>
@@ -52,8 +52,8 @@ export default function Newsletter() {
                 gradientUnits="userSpaceOnUse"
                 gradientTransform="translate(512 512) rotate(90) scale(512)"
               >
-                <stop stopColor="#b3438f" />
-                <stop offset={1} stopColor="#b3438f" stopOpacity={0} />
+                <stop stopColor="#129160" />
+                <stop offset={1} stopColor="#129160" stopOpacity={0} />
               </radialGradient>
             </defs>
           </svg>

@@ -72,7 +72,7 @@ export default function Footer({ navigationData }) {
   const socialLinks = [
     {
       name: "Facebook",
-      href: "https://www.facebook.com/nardis.beauty",
+      href: "https://www.facebook.com/",
       icon: (props) => (
         <svg fill="currentColor" viewBox="0 0 24 24" {...props}>
           <path
@@ -85,7 +85,7 @@ export default function Footer({ navigationData }) {
     },
     {
       name: "Instagram",
-      href: "https://www.instagram.com/nardis.bulgaria/",
+      href: "https://www.instagram.com/",
       icon: (props) => (
         <svg fill="currentColor" viewBox="0 0 24 24" {...props}>
           <path
@@ -111,8 +111,8 @@ export default function Footer({ navigationData }) {
               <Image
                 width={147}
                 height={32}
-                alt="Nardis.bg"
-                src="/nardis-logo.svg"
+                alt="Example.bg"
+                src="/next-level-logo.png"
                 className="h-8 w-auto"
               />
             </Link>
@@ -191,7 +191,7 @@ export default function Footer({ navigationData }) {
             <div className="mt-4 sm:mt-0 sm:ml-4 sm:shrink-0">
               <button
                 type="submit"
-                className="flex-none rounded-md bg-[#b3438f] hover:bg-[#ebedeb] px-3.5 cursor-pointer py-2.5 text-sm font-semibold text-white hover:text-black shadow-xs focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                className="flex-none rounded-md bg-[#129160] hover:bg-[#ebedeb] px-3.5 cursor-pointer py-2.5 text-sm font-semibold text-white hover:text-black shadow-xs focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
               >
                 Абонирайте се
               </button>
@@ -212,7 +212,7 @@ export default function Footer({ navigationData }) {
             ))}
           </div>
           <p className="mt-8 text-sm/6 text-gray-400 md:order-1 md:mt-0">
-            &copy; {year} &ldquo;НАРДИЗ&rdquo; ЕООД. Всички права запазени.
+            &copy; {year} &ldquo;Example&rdquo; ООД. Всички права запазени.
           </p>
         </div>
       </div>

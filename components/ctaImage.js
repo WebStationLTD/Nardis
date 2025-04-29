@@ -39,23 +39,23 @@ export default function Example() {
       </div>
       <div className="relative mx-auto max-w-7xl py-12 sm:py-12 lg:px-8 lg:py-12">
         <div className="pr-6 pl-6 md:ml-auto md:w-2/3 md:pl-16 lg:w-1/2 lg:pr-0 lg:pl-24 xl:pl-32">
-          <h2 className="text-xl font-semibold text-[#b3438f]">Nardis.bg</h2>
+          <h2 className="text-xl font-semibold text-[#129160]">Example.bg</h2>
           <p className="mt-2 text-4xl font-semibold tracking-tight text-white sm:text-5xl">
-            Маркова козметика от Nardis
+            Lorem ipsum
           </p>
           <p className="mt-6 text-base/7 text-gray-300">
-            Маркова козметика от NARDIS може да бъде намерена в над 80
-            козметични магазина и студия в страната. За улеснение на нашите
-            клиенти ние създадохме този онлайн магазин. Тук ще намерите пълната
-            гама продукти Artdeco и други марки директно от официалния вносител
-            и представител. Вижте нашите моливи за очи, спирала за очи или
-            маркови червила, както и много полезна информация за индивидуални
-            продукти, като крем коректор, база за сенки за очи и база за грим.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum.
           </p>
           <div className="mt-8">
             <Link
               href="#"
-              className="inline-flex rounded-md bg-[#b3438f] px-3.5 py-2.5 text-sm font-semibold text-white hover:text-black shadow-xs hover:bg-[#ebedeb] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+              className="inline-flex rounded-md bg-[#129160] px-3.5 py-2.5 text-sm font-semibold text-white hover:text-black shadow-xs hover:bg-[#ebedeb] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
             >
               Купете онлайн
             </Link>

@@ -192,7 +192,7 @@ export default function Cart() {
           <div className="mt-6">
             <Link
               href="/products"
-              className="inline-flex items-center rounded-md bg-[#b3438f] px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#9c3b7e] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#b3438f]"
+              className="inline-flex items-center rounded-md bg-[#129160] px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#9c3b7e] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#129160]"
             >
               <ArrowLeftIcon
                 className="-ml-0.5 mr-1.5 h-5 w-5"
@@ -226,7 +226,7 @@ export default function Cart() {
               Пазарувате като гост.{" "}
               <Link
                 href="/login"
-                className="text-[#b3438f] hover:text-[#9c3b7e]"
+                className="text-[#129160] hover:text-[#9c3b7e]"
               >
                 Влезте в акаунта си
               </Link>{" "}
@@ -239,7 +239,7 @@ export default function Cart() {
           <div className="mt-12 lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-12 xl:gap-x-16">
             <div className="lg:col-span-7">
               <div className="flex justify-center items-center h-64">
-                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#b3438f]"></div>
+                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#129160]"></div>
               </div>
             </div>
           </div>
@@ -276,7 +276,7 @@ export default function Cart() {
                 <button
                   type="button"
                   onClick={handleClearCart}
-                  className="text-sm font-medium text-[#b3438f] hover:text-[#9c3b7e]"
+                  className="text-sm font-medium text-[#129160] hover:text-[#9c3b7e]"
                 >
                   Изчисти количката
                 </button>
@@ -337,7 +337,7 @@ export default function Cart() {
                             </button>
                             <div className="relative inline-flex items-center bg-white px-4 py-2 text-sm font-medium text-gray-900 ring-1 ring-inset ring-gray-300 focus:z-10">
                               {updateLoading[item.id] ? (
-                                <div className="animate-spin h-4 w-4 border-t-2 border-b-2 border-[#b3438f] rounded-full"></div>
+                                <div className="animate-spin h-4 w-4 border-t-2 border-b-2 border-[#129160] rounded-full"></div>
                               ) : (
                                 item.quantity
                               )}
@@ -451,7 +451,7 @@ export default function Cart() {
               <div className="mt-6">
                 <Link
                   href="/checkout"
-                  className="w-full rounded-md border border-transparent bg-[#b3438f] px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-[#9c3b7e] focus:outline-none focus:ring-2 focus:ring-[#b3438f] focus:ring-offset-2 focus:ring-offset-gray-50 flex items-center justify-center"
+                  className="w-full rounded-md border border-transparent bg-[#129160] px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-[#9c3b7e] focus:outline-none focus:ring-2 focus:ring-[#129160] focus:ring-offset-2 focus:ring-offset-gray-50 flex items-center justify-center"
                 >
                   <CheckIcon
                     className="-ml-0.5 mr-1.5 h-5 w-5"

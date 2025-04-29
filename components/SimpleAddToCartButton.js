@@ -37,7 +37,7 @@ export default function SimpleAddToCartButton({
             confirmButtonText: "Вход",
             showCancelButton: true,
             cancelButtonText: "Отказ",
-            confirmButtonColor: "#b3438f",
+            confirmButtonColor: "#129160",
           }).then((result) => {
             if (result.isConfirmed) {
               window.location.href = "/login";
@@ -52,7 +52,7 @@ export default function SimpleAddToCartButton({
           text: result.error,
           icon: "error",
           confirmButtonText: "OK",
-          confirmButtonColor: "#b3438f",
+          confirmButtonColor: "#129160",
         });
         return;
       }
@@ -69,7 +69,7 @@ export default function SimpleAddToCartButton({
         confirmButtonText: "Към количката",
         showCancelButton: true,
         cancelButtonText: "Продължи пазаруването",
-        confirmButtonColor: "#b3438f",
+        confirmButtonColor: "#129160",
       }).then((result) => {
         if (result.isConfirmed) {
           window.location.href = "/cart";
@@ -85,7 +85,7 @@ export default function SimpleAddToCartButton({
         text: "Възникна проблем при добавяне на продукта в количката",
         icon: "error",
         confirmButtonText: "OK",
-        confirmButtonColor: "#b3438f",
+        confirmButtonColor: "#129160",
       });
     } finally {
       setIsLoading(false);
@@ -97,7 +97,7 @@ export default function SimpleAddToCartButton({
       type="button"
       onClick={handleAddToCart}
       disabled={isLoading}
-      className={`inline-flex items-center justify-center rounded-md bg-[#b3438f] px-3 py-2 cursor-pointer text-sm font-semibold text-white hover:text-black shadow-xs hover:bg-[#ebedeb] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white disabled:opacity-70 w-full mt-2 ${className}`}
+      className={`inline-flex items-center justify-center rounded-md bg-[#129160] px-3 py-2 cursor-pointer text-sm font-semibold text-white hover:text-black shadow-xs hover:bg-[#ebedeb] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white disabled:opacity-70 w-full mt-2 ${className}`}
     >
       {isLoading ? (
         <span className="inline-flex items-center">

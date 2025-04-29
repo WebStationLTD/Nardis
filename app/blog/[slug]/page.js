@@ -75,8 +75,8 @@ export default async function PostPage({ params }) {
                 />
                 <defs>
                   <radialGradient id="827591b1-ce8c-4110-b064-7cb85a0b1217">
-                    <stop stopColor="#bc4b93" />
-                    <stop offset={1} stopColor="#bc4b93" />
+                    <stop stopColor="#129160" />
+                    <stop offset={1} stopColor="#129160" />
                   </radialGradient>
                 </defs>
               </svg>

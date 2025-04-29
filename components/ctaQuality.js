@@ -9,8 +9,8 @@ export default function Example() {
             Качествени продукти на разумна цена
           </h2>
           <p className="mx-auto mt-6 max-w-xl text-lg/8 text-pretty text-gray-300">
-            Вече над 20 години доставя качествена немска козметика на
-            потребителите в България.
+            Вече над 20 години доставя качествени продукти на потребителите в
+            България.
           </p>
           <div className="mt-10 flex items-center justify-center gap-x-6">
             <Link
@@ -39,8 +39,8 @@ export default function Example() {
         />
         <defs>
           <radialGradient id="8d958450-c69f-4251-94bc-4e091a323369">
-            <stop stopColor="#b3438f" />
-            <stop offset={1} stopColor="#b3438f" />
+            <stop stopColor="#129160" />
+            <stop offset={1} stopColor="#129160" />
           </radialGradient>
         </defs>
       </svg>
