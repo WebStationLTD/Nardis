@@ -5,7 +5,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "nardis.rosset.website",
+        hostname: "nextlevel-shop.admin-panels.com",
       },
       {
         protocol: "https",
