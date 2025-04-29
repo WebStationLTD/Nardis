@@ -34,13 +34,13 @@ export default function Example() {
       <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
         <div className="sm:flex sm:items-baseline sm:justify-between">
           <h2 className="text-2xl font-bold tracking-tight text-gray-900">
-            Our Favorites
+            Препоръчани продукти
           </h2>
           <a
             href="#"
             className="hidden text-sm font-semibold text-indigo-600 hover:text-indigo-500 sm:block"
           >
-            Browse all favorites
+            Всички препоръчани продукти
             <span aria-hidden="true"> &rarr;</span>
           </a>
         </div>
@@ -69,7 +69,7 @@ export default function Example() {
             href="#"
             className="block text-sm font-semibold text-indigo-600 hover:text-indigo-500"
           >
-            Browse all favorites
+            Всички препоръчани продукти
             <span aria-hidden="true"> &rarr;</span>
           </a>
         </div>
