@@ -36,7 +36,7 @@ const CtaImage = dynamic(() => import("@/components/ctaImage"), {
   loading: () => <p>Зареждане...</p>,
 });
 
-const CtaMissOops = dynamic(() => import("@/components/ctaMissOops"), {
+const CtaFavorites = dynamic(() => import("@/components/ctaFavorites"), {
   ssr: true,
   loading: () => <p>Зареждане...</p>,
 });
@@ -66,7 +66,7 @@ export default function Home() {
       <CtaQuality />
       <PromoProduts />
       <CtaImage />
-      <CtaMissOops />
+      <CtaFavorites />
       <NewsLetter />
       <TestimonialsSection />
     </>

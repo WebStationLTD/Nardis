@@ -6,8 +6,8 @@ const heroProducts = [
   {
     id: 1,
     name: "База за грим",
-    imageSrc: "/images/base-makeup.jpg", // Локално копие на изображението
-    // Резервен вариант: "https://nextlevel-shop.admin-panels.com/wp-content/uploads/2025/03/base-makeup.jpg",
+    imageSrc:
+      "https://nextlevel-shop.admin-panels.com/wp-content/uploads/2025/03/base-makeup.jpg",
     productUrl: "/products/база-за-грим",
     altText: "База за грим",
     isPriority: true,
@@ -15,15 +15,16 @@ const heroProducts = [
   {
     id: 2,
     name: "Гланц за устни Lip Brilliance",
-    imageSrc: "/images/lip-brilliance.png", // Локално копие на изображението
-    // Резервен вариант: "https://nextlevel-shop.admin-panels.com/wp-content/uploads/2025/03/lip-brilliance.png",
+    imageSrc:
+      "https://nextlevel-shop.admin-panels.com/wp-content/uploads/2025/03/lip-brilliance.png",
     productUrl: "/products/гланц-за-устни-lip-brilliance",
     altText: "Гланц за устни Lip Brilliance",
   },
   {
     id: 3,
     name: "Спирала All In One",
-    imageSrc: "/images/spirala-all-in-one.jpg", // Локално копие на изображението за по-бързо зареждане
+    imageSrc:
+      "https://nextlevel-shop.admin-panels.com/wp-content/uploads/2025/03/spirala-all-in-one.jpg",
     productUrl: "/products/спирала-all-in-one",
     altText: "Спирала All In One",
     isPriority: true, // Маркираме специално това изображение като приоритетно
@@ -31,32 +32,32 @@ const heroProducts = [
   {
     id: 4,
     name: "Молив за устни с минерали",
-    imageSrc: "/images/lip-pencil-minerals.jpg", // Локално копие на изображението
-    // Резервен вариант: "https://nextlevel-shop.admin-panels.com/wp-content/uploads/2025/03/lip-pencil-minerals.jpg",
+    imageSrc:
+      "https://nextlevel-shop.admin-panels.com/wp-content/uploads/2025/03/lip-pencil-minerals.jpg",
     productUrl: "/products/молив-за-устни-с-минерали",
     altText: "Молив за устни с минерали",
   },
   {
     id: 5,
     name: "Хидратиращ крем за ръце",
-    imageSrc: "/images/hand-cream.png", // Локално копие на изображението
-    // Резервен вариант: "https://nextlevel-shop.admin-panels.com/wp-content/uploads/2025/03/hand-cream.png",
+    imageSrc:
+      "https://nextlevel-shop.admin-panels.com/wp-content/uploads/2025/03/hand-cream.png",
     productUrl: "/products/хидратиращ-крем-за-ръце",
     altText: "Хидратиращ крем за ръце",
   },
   {
     id: 6,
     name: "Спирала Volume Supreme",
-    imageSrc: "/images/volume-supreme.jpg", // Локално копие на изображението
-    // Резервен вариант: "https://nextlevel-shop.admin-panels.com/wp-content/uploads/2025/03/volume-supreme.jpg",
+    imageSrc:
+      "https://nextlevel-shop.admin-panels.com/wp-content/uploads/2025/03/volume-supreme.jpg",
     productUrl: "/products/спирала-volume-supreme",
     altText: "Спирала Volume Supreme",
   },
   {
     id: 7,
     name: "Гланц за устни Hydra Lip Booster",
-    imageSrc: "/images/hydra-lip-booster.jpg", // Локално копие на изображението
-    // Резервен вариант: "https://nextlevel-shop.admin-panels.com/wp-content/uploads/2025/03/hydra-lip-booster.jpg",
+    imageSrc:
+      "https://nextlevel-shop.admin-panels.com/wp-content/uploads/2025/03/hydra-lip-booster.jpg",
     productUrl: "/products/гланц-за-устни-hydra-lip-booster",
     altText: "Гланц за устни Hydra Lip Booster",
   },

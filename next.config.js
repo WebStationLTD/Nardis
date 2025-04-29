@@ -6,6 +6,7 @@ const nextConfig = {
       "secure.gravatar.com",
       "nardis.bg",
       "nextlevel-shop.admin-panels.com",
+      "nardis.rosset.website",
     ],
     formats: ["image/avif", "image/webp"],
   },
