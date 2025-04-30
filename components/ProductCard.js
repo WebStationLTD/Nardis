@@ -44,11 +44,11 @@ export default function ProductCard({
           <WishlistButton productId={product.id} size="small" />
         </div>
 
-        <Link href={`/products/${product.slug}`} prefetch={true}>
+        <Link href={`/products/${product.slug}`} prefetch={isFirst}>
           <div className="relative w-full h-full">
             <Image
-              width={280}
-              height={320}
+              width={isFirst ? 400 : 280}
+              height={isFirst ? 450 : 320}
               alt={product.name}
               src={imageError ? "/placeholder.webp" : imageSrc}
               onError={() => setImageError(true)}
@@ -58,16 +58,19 @@ export default function ProductCard({
                   ? "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlhZWiAAAAAAAABvogAAOPUAAAOQWFlaIAAAAAAAAGKZAAC3hQAAGNpYWVogAAAAAAAAJKAAAA+EAAC2z2Rlc2MAAAAAAAAAFklFQyBodHRwOi8vd3d3LmllYy5nZQAAAAAAAAAAAAAAAFklFQyBodHRwOi8vd3d3LmllYy5nZQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWFlaIAAAAAAAAPbWAAEAAAAA0y1zZjMyAAAAAAABDEIAAAXe///zJgAAB5IAAP2R///7ov///aMAAAPcAADAbA=="
                   : undefined
               }
-              className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105 group-hover:opacity-75"
+              className={`w-full h-full object-cover transition-transform duration-300 group-hover:scale-105 group-hover:opacity-75 ${
+                isFirst ? "lcp-image" : ""
+              }`}
               priority={isFirst}
               fetchPriority={isFirst ? "high" : "auto"}
               loading={isFirst ? "eager" : "lazy"}
               sizes={
                 isFirst
-                  ? "100vw"
+                  ? "(max-width: 640px) 90vw, (max-width: 768px) 70vw, (max-width: 1024px) 30vw, 25vw"
                   : "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               }
               quality={isFirst ? 90 : 75}
+              decoding={isFirst ? "sync" : "async"}
             />
           </div>
           {hasSale && (
@@ -81,7 +84,7 @@ export default function ProductCard({
       <div className="flex-grow flex flex-col">
         <Link
           href={`/products/${product.slug}`}
-          prefetch={true}
+          prefetch={isFirst}
           className="flex-grow"
         >
           <h3 className="text-sm text-gray-700 font-medium mb-2 line-clamp-2">

@@ -14,6 +14,9 @@ const nextConfig = {
     // Оптимизации за производителност
     optimizeCss: true, // Оптимизира CSS файловете
     optimizePackageImports: ["@headlessui/react", "@heroicons/react"],
+    // Минимизира CSS и го разделя на критичен и некритичен
+    optimizeFonts: true,
+    largePageDataBytes: 128 * 1000, // Увеличаваме размера на данните за страница
   },
   // Конфигурация за кеширане на страниците
   staticPageGenerationTimeout: 90,
@@ -37,6 +40,22 @@ const nextConfig = {
   distDir: ".next",
   poweredByHeader: false,
   output: "standalone", // За по-добра поддръжка с Vercel
+
+  // Допълнителни настройки за оптимизация на CSS
+  webpack: (config, { dev, isServer }) => {
+    // Оптимизации само за продукционна среда
+    if (!dev && !isServer) {
+      // Използваме CSS Optimizer за по-добро разделяне и минимизиране
+      config.optimization.splitChunks.cacheGroups.styles = {
+        name: "styles",
+        test: /\.(css|scss)$/,
+        chunks: "all",
+        enforce: true,
+      };
+    }
+
+    return config;
+  },
 };
 
 module.exports = nextConfig;

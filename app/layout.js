@@ -6,6 +6,7 @@ import { WishlistProvider } from "@/app/context/WishlistContext";
 import { CartProvider } from "@/app/context/CartContext";
 import { Inter } from "next/font/google";
 import { getNavigationData } from "@/services/navigationService";
+import StylesPreloader from "@/components/StylesPreloader";
 
 const inter = Inter({
   subsets: ["latin", "cyrillic"],
@@ -19,6 +20,12 @@ const inter = Inter({
 export const metadata = {
   title: "Nardis - Козметика от Германия",
   description: "Официален вносител на немска козметика в България",
+  other: {
+    "link:preconnect": [
+      "https://fonts.googleapis.com",
+      "https://fonts.gstatic.com",
+    ],
+  },
 };
 
 export default async function RootLayout({ children }) {
@@ -28,6 +35,7 @@ export default async function RootLayout({ children }) {
   return (
     <html lang="bg" className={inter.variable}>
       <body suppressHydrationWarning={true}>
+        <StylesPreloader />
         <WishlistProvider>
           <CartProvider>
             <StoreNavigation navigationData={navigationData} />
