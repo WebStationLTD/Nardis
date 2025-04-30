@@ -3,20 +3,23 @@
   padding: 0 50px; /* Увеличен padding за стрелките */
 }
 
-/* Премахвам излишното отстояние и margin за слайдера */
-:global(.swiper-wrapper) {
+/* Стилове за слайдера */
+.swiperWrapper {
   padding: 0;
   margin: 0;
 }
 
-/* Слайдовете да са с цялата си височина */
-:global(.swiper-slide) {
+.productsSwiper :global(.swiper-wrapper) {
+  padding: 0;
+  margin: 0;
+}
+
+.productsSwiper :global(.swiper-slide) {
   height: auto !important;
   display: flex;
 }
 
-/* Връщане на оригиналните grid стилове за продуктовите карти */
-:global(.swiper-slide > div) {
+.productsSwiper :global(.swiper-slide > div) {
   width: 100%;
   height: 100%;
 }
@@ -56,19 +59,19 @@
 }
 
 /* Свойства на disabled състоянието */
-:global(.swiper-button-disabled) {
+.productsSwiper :global(.swiper-button-disabled) {
   opacity: 0.5 !important;
   cursor: not-allowed !important;
 }
 
 /* Скриване на стандартните Swiper стрелки */
-:global(.swiper-button-next),
-:global(.swiper-button-prev) {
+.productsSwiper :global(.swiper-button-next),
+.productsSwiper :global(.swiper-button-prev) {
   color: inherit !important;
 }
 
-:global(.swiper-button-next:after),
-:global(.swiper-button-prev:after) {
+.productsSwiper :global(.swiper-button-next:after),
+.productsSwiper :global(.swiper-button-prev:after) {
   display: none !important;
 }
 
