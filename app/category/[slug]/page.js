@@ -10,8 +10,8 @@ import SkeletonFilters from "@/components/SkeletonFilters";
 import SkeletonPagination from "@/components/SkeletonPagination";
 
 // Подобрена конфигурация за ISR
-export const revalidate = 0; // Принудително ревалидиране при всяка заявка
-export const fetchCache = "force-no-store"; // Принудително без кеширане
+export const revalidate = 3600; // Ревалидиране на всеки час
+export const fetchCache = "force-cache"; // Подобрено кеширане
 
 // Dynamically import components with SSR support
 const Pagination = dynamic(() => import("./pagination"), {
