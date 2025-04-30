@@ -1,5 +1,6 @@
 import WooCommerce from "@/lib/woocomerce";
-import { cache } from "react";
+// import { cache } from "react";
+// Временно премахваме кеша, за да принудим всички данни да се презаредят
 
 /**
  * Fetch products with optional filtering parameters
@@ -17,7 +18,8 @@ import { cache } from "react";
  * @param {string|number[]} [options.include] - Specific product IDs to include
  * @returns {Promise<{products: Array, totalPages: number, maxPrice: number}>}
  */
-export const getProducts = cache(async (options = {}) => {
+// export const getProducts = cache(async (options = {}) => {
+export const getProducts = async (options = {}) => {
   const {
     page = 1,
     perPage = 12,
@@ -71,7 +73,7 @@ export const getProducts = cache(async (options = {}) => {
     console.error("Error fetching products:", error);
     throw error;
   }
-});
+};
 
 /**
  * Get a single product by ID or slug
@@ -79,7 +81,8 @@ export const getProducts = cache(async (options = {}) => {
  * @param {boolean} [bySlug=false] - Whether to search by slug instead of ID
  * @returns {Promise<Object>} - Product data
  */
-export const getProduct = cache(async (identifier, bySlug = false) => {
+// export const getProduct = cache(async (identifier, bySlug = false) => {
+export const getProduct = async (identifier, bySlug = false) => {
   try {
     if (bySlug) {
       const response = await WooCommerce.get("products", {
@@ -102,7 +105,7 @@ export const getProduct = cache(async (identifier, bySlug = false) => {
     );
     throw error;
   }
-});
+};
 
 /**
  * Get related products by product IDs
@@ -182,7 +185,8 @@ export async function getProductsByIds(productIds) {
  * @param {number} [options.parent] - Parent category ID to filter by
  * @returns {Promise<Array>} - Array of category data
  */
-export const getCategories = cache(async (options = {}) => {
+// export const getCategories = cache(async (options = {}) => {
+export const getCategories = async (options = {}) => {
   const { perPage = 100, page = 1, parent } = options;
 
   try {
@@ -199,14 +203,15 @@ export const getCategories = cache(async (options = {}) => {
     console.error("Error fetching product categories:", error);
     throw error;
   }
-});
+};
 
 /**
  * Get all categories without pagination limit
  * This is cached to avoid multiple API calls for the same data
  * @returns {Promise<Array>} - Complete array of all categories
  */
-export const getAllCategories = cache(async () => {
+// export const getAllCategories = cache(async () => {
+export const getAllCategories = async () => {
   try {
     // Fetch all categories in a single request with max allowed limit
     const categories = await getCategories({ perPage: 100, page: 1 });
@@ -225,4 +230,4 @@ export const getAllCategories = cache(async () => {
     console.error("Error fetching all categories:", error);
     return [];
   }
-});
+};

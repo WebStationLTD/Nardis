@@ -24,7 +24,8 @@ export const metadata = {
 };
 
 // Конфигурация за ISR
-export const revalidate = 3600; // Ревалидиране на всеки час
+export const revalidate = 0; // Принудително ревалидиране при всяка заявка
+export const fetchCache = "force-no-store"; // Принудително без кеширане
 
 // Компоненти, които поддържат SSR, но се зареждат лениво
 const Pagination = dynamic(() => import("./pagination"), {

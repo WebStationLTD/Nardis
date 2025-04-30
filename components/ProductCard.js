@@ -6,6 +6,17 @@ import { useState, useEffect } from "react";
 import WishlistButton from "@/components/wishlistButton";
 import SimpleAddToCartButton from "@/components/SimpleAddToCartButton";
 
+// Функция за логване на проблемни URL-и
+function checkImageUrl(url) {
+  if (!url) return url;
+  if (url.includes("nardis.rosset.website")) {
+    console.warn("Намерен стар URL:", url);
+    // Можем да го заменим, но това е само за диагностика
+    return url;
+  }
+  return url;
+}
+
 export default function ProductCard({
   product,
   className = "",
@@ -17,11 +28,15 @@ export default function ProductCard({
   // При първоначално зареждане на компонента, валидираме URL-то на изображението
   useEffect(() => {
     if (product?.images?.[0]?.src) {
+      // Проверка и логване на URL
+      const url = checkImageUrl(product.images[0].src);
+      console.log("ProductCard получи URL:", url);
+
       // Използваме HTMLImageElement вместо Image, за да избегнем конфликт с импортирания Image от next/image
       const imgElement = new window.Image();
-      imgElement.onload = () => setImageSrc(product.images[0].src);
+      imgElement.onload = () => setImageSrc(url);
       imgElement.onerror = () => setImageError(true);
-      imgElement.src = product.images[0].src;
+      imgElement.src = url;
     }
   }, [product]);
 
