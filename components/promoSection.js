@@ -9,7 +9,6 @@ const heroProducts = [
     imageSrc: "/hero-1.jpg",
     productUrl: "/products/база-за-грим",
     altText: "База за грим",
-    isPriority: true,
   },
   {
     id: 2,
@@ -69,7 +68,7 @@ export default function PromoSection() {
 
   return (
     <div className="relative overflow-hidden bg-gray-800">
-      <div className="pt-16 pb-80 sm:pt-24 sm:pb-40 lg:pt-40 lg:pb-48">
+      <div className="pt-12 pb-12 sm:pt-24 sm:pb-40 lg:pt-40 lg:pb-48">
         <div className="relative mx-auto max-w-7xl px-4 sm:static sm:px-6 lg:px-8">
           <div className="sm:max-w-lg">
             <h1 className="text-3xl md:text-6xl font-bold tracking-tight text-white sm:text-6xl text-balance">
@@ -86,7 +85,7 @@ export default function PromoSection() {
             <div className="mt-10 relative z-2">
               {/* Decorative image grid */}
               <div className="lg:relative lg:inset-y-0 z-10 lg:mx-auto lg:w-full lg:max-w-7xl">
-                <div className="absolute block z-4 transform sm:top-0 sm:left-1/2 sm:translate-x-8 lg:top-1/2 lg:left-1/2 lg:translate-x-8 sm:-translate-y-120 lg:-translate-y-125">
+                <div className="hidden md:block absolute z-4 transform sm:top-0 sm:left-1/2 sm:translate-x-8 lg:top-1/2 lg:left-1/2 lg:translate-x-8 sm:-translate-y-120 lg:-translate-y-125">
                   <div className="flex items-center space-x-6 lg:space-x-8">
                     {/* Рендерираме колоните с продукти */}
                     {productsByColumn.map((column, columnIndex) => (
