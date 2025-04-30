@@ -1,0 +1,94 @@
+.productsSwiper {
+  position: relative;
+  padding: 0 50px; /* Увеличен padding за стрелките */
+}
+
+/* Премахвам излишното отстояние и margin за слайдера */
+:global(.swiper-wrapper) {
+  padding: 0;
+  margin: 0;
+}
+
+/* Слайдовете да са с цялата си височина */
+:global(.swiper-slide) {
+  height: auto !important;
+  display: flex;
+}
+
+/* Връщане на оригиналните grid стилове за продуктовите карти */
+:global(.swiper-slide > div) {
+  width: 100%;
+  height: 100%;
+}
+
+/* Стилизация на стрелките за навигация */
+.navigationButton {
+  position: absolute;
+  width: 40px !important;
+  height: 40px !important;
+  background-color: white;
+  border-radius: 50%;
+  color: #129160;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease-in-out;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.navigationButton:hover {
+  background-color: #129160;
+  color: white;
+}
+
+.prevButton {
+  composes: navigationButton;
+  left: -20px !important; /* Позициониране на 20px от левия край */
+}
+
+.nextButton {
+  composes: navigationButton;
+  right: -20px !important; /* Позициониране на 20px от десния край */
+}
+
+/* Свойства на disabled състоянието */
+:global(.swiper-button-disabled) {
+  opacity: 0.5 !important;
+  cursor: not-allowed !important;
+}
+
+/* Скриване на стандартните Swiper стрелки */
+:global(.swiper-button-next),
+:global(.swiper-button-prev) {
+  color: inherit !important;
+}
+
+:global(.swiper-button-next:after),
+:global(.swiper-button-prev:after) {
+  display: none !important;
+}
+
+/* Responsive стилове */
+@media (max-width: 640px) {
+  .productsSwiper {
+    padding: 0 40px;
+  }
+
+  .prevButton,
+  .nextButton {
+    width: 32px !important;
+    height: 32px !important;
+  }
+
+  .prevButton {
+    left: -15px !important;
+  }
+
+  .nextButton {
+    right: -15px !important;
+  }
+}

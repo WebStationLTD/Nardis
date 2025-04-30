@@ -7,7 +7,7 @@ export default function Example() {
       <div className="relative h-80 overflow-hidden bg-indigo-600 md:absolute md:left-0 md:h-full md:w-1/3 lg:w-1/2">
         <Image
           alt="Nardis маркова козметика"
-          src="https://nardis.bg/wp-content/uploads/webimage-51190EDE-28E3-4A42-BC51691E2236AFC8.jpg"
+          src="https://nextlevel-shop.admin-panels.com/wp-content/uploads/2025/04/cta-image-bg.jpg"
           fill
           sizes="(max-width: 768px) 100vw, 50vw"
           className="object-cover"

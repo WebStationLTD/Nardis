@@ -6,8 +6,7 @@ const heroProducts = [
   {
     id: 1,
     name: "База за грим",
-    imageSrc:
-      "https://nextlevel-shop.admin-panels.com/wp-content/uploads/2025/03/base-makeup.jpg",
+    imageSrc: "/hero-1.jpg",
     productUrl: "/products/база-за-грим",
     altText: "База за грим",
     isPriority: true,
@@ -15,16 +14,14 @@ const heroProducts = [
   {
     id: 2,
     name: "Гланц за устни Lip Brilliance",
-    imageSrc:
-      "https://nextlevel-shop.admin-panels.com/wp-content/uploads/2025/03/lip-brilliance.png",
+    imageSrc: "/hero-2.jpg",
     productUrl: "/products/гланц-за-устни-lip-brilliance",
     altText: "Гланц за устни Lip Brilliance",
   },
   {
     id: 3,
     name: "Спирала All In One",
-    imageSrc:
-      "https://nextlevel-shop.admin-panels.com/wp-content/uploads/2025/03/spirala-all-in-one.jpg",
+    imageSrc: "/hero-3.jpg",
     productUrl: "/products/спирала-all-in-one",
     altText: "Спирала All In One",
     isPriority: true, // Маркираме специално това изображение като приоритетно
@@ -32,32 +29,28 @@ const heroProducts = [
   {
     id: 4,
     name: "Молив за устни с минерали",
-    imageSrc:
-      "https://nextlevel-shop.admin-panels.com/wp-content/uploads/2025/03/lip-pencil-minerals.jpg",
+    imageSrc: "/hero-4.jpg",
     productUrl: "/products/молив-за-устни-с-минерали",
     altText: "Молив за устни с минерали",
   },
   {
     id: 5,
     name: "Хидратиращ крем за ръце",
-    imageSrc:
-      "https://nextlevel-shop.admin-panels.com/wp-content/uploads/2025/03/hand-cream.png",
+    imageSrc: "/hero-5.jpg",
     productUrl: "/products/хидратиращ-крем-за-ръце",
     altText: "Хидратиращ крем за ръце",
   },
   {
     id: 6,
     name: "Спирала Volume Supreme",
-    imageSrc:
-      "https://nextlevel-shop.admin-panels.com/wp-content/uploads/2025/03/volume-supreme.jpg",
+    imageSrc: "/hero-6.jpg",
     productUrl: "/products/спирала-volume-supreme",
     altText: "Спирала Volume Supreme",
   },
   {
     id: 7,
     name: "Гланц за устни Hydra Lip Booster",
-    imageSrc:
-      "https://nextlevel-shop.admin-panels.com/wp-content/uploads/2025/03/hydra-lip-booster.jpg",
+    imageSrc: "/hero-7.jpg",
     productUrl: "/products/гланц-за-устни-hydra-lip-booster",
     altText: "Гланц за устни Hydra Lip Booster",
   },
@@ -149,7 +142,7 @@ export default function PromoSection() {
           </div>
         </div>
       </div>
-      <svg
+      {/* <svg
         viewBox="0 0 1024 1024"
         aria-hidden="true"
         className="absolute top-1/2 left-10 size-[64rem] overflow-hidden -translate-x-1/2 [mask-image:radial-gradient(closest-side,white,transparent)]"
@@ -167,7 +160,7 @@ export default function PromoSection() {
             <stop offset={1} stopColor="#129160" />
           </radialGradient>
         </defs>
-      </svg>
+      </svg> */}
     </div>
   );
 }
