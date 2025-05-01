@@ -5,17 +5,19 @@ import Link from "next/link";
 const heroProducts = [
   {
     id: 1,
-    name: "База за грим",
-    imageSrc: "/hero-1.jpg",
-    productUrl: "/products/база-за-грим",
-    altText: "База за грим",
+    name: "Бокс",
+    imageSrc:
+      "https://nextlevel-shop.admin-panels.com/wp-content/uploads/2025/05/бокс.jpg",
+    productUrl: "#",
+    altText: "Бокс",
   },
   {
     id: 2,
-    name: "Гланц за устни Lip Brilliance",
-    imageSrc: "/hero-2.jpg",
-    productUrl: "/products/гланц-за-устни-lip-brilliance",
-    altText: "Гланц за устни Lip Brilliance",
+    name: "Дрехи 1",
+    imageSrc:
+      "https://nextlevel-shop.admin-panels.com/wp-content/uploads/2025/05/дрехи-1.jpg",
+    productUrl: "#",
+    altText: "Дрехи 1",
   },
   {
     id: 3,
@@ -27,10 +29,11 @@ const heroProducts = [
   },
   {
     id: 4,
-    name: "Молив за устни с минерали",
-    imageSrc: "/hero-4.jpg",
-    productUrl: "/products/молив-за-устни-с-минерали",
-    altText: "Молив за устни с минерали",
+    name: "Дрехи 2",
+    imageSrc:
+      "https://nextlevel-shop.admin-panels.com/wp-content/uploads/2025/05/дрехи-2.jpg",
+    productUrl: "#",
+    altText: "Дрехи 2",
   },
   {
     id: 5,
@@ -41,17 +44,19 @@ const heroProducts = [
   },
   {
     id: 6,
-    name: "Спирала Volume Supreme",
-    imageSrc: "/hero-6.jpg",
-    productUrl: "/products/спирала-volume-supreme",
-    altText: "Спирала Volume Supreme",
+    name: "Дрехи 3",
+    imageSrc:
+      "https://nextlevel-shop.admin-panels.com/wp-content/uploads/2025/05/дрехи-3.jpg",
+    productUrl: "#",
+    altText: "Дрехи 3",
   },
   {
     id: 7,
-    name: "Гланц за устни Hydra Lip Booster",
-    imageSrc: "/hero-7.jpg",
-    productUrl: "/products/гланц-за-устни-hydra-lip-booster",
-    altText: "Гланц за устни Hydra Lip Booster",
+    name: "Фитнес оборудване и аксесоари",
+    imageSrc:
+      "https://nextlevel-shop.admin-panels.com/wp-content/uploads/2025/05/фитнес-оборудване-и-аксесоари.jpg",
+    productUrl: "#",
+    altText: "Фитнес оборудване и аксесоари",
   },
 ];
 
@@ -85,7 +90,7 @@ export default function PromoSection() {
             <div className="mt-10 relative z-2">
               {/* Decorative image grid */}
               <div className="lg:relative lg:inset-y-0 z-10 lg:mx-auto lg:w-full lg:max-w-7xl">
-                <div className="hidden md:block absolute z-4 transform sm:top-0 sm:left-1/2 sm:translate-x-8 lg:top-1/2 lg:left-1/2 lg:translate-x-8 sm:-translate-y-120 lg:-translate-y-125">
+                <div className="hidden md:block absolute z-4 transform sm:top-0 sm:left-1/2 sm:translate-x-8 lg:top-1/2 lg:left-1/2 lg:translate-x-8 sm:-translate-y-100 lg:-translate-y-105">
                   <div className="flex items-center space-x-6 lg:space-x-8">
                     {/* Рендерираме колоните с продукти */}
                     {productsByColumn.map((column, columnIndex) => (
@@ -96,7 +101,7 @@ export default function PromoSection() {
                         {column.map((product) => (
                           <div
                             key={product.id}
-                            className="h-64 w-44 overflow-hidden rounded-lg group relative"
+                            className="h-54 w-54 overflow-hidden rounded-lg group relative"
                           >
                             <Link
                               href={product.productUrl}
