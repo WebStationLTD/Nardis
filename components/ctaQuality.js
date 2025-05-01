@@ -6,7 +6,7 @@ export default function Example() {
       <div className="px-6 py-12 sm:px-6 sm:py-12 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-4xl font-semibold tracking-tight text-balance text-white sm:text-5xl">
-            Качествени продукти на разумна цена
+            Качествени продукти от Example.bg
           </h2>
           <p className="mx-auto mt-6 max-w-xl text-lg/8 text-pretty text-gray-300">
             Вече над 20 години доставя качествени продукти на потребителите в
