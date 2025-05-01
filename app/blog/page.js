@@ -1,10 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
+import PaginationControl from "@/components/PaginationControl";
 
 export const metadata = {
   title: "Блог",
   description:
-    "Открийте актуални правни анализи, експертни съвети и новини в блога на Адвокатско дружество „Бурков, Радев, Дюлгерска“. Следете последните тенденции в правото, бизнеса и технологиите.",
+    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",
 };
 
 export default async function Blog({ searchParams }) {
@@ -116,29 +117,11 @@ export default async function Blog({ searchParams }) {
             </p>
           )}
           {/* Pagination Controls */}
-          <div className="mt-10 flex justify-center">
-            {currentPage > 1 && (
-              <Link
-                href={`/blog?page=${currentPage - 1}`}
-                className="px-4 py-2 mx-2 bg-gray-200 rounded-md"
-                prefetch={true}
-              >
-                Предишна
-              </Link>
-            )}
-            <span className="px-4 py-2 mx-2">
-              Страница {currentPage} от {totalPages}
-            </span>
-            {currentPage < totalPages && (
-              <Link
-                href={`/blog?page=${currentPage + 1}`}
-                className="px-4 py-2 mx-2 bg-gray-200 rounded-md"
-                prefetch={true}
-              >
-                Следваща
-              </Link>
-            )}
-          </div>
+          <PaginationControl
+            currentPage={currentPage}
+            totalPages={totalPages}
+            basePath="/blog"
+          />
         </div>
       </div>
     </>
