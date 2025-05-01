@@ -152,41 +152,12 @@ export default async function ProductsPage({ searchParams }) {
               </Link>
             </li>
           </ol>
-
-          {topCategories.length > 0 && (
-            <div className="mt-4">
-              <p className="text-sm font-medium text-gray-700 mb-2">
-                Популярни категории:
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {topCategories.map((cat) => (
-                  <Link
-                    key={cat.id}
-                    href={`/category/${cat.slug}`}
-                    className="text-sm px-3 py-1 bg-gray-100 rounded-full hover:bg-gray-200"
-                  >
-                    {cat.name}
-                  </Link>
-                ))}
-                <Link
-                  href="/category"
-                  className="text-sm px-3 py-1 bg-indigo-100 rounded-full hover:bg-indigo-200 text-indigo-700"
-                >
-                  Всички категории
-                </Link>
-              </div>
-            </div>
-          )}
         </nav>
       </div>
 
       {/* Main content */}
       <div className="w-full max-w-[100%] xl:max-w-[80%] mx-auto px-4 py-6 sm:px-6 lg:px-8">
-        <h2 className="text-2xl font-bold tracking-tight text-gray-900 mb-6">
-          Филтри
-        </h2>
-
-        <div className="grid grid-cols-1 lg:grid-cols-[15%_85%] gap-4">
+        <div className="grid grid-cols-1 ccc lg:grid-cols-[15%_85%] gap-4">
           <div>
             <Filters maxPrice={maxPossiblePrice} />
           </div>
@@ -195,6 +166,30 @@ export default async function ProductsPage({ searchParams }) {
             {/* No Suspense here - render products directly for SEO */}
             <ProductsList products={products} />
             <Pagination currentPage={currentPage} totalPages={totalPages} />
+            {topCategories.length > 0 && (
+              <div className="mt-4">
+                <p className="text-sm font-medium text-gray-700 mb-2">
+                  Популярни категории:
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {topCategories.map((cat) => (
+                    <Link
+                      key={cat.id}
+                      href={`/category/${cat.slug}`}
+                      className="text-sm px-3 py-1 bg-gray-100 rounded-full hover:bg-gray-200"
+                    >
+                      {cat.name}
+                    </Link>
+                  ))}
+                  <Link
+                    href="/category"
+                    className="text-sm px-3 py-1 bg-indigo-100 rounded-full hover:bg-indigo-200 text-indigo-700"
+                  >
+                    Всички категории
+                  </Link>
+                </div>
+              </div>
+            )}
           </div>
         </div>
 

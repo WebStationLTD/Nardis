@@ -248,7 +248,7 @@ export default async function CategoryPage({ params, searchParams }) {
       </div>
 
       {/* SEO breadcrumb navigation */}
-      <div className="w-full max-w-[100%] md:max-w-[80%] mx-auto px-4 py-4 sm:px-6">
+      <div className="w-full max-w-[100%] md:max-w-[80%] mx-auto px-4 pb-0 py-4 sm:px-6">
         <nav aria-label="Breadcrumb">
           <ol className="flex items-center space-x-2 text-sm text-gray-600">
             <li>
@@ -275,7 +275,7 @@ export default async function CategoryPage({ params, searchParams }) {
           </ol>
 
           {/* Related categories for SEO */}
-          {relatedCategories.length > 0 && (
+          {/* {relatedCategories.length > 0 && (
             <div className="mt-4">
               <p className="text-sm font-medium text-gray-700 mb-2">
                 Свързани категории:
@@ -292,15 +292,11 @@ export default async function CategoryPage({ params, searchParams }) {
                 ))}
               </div>
             </div>
-          )}
+          )} */}
         </nav>
       </div>
 
-      <div className="w-full max-w-[100%] md:max-w-[80%] mx-auto px-4 py-6 sm:px-6 lg:px-8">
-        <h2 className="text-2xl font-bold tracking-tight text-gray-900 mb-6">
-          Филтри
-        </h2>
-
+      <div className="w-full max-w-[100%] md:max-w-[80%] mx-auto px-4 py-6 pt-3 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-[15%_85%] gap-4">
           <div>
             <Filters maxPrice={maxPossiblePrice} />
@@ -337,6 +333,26 @@ export default async function CategoryPage({ params, searchParams }) {
             )
           )}
         </div>
+
+        {/* Related categories for SEO */}
+        {relatedCategories.length > 0 && (
+          <div className="mt-4">
+            <p className="text-sm font-medium text-gray-700 mb-2">
+              Свързани категории:
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {relatedCategories.map((cat) => (
+                <Link
+                  key={cat.id}
+                  href={`/category/${cat.slug}`}
+                  className="text-sm px-3 py-1 bg-gray-100 rounded-full hover:bg-gray-200"
+                >
+                  {cat.name}
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
 
         {currentPage === 1 && categoryDescription && (
           <div className="mt-8 prose max-w-none">
