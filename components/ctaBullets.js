@@ -62,6 +62,7 @@ export default function Example() {
         <div
           aria-hidden="true"
           className="absolute inset-x-0 -top-16 -z-10 flex transform-gpu justify-center overflow-hidden blur-3xl"
+          style={{ transform: "translateX(-950px)" }}
         >
           <div
             style={{
