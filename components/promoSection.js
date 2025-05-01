@@ -141,10 +141,10 @@ export default function PromoSection() {
           </div>
         </div>
       </div>
-      {/* <svg
+      <svg
         viewBox="0 0 1024 1024"
         aria-hidden="true"
-        className="absolute top-1/2 left-10 size-[64rem] overflow-hidden -translate-x-1/2 [mask-image:radial-gradient(closest-side,white,transparent)]"
+        className="sm:hidden absolute top-1/2 -translate-y-[50px] right-0 size-[64rem] overflow-hidden translate-x-1/2 [mask-image:radial-gradient(closest-side,white,transparent)]"
       >
         <circle
           r={512}
@@ -159,7 +159,7 @@ export default function PromoSection() {
             <stop offset={1} stopColor="#129160" />
           </radialGradient>
         </defs>
-      </svg> */}
+      </svg>
     </div>
   );
 }
