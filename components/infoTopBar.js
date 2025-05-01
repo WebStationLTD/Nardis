@@ -15,7 +15,7 @@ export default function InfoTopBar() {
           {/* Лява част: Имейл и телефон */}
           <div className="flex items-center">
             {/* Имейл */}
-            <div className="flex items-center text-sm font-light">
+            <div className="flex items-center text-sm font-medium">
               <AtSymbolIcon className="mr-1.5 h-4 w-4 text-gray-500" />
               <a
                 href="mailto:info@example.bg"
@@ -29,7 +29,7 @@ export default function InfoTopBar() {
             <div className="h-3.5 mx-4 w-px bg-gray-400"></div>
 
             {/* Телефон */}
-            <div className="flex items-center text-sm font-light">
+            <div className="flex items-center text-sm font-medium">
               <PhoneIcon className="mr-1.5 h-4 w-4 text-gray-500" />
               <a
                 href="tel:+359888123456"
@@ -43,7 +43,7 @@ export default function InfoTopBar() {
           {/* Дясна част: Адрес и социални мрежи */}
           <div className="flex items-center">
             {/* Адрес */}
-            <div className="flex items-center text-sm font-light">
+            <div className="flex items-center text-sm font-medium">
               <MapPinIcon className="mr-1.5 h-4 w-4 text-gray-500" />
               <span>гр. София, ул. Примерна 123</span>
             </div>
@@ -54,7 +54,7 @@ export default function InfoTopBar() {
             {/* Instagram линк */}
             <a
               href="https://www.instagram.com/"
-              className="flex items-center text-sm font-light text-gray-600 hover:text-gray-900 transition-colors"
+              className="flex items-center text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
               target="_blank"
               rel="noopener noreferrer"
             >
