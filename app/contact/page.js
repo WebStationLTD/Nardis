@@ -101,6 +101,22 @@ export default async function ContactPage() {
         </div>
         <ContactForm />
       </div>
+      <section className="w-full mt-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
+          <h2 className="text-3xl font-semibold text-center mb-6">
+            Намерете ни на картата
+          </h2>
+        </div>
+        <div className="w-full h-[400px] lg:h-[500px]">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d93836.37935918859!2d23.241546453611484!3d42.69552878952262!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40aa8682cb317bf5%3A0x400a01269bf5e60!2sSofia!5e0!3m2!1sen!2sbg!4v1746127640765!5m2!1sen!2sbg"
+            className="w-full h-full border-0"
+            allowFullScreen=""
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
+      </section>
     </div>
   );
 }
