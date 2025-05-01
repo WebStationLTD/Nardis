@@ -70,7 +70,10 @@ export default function Pagination({ currentPage, totalPages }) {
         Предишна
       </button>
 
-      <form onSubmit={handleInputSubmit} className="flex items-center">
+      <form
+        onSubmit={handleInputSubmit}
+        className="flex items-center w-full sm:w-auto"
+      >
         <span className="px-2 py-2">Страница</span>
         <input
           type="number"
