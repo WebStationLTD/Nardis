@@ -58,17 +58,19 @@ export default function Home() {
   return (
     <>
       <StructuredData data={generateOrganizationSchema()} />
-      <PromoSection />
-      <FeatureList />
-      <NewProducts />
-      <CtaBullets />
-      <ShopingByCategory />
-      <CtaQuality />
-      <PromoProduts />
-      <CtaImage />
-      <CtaFavorites />
-      <NewsLetter />
-      <TestimonialsSection />
+      <div className="pt-0">
+        <PromoSection />
+        <FeatureList />
+        <NewProducts />
+        <CtaBullets />
+        <ShopingByCategory />
+        <CtaQuality />
+        <PromoProduts />
+        <CtaImage />
+        <CtaFavorites />
+        <NewsLetter />
+        <TestimonialsSection />
+      </div>
     </>
   );
 }

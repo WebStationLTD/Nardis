@@ -2,6 +2,7 @@ import "@/styles/globals.css";
 import StoreNavigation from "@/components/storeNavigation";
 import FooterSection from "@/components/footer";
 import CookieConsentBanner from "@/components/cookieConsentBanner";
+import InfoTopBar from "@/components/infoTopBar";
 import { WishlistProvider } from "@/app/context/WishlistContext";
 import { CartProvider } from "@/app/context/CartContext";
 import { Inter } from "next/font/google";
@@ -38,8 +39,11 @@ export default async function RootLayout({ children }) {
         <StylesPreloader />
         <WishlistProvider>
           <CartProvider>
-            <StoreNavigation navigationData={navigationData} />
-            {children}
+            <div>
+              <InfoTopBar />
+              <StoreNavigation navigationData={navigationData} />
+              {children}
+            </div>
             <CookieConsentBanner />
             <FooterSection navigationData={navigationData} />
           </CartProvider>

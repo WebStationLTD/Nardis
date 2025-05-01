@@ -151,7 +151,7 @@ function NavigationContent({ navigationData }) {
   };
 
   return (
-    <div className="bg-white sticky top-0 z-50">
+    <>
       {/* Mobile menu */}
       <Dialog open={open} onClose={setOpen} className="relative z-40 lg:hidden">
         <DialogBackdrop
@@ -313,7 +313,7 @@ function NavigationContent({ navigationData }) {
         </div>
       </Dialog>
 
-      <header className="relative bg-gray-800">
+      <header className="bg-gray-800 sticky top-0 z-[100] shadow-md">
         <nav aria-label="Top" className="mx-auto w-full px-4 sm:px-6 lg:px-8">
           <div>
             <div className="h-16 items-center justify-between grid grid-cols-3">
@@ -576,7 +576,7 @@ function NavigationContent({ navigationData }) {
           </div>
         </nav>
       </header>
-    </div>
+    </>
   );
 }
 
@@ -585,8 +585,8 @@ export default function StoreNavigation({ navigationData }) {
   return (
     <Suspense
       fallback={
-        <div className="bg-white sticky top-0 z-50">
-          <header className="relative bg-gray-800">
+        <>
+          <header className="bg-gray-800 sticky top-0 z-[100] shadow-md">
             <nav
               aria-label="Top"
               className="mx-auto w-full px-4 sm:px-6 lg:px-8"
@@ -602,7 +602,7 @@ export default function StoreNavigation({ navigationData }) {
               </div>
             </nav>
           </header>
-        </div>
+        </>
       }
     >
       <NavigationContent navigationData={navigationData} />

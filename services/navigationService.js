@@ -104,7 +104,7 @@ export const getFeaturedNavItems = cache(async () => {
  */
 export const getNavigationPages = cache(async () => {
   return [
-    { name: "За нас", href: "#" },
+    // { name: "За нас", href: "#" },
     { name: "Блог", href: "/blog" },
     { name: "Контакти", href: "/contact" },
   ];
