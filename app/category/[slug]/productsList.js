@@ -64,7 +64,7 @@ export default function ProductsList({ products }) {
 
   // Render products
   return (
-    <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8 mt-0">
+    <div className="grid grid-cols-1 max-[420px]:grid-cols-1 min-[420px]:grid-cols-2 gap-x-6 gap-y-10 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8 mt-0">
       {displayProducts.map((product, index) => (
         <ProductCard key={product.id} product={product} isFirst={index === 0} />
       ))}
