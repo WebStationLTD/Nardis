@@ -85,7 +85,7 @@ function FiltersContent({ maxPrice }) {
     <div>
       {/* Заглавие с бутон за скриване/показване на мобилни устройства */}
       <div
-        className="flex items-center justify-between cursor-pointer lg:cursor-default mb-3 lg:mb-5 lg:border-0 border border-gray-300 rounded-md p-3 lg:p-0"
+        className="flex items-center justify-between cursor-pointer lg:cursor-default mb-0 lg:border-0 border border-gray-300 rounded-md px-3 py-1 lg:p-0"
         onClick={toggleFilters}
       >
         <h3 className="font-semibold text-xl lg:text-2xl">Филтри</h3>
@@ -98,7 +98,7 @@ function FiltersContent({ maxPrice }) {
 
       {/* Съдържание на филтрите */}
       <div
-        className={`flex flex-col gap-4 transition-all duration-300 ease-in-out ${
+        className={`flex flex-col gap-1 transition-all duration-300 ease-in-out ${
           isFiltersOpen
             ? "max-h-[2000px] opacity-100 mt-3 visible"
             : "max-h-0 opacity-0 mt-0 invisible lg:max-h-[2000px] lg:opacity-100 lg:mt-3 lg:visible"

@@ -133,7 +133,7 @@ export default async function ProductsPage({ searchParams }) {
       </div>
 
       {/* Breadcrumb and categories navigation for SEO */}
-      <div className="w-full max-w-[100%] xl:max-w-[80%] mx-auto px-4 py-4 sm:px-6">
+      <div className="w-full max-w-[100%] xl:max-w-[80%] mx-auto px-4 pb-0 py-4 sm:px-6">
         <nav aria-label="Breadcrumb and key categories">
           <ol className="flex items-center space-x-2 text-sm text-gray-600">
             <li>
@@ -156,8 +156,8 @@ export default async function ProductsPage({ searchParams }) {
       </div>
 
       {/* Main content */}
-      <div className="w-full max-w-[100%] xl:max-w-[80%] mx-auto px-4 py-6 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 ccc lg:grid-cols-[15%_85%] gap-4">
+      <div className="w-full max-w-[100%] xl:max-w-[80%] mx-auto px-4 py-6 pt-3 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-[15%_85%] gap-4">
           <div>
             <Filters maxPrice={maxPossiblePrice} />
           </div>
